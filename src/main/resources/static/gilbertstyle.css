@@ -17,24 +17,25 @@
     .button-bar {
         display: grid;
         grid-template-columns: repeat(5, 1fr);
-        gap: 5px;
         width: 100vw;
+        border: 2px solid #f8f0e5;
     }
 
     .button-bar a {
         text-align: center;
-        padding: 10px;
+        padding: 10px 15px;
         background-color: #004224;
         color: #f8f0e5;
         text-decoration: none;
         font-size: 1.2em;
-        border: 2px solid rgb(0, 0, 0);
-        border-left: none;
-        border-right: none;
+        transition: background-color 0.3s;
+        border: none;
     }
 
     .button-bar a:hover {
         background-color: rgba(66, 58, 38, 0.9);
+        border: #f8f0e5;
+        font-weight: bolder;
     }
 }
 @media only screen and (min-width: 600px) {
@@ -75,7 +76,8 @@
         font-size: 1.5em;
     }
     .button-bar a:hover {
-            background-color: rgba(66, 58, 38, 0.7);
+        background-color: rgba(66, 58, 38, 0.7);
+
         }
 }
 
