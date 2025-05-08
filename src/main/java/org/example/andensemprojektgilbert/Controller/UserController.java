@@ -33,7 +33,7 @@ public class UserController {
         }
         if (userService.register(user)) {
             session.setAttribute("currentUser", user);
-            return "redirect:/index";
+            return "redirect:/";
         } else {
             model.addAttribute("error", "Email findes allerede");
             return "register";
@@ -44,5 +44,26 @@ public class UserController {
         User user = (User) session.getAttribute("currentUser");
         model.addAttribute("user", user);
         return "gilbertprofile";
+    }
+
+    @GetMapping("/login")
+    public String getLogin(Model model) {
+        model.addAttribute("user", new User());
+        return "login";
+    }
+    @PostMapping("/login")
+    public String login(@Valid @ModelAttribute User user, BindingResult bindingResult, HttpSession session, Model model) {
+        User loggedInUser = userService.login(user.getEmail(), user.getPassword());
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            return "login";
+        }
+        if (loggedInUser != null) {
+            session.setAttribute("currentUser", loggedInUser);
+            return "redirect:/";
+        } else {
+            model.addAttribute("error", "Forkert email eller password");
+            return "login";
+        }
     }
 }

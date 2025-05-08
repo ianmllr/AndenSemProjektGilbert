@@ -25,5 +25,14 @@ public class UserService {
         return userRepo.createUser(user);
     }
 
+    public User login(String email, String password) {
+        user = userRepo.readUserByEmail(email);
+        if (user != null && BCrypt.checkpw(password, user.getPassword())) {
+            System.out.println("Bruger logget ind: " + user.getName());
+            return user;
+        } else {
+            return null;
+        }
+    }
 
 }

@@ -5,10 +5,12 @@ import org.example.andensemprojektgilbert.Model.User;
 import org.example.andensemprojektgilbert.Service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class UserTest {
@@ -21,6 +23,7 @@ public class UserTest {
 
 
 
+
     @Test
     void newUser() {
         User user = new User();
@@ -29,5 +32,10 @@ public class UserTest {
         user.setEmail("test@.com");
         boolean result = userService.register(user);
         assertTrue(result);
+    }
+
+    @Test
+    void loginUser() {
+
     }
 }
