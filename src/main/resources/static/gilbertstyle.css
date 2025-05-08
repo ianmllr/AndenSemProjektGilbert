@@ -5,6 +5,7 @@
 	box-sizing : border-box;
 	background-color: #004224;
 	color: #f8f0e5;
+    text-align: center;
 	}
 	
 @media only screen and (max-width: 600px) {
@@ -12,6 +13,28 @@
         position: fixed;
         bottom: 0;
         width: 100%;
+    }
+    .button-bar {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 5px;
+        width: 100vw;
+    }
+
+    .button-bar a {
+        text-align: center;
+        padding: 10px;
+        background-color: #004224;
+        color: #f8f0e5;
+        text-decoration: none;
+        font-size: 1.2em;
+        border: 2px solid rgb(0, 0, 0);
+        border-left: none;
+        border-right: none;
+    }
+
+    .button-bar a:hover {
+        background-color: rgba(66, 58, 38, 0.9);
     }
 }
 @media only screen and (min-width: 600px) {
@@ -32,7 +55,28 @@
         color: #f8f0e5;
         text-align: center;
         align-content: center;
+
+
     }
+    .button-bar
+    {
+        display: flex;
+        justify-content: space-between;
+        width: 100vw;
+
+    }
+    .button-bar a {
+        flex-grow: 1;
+        text-align: center;
+        padding: 15px;
+        background-color: #004224;
+        color: #f8f0e5;
+        text-decoration: none;
+        font-size: 1.5em;
+    }
+    .button-bar a:hover {
+            background-color: rgba(66, 58, 38, 0.7);
+        }
 }
 
 
