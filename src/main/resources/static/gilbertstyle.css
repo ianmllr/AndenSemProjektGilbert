@@ -1,0 +1,46 @@
+/* Generelle definitioner */
+* { margin : 0px;
+	border : 0px;
+	padding : 0px;
+	box-sizing : border-box;
+	background-color: #004224;
+	color: #f8f0e5;
+	}
+	
+@media only screen and (max-width: 600px) {
+    nav {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+}
+@media only screen and (min-width: 600px) {
+	nav {
+		display: none;
+}
+
+body {
+    display: grid;
+    grid-template-areas: 
+        "header"
+        "main"
+        "nav";
+    grid-template-columns: 1fr; /* 1fr betyder 1fraction altså en del */
+    grid-template-rows: auto auto 1fr;
+    gap: 10px; 
+    background-color: #004224;
+    color: #f8f0e5;
+	text-align: center;
+	align-content: center;
+}
+
+
+
+
+
+
+
+
+
+
+
