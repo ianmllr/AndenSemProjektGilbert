@@ -6,6 +6,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class UserRepo {
 
@@ -18,6 +20,14 @@ public class UserRepo {
         int result = jdbcTemplate.update(sql, user.getName(), user.getPassword(), user.getEmail(), 0, user.getRating(), 2);
         return result == 1;
     }
+
+    public List<User> getAllUsers() {
+        String sql = "SELECT id, name, email, password, sales, rating, role FROM user";
+        return jdbcTemplate.query(sql, (rs, rowNum) ->
+                new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getInt("sales"), rs.getString("rating"), rs.getString("role"))
+        );
+    }
+
     public User readUserByEmail(String email) {
         String sql = "SELECT * FROM user WHERE email = ?";
 
@@ -34,4 +44,5 @@ public class UserRepo {
             return null;
         }
     }
+
 }
