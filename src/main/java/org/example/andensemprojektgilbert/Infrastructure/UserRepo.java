@@ -16,16 +16,16 @@ public class UserRepo {
 
 
     public boolean createUser(User user) {
-        String sql = "INSERT INTO user (name, password, email, sales, rating, role) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO user (name, password, email, sales, rating, role, imgsrc) VALUES (?, ?, ?, ?, ?, ?, ?)";
         int result = jdbcTemplate.update(sql, user.getName(), user.getPassword(), user.getEmail(), 0, user.getRating(), 2);
         return result == 1;
     }
 
     public List<User> getAllUsers() {
-        String sql = "SELECT id, name, email, password, sales, rating, user_role.role FROM user\n"  +
+        String sql = "SELECT id, name, email, password, sales, rating, user_role.role, imgsrc FROM user\n"  +
                 "JOIN user_role ON idroles = user.role";
         return jdbcTemplate.query(sql, (rs, rowNum) ->
-                new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getInt("sales"), rs.getString("rating"), rs.getString("role"))
+                new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getInt("sales"), rs.getString("rating"), rs.getString("role"), rs.getString("imgsrc"))
         );
     }
 

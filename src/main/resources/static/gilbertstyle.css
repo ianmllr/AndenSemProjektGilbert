@@ -50,7 +50,7 @@
         "main"
         "nav";
         grid-template-columns: 1fr; /* 1fr betyder 1fraction altså en del */
-        grid-template-rows: auto auto 1fr;
+        grid-template-rows: 2fr auto 1fr;
         gap: 10px;
         background-color: #004224;
         color: #f8f0e5;
@@ -87,6 +87,32 @@ button {
     color: #004224;
     border: 2px solid #749a8a;
 }
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
+    position: relative;
+}
+
+.profilpicture {
+    position: absolute;
+    left: 25px;
+    width: 21vw;
+    max-width: 200px;
+    height: auto;
+}
+.user-info {
+    text-align: center;
+
+    color: #f8f0e5;
+    font-size: 1.2em;
+}
+
+
+
+
 
 
 

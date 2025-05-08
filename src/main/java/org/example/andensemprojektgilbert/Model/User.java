@@ -28,7 +28,9 @@ public class User {
 
     private String role;
 
-    public User(int id, String name, String email, String password, int sales, String rating, String role) {
+    private String imgsrc;
+
+    public User(int id, String name, String email, String password, int sales, String rating, String role, String imgsrc) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -36,6 +38,7 @@ public class User {
         this.sales = sales;
         this.rating = rating;
         this.role = role;
+        this.imgsrc = imgsrc;
     }
     public User() {}
 
@@ -68,6 +71,12 @@ public class User {
     }
     public void setSales(int sales) {
         this.sales = sales;
+    }
+    public String getImgsrc(){
+        return imgsrc;
+    }
+    public void setImgsrc(String imgsrc){
+        this.imgsrc = imgsrc;
     }
 
     public String getRating() {

@@ -14,8 +14,12 @@
 
 <body>
 <header>
+  <div class="user-info">
   <h1><p th:text="${user}"></p></h1>
-
+  <p th:text="${user.rating}"></p>
+  <p th:text="${user.sales} + ' salg'"></p>
+  </div>
+  <img th:src="${user.imgsrc != null} ? ${user.imgsrc} : '/icons/profil.png'" class="profilpicture" width="250">
 
 </header>
 
@@ -48,7 +52,6 @@
 </div>
 
 <main>
-  <p th:text="${user}"></p>
   <div class="grid-container">
     <div class="item1">one</div>
     <div class="item2">two</div>
