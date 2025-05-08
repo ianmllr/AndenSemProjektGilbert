@@ -40,8 +40,9 @@ public class UserController {
         }
     }
     @GetMapping("/gilbertprofile")
-    public String getUser(Model model) {
-        model.addAttribute("user", new User());
+    public String getUser(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("currentUser");
+        model.addAttribute("user", user);
         return "gilbertprofile";
     }
 }

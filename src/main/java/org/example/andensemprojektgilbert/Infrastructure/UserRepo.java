@@ -22,7 +22,8 @@ public class UserRepo {
     }
 
     public List<User> getAllUsers() {
-        String sql = "SELECT id, name, email, password, sales, rating, role FROM user";
+        String sql = "SELECT id, name, email, password, sales, rating, user_role.role FROM user\n"  +
+                "JOIN user_role ON idroles = user.role";
         return jdbcTemplate.query(sql, (rs, rowNum) ->
                 new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getInt("sales"), rs.getString("rating"), rs.getString("role"))
         );

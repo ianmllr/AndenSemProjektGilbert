@@ -4,7 +4,7 @@
 
 <head>
   <title>Gilbert</title>
-  <link rel="stylesheet" type="text/css" href="../static/gilbertstyle.css">
+  <link rel="stylesheet" type="text/css" href="/gilbertstyle.css">
   <meta charset="UTF-8">
   <meta name="description" content="Køb og salg af brugt mærkevaretøj">
   <meta name="keywords" content="køb, salg, Gucci, Rolex">
@@ -20,19 +20,19 @@
 <nav>
   <div class="nav-container">
     <a href="home">
-      <img src="../static/icons/home2.png" class="icon" width="80px" >
+      <img src="/icons/home2.png" class="icon" width="80px" >
     </a>
     <a href="search">
-      <img src="../static/icons/sg.png" class="icon" width="70px" >
+      <img src="/icons/sg.png" class="icon" width="70px" >
     </a>
     <a href="favorites">
-      <img src="../static/icons/heart.png" class="icon" width="75px" >
+      <img src="/icons/heart.png" class="icon" width="75px" >
     </a>
-    <a href="mine">
-      <img src="../static/icons/profil.png" class="icon" width="80px">
+    <a href="/gilbertprofile">
+      <img src="/icons/profil.png" class="icon" width="80px">
     </a>
     <a href="notifications">
-      <img src="../static/icons/notification.png" class="icon" width="80px" alt="Notifications">
+      <img src="/icons/notification.png" class="icon" width="80px" alt="Notifications">
     </a>
   </div>
 </nav>
@@ -46,7 +46,7 @@
 </div>
 
 <main>
-  <p>Profil optik</p>
+  <p th:text="${user}"></p>
   <div class="grid-container">
     <div class="item1">one</div>
     <div class="item2">two</div>
