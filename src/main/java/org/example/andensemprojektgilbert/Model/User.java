@@ -69,12 +69,16 @@ public class User {
     public void setSales(int sales) {
         this.sales = sales;
     }
+
     public String getRating() {
+        if (sales == 0) {
+            rating = "New seller";
+        } else if (sales == 50) {
+            rating = "Experience seller";
+        }
         return rating;
     }
-    public void setRating(String rating) {
-        this.rating = rating;
-    }
+
     public String getRole() {
         return role;
     }
