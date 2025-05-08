@@ -39,4 +39,9 @@ public class UserController {
             return "register";
         }
     }
+    @GetMapping("/gilbertprofile")
+    public String getUser(Model model) {
+        model.addAttribute("user", new User());
+        return "gilbertprofile";
+    }
 }
