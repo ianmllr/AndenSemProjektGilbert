@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+    <link rel="stylesheet" type="text/css" href="/gilbertstyle.css">
+    <meta charset="UTF-8">
+    <meta name="description" content="Køb og salg af brugt mærkevaretøj">
+    <meta name="keywords" content="køb, salg, Gucci, Rolex">
+    <meta name="author" content="ccco">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <h1>Der er sket en fejl</h1>
+    <p th:text="${exception}">fejl</p>
+    <br>
+    <a href="/">
+        <button id="goToIndex" type="submit" >Gå til forsiden</button>
+    </a>
+    <h2>Eller</h2>
+    <a href="javascript:history.back()">
+        <button id="goToStart" type="submit">Gå tilbage</button>
+    </a>
+</body>
+</html>

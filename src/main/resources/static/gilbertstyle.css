@@ -80,7 +80,13 @@
 
         }
 }
-
+button {
+    padding: 10px;
+    font-size: 1.2em;
+    background-color: #f8f0e5;
+    color: #004224;
+    border: 2px solid #749a8a;
+}
 
 
 
