@@ -123,6 +123,7 @@ public class ProductRepo {
 
     public List<Product> readUserProducts(User user) {
 
+
         String sql = "SELECT * FROM Product WHERE createdByID = ?";
         return jdbcTemplate.query(sql, new Object[]{user.getId()}, (rs, rowNum) -> new Product(
                 rs.getInt("id"),
