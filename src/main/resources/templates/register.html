@@ -2,8 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png"  href="/icons/Profil32x32_3.png">
     <title>Register</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/gilbertstyle.css">
 </head>
 <body>
 <h2>Register</h2>
@@ -18,17 +19,42 @@
             <li th:each="err : ${errors}" th:text="${err.defaultMessage}" style="color: red;"></li>
         </ul>
     </div>
+<div class="register-bar">
+    <br><label for="name">Name:</label><br>
+    <input type="text" id="name" placeholder="Ex. John" th:field="*{name}" required><br><br>
 
-    <label for="name">Name:</label>
-    <input type="text" id="name" th:field="*{name}" required>
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" placeholder="Ex. john@gmail.com" th:field="*{email}" required><br><br>
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" th:field="*{email}" required>
-
-    <label for="password">Password:</label>
-    <input type="password" id="password" th:field="*{password}" required>
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" placeholder="Password" th:field="*{password}" required><br><br>
 
     <button type="submit">Register</button>
+</div>
+<div class="indexLogo">
+    <a href="/" class="logo-link">
+        <img src="/icons/POlogo.1.png" alt="Home">
+    </a>
+</div>
+    <nav>
+        <div class="nav-container">
+            <a href="home">
+                <img src="/icons/home2.png" class="icon" width="80px" >
+            </a>
+            <a href="search">
+                <img src="/icons/sg.png" class="icon" width="70px" >
+            </a>
+            <a href="favorites">
+                <img src="/icons/heart.png" class="icon" width="75px" >
+            </a>
+            <a href="/gilbertprofile">
+                <img src="/icons/profil.png" class="icon" width="80px">
+            </a>
+            <a href="notifications">
+                <img src="/icons/notification.png" class="icon" width="80px" alt="Notifications">
+            </a>
+        </div>
+    </nav>
 </form>
 </body>
 </html>
