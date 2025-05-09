@@ -11,6 +11,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
 
 @Controller
 public class UserController {
@@ -25,11 +33,24 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute User user, BindingResult bindingResult, HttpSession session, Model model) {
+    public String registerUser(@Valid @ModelAttribute User user, BindingResult bindingResult, HttpSession session, Model model, @RequestParam("image") MultipartFile image) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "register";
+        }
+        if (!image.isEmpty()) {
+            String originalFilename = image.getOriginalFilename();
+            String uniqueFilename = UUID.randomUUID().toString() + "_" + originalFilename;
+            String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/userimage";;
+            Path filePath = Paths.get(uploadDir, uniqueFilename);
+            try {
+                Files.createDirectories(filePath.getParent());
+                Files.write(filePath, image.getBytes());
+                user.setImgsrc(uniqueFilename);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         if (userService.register(user)) {
             session.setAttribute("currentUser", user);
@@ -45,6 +66,7 @@ public class UserController {
         model.addAttribute("user", user);
         return "gilbertprofile";
     }
+
 
     @GetMapping("/login")
     public String getLogin(Model model) {

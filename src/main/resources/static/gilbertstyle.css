@@ -169,6 +169,7 @@ header {
     width: 21vw;
     max-width: 200px;
     height: auto;
+    border-radius: 50%;
 }
 .user-info {
     text-align: center;

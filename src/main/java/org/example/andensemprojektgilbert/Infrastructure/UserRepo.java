@@ -39,6 +39,10 @@ public class UserRepo {
                 user.setName(rs.getString("name"));
                 user.setPassword(rs.getString("password"));
                 user.setEmail(rs.getString("email"));
+                user.setSales(rs.getInt("sales"));
+                user.setRating(rs.getString("rating"));
+                user.setRole(rs.getString("role"));
+                user.setImgsrc(rs.getString("imgsrc"));
                 return user;
             });
         } catch (EmptyResultDataAccessException e) {

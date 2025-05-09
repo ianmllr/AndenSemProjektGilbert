@@ -87,6 +87,9 @@ public class User {
         }
         return rating;
     }
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
 
     public String getRole() {
         return role;

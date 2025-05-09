@@ -20,7 +20,7 @@
   <p th:text="${user.rating}"></p>
   <p th:text="${user.sales} + ' salg'"></p>
   </div>
-  <img th:src="${user.imgsrc != null} ? ${user.imgsrc} : '/icons/profil.png'" class="profilpicture" width="250">
+  <img th:src="${user.imgsrc != null} ? @{/userimage/} + ${user.imgsrc} : @{/icons/profil.png}" class="profilpicture" width="250">
 
 </header>
 
