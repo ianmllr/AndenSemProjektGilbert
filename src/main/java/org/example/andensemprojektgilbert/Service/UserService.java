@@ -34,5 +34,16 @@ public class UserService {
             return null;
         }
     }
+    public boolean updateUser(User user) {
+        if (user != null && user.getPassword().isEmpty()) {
+            return userRepo.updateUserNoPassword(user);
+        }
+        if (user != null && !user.getPassword().isEmpty()) {
+            String hashed = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+            user.setPassword(hashed);
+            return userRepo.updateUser(user);
+        }
+        else return false;
+    }
 
 }

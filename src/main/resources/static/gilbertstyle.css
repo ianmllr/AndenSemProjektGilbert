@@ -105,6 +105,11 @@ h2 a {
     .login-button {
         display: none;
     }
+    .profilelink {
+        position: absolute;
+        left: 20px;
+        top: 4px;
+    }
 }
 @media only screen and (min-width: 600px) {
     nav {
@@ -207,6 +212,11 @@ h2 a {
         background-color: #004224;
         color: #f8f0e5;
         padding: 10px 20px;
+    }
+    .profilelink {
+        position: absolute;
+        left: 35px;
+        top: 35px;
     }
 }
 button {

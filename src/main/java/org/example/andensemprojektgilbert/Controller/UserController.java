@@ -103,4 +103,43 @@ public class UserController {
             return "login";
         }
     }
+    @GetMapping("/edituser")
+    public String getEditUser(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("currentUser");
+        model.addAttribute("user", user);
+        return "edituser";
+    }
+    @PostMapping("/edituser")
+    public String editUser(@Valid @ModelAttribute User user, BindingResult bindingResult, HttpSession session, Model model, RedirectAttributes redirectAttributes, @RequestParam(value = "image", required = false) MultipartFile image) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            return "edituser";
+        }
+        if (image != null && !image.isEmpty() && image.getSize() < 3 * 1024 * 1024) {
+        String originalFilename = image.getOriginalFilename();
+            String uniqueFilename = UUID.randomUUID().toString() + "_" + originalFilename;
+            String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/userimage";
+            Path filePath = Paths.get(uploadDir, uniqueFilename);
+            try {
+                Files.createDirectories(filePath.getParent());
+                Files.write(filePath, image.getBytes());
+                user.setImgsrc(uniqueFilename);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else {
+            User existingUser = (User) session.getAttribute("currentUser");
+            user.setImgsrc(existingUser.getImgsrc());
+        }
+        boolean updated = userService.updateUser(user);
+        if (updated) {
+            session.setAttribute("currentUser", user);
+            return "redirect:/gilbertprofile";
+        }
+        else {
+            redirectAttributes.addFlashAttribute("message", "Der er sket en fejl, prøv igen");
+            return "redirect:/edituser";
+        }
+    }
 }

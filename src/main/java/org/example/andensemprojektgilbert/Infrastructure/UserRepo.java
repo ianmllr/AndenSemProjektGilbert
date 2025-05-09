@@ -49,5 +49,20 @@ public class UserRepo {
             return null;
         }
     }
-
+    public boolean updateUser(User user) {
+        String sql = "UPDATE user SET name = ?, password = ?, email = ?, imgsrc = ? WHERE id = ?";
+        int updated = jdbcTemplate.update(sql, user.getName(), user.getPassword(), user.getEmail(), user.getImgsrc(), user.getId());
+        if (updated > 0) {
+            return true;
+        }
+        return false;
+    }
+    public boolean updateUserNoPassword(User user) {
+        String sql = "UPDATE user set name = ?, email = ?, imgsrc = ? WHERE id = ?";
+        int updated = jdbcTemplate.update(sql, user.getName(), user.getEmail(), user.getImgsrc(), user.getId());
+        if (updated > 0) {
+            return true;
+        }
+        return false;
+    }
 }
