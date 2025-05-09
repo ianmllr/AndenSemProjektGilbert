@@ -16,23 +16,27 @@ import java.util.List;
 public class MeController {
 
     @Autowired
-    private MyPageService myPageService = new MyPageService();
+    private MyPageService myPageService;
 
     @GetMapping("/me")
     public String getMyPage(Model model, HttpSession session) {
         User user = (User) session.getAttribute("currentUser");
+        System.out.println("opened my page with user " + user.getName());
         List<Product> products = myPageService.getMyProducts(user);
         model.addAttribute("products", products);
         return "me";
     }
 
-    @GetMapping("/me/newProduct")
-    public String getNewProduct(Model model) {
+    @GetMapping("/me/newproduct")
+    public String getNewProduct(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("currentUser");
+        System.out.println("opened new product page with user " + user.getName());
+        model.addAttribute("user", user);
         model.addAttribute("product", new Product());
-        return "/me/newProduct";
+        return "newproduct";
     }
 
-    @PostMapping("/me/newProduct")
+    @PostMapping("/me/newproduct")
     public String postNewProduct(HttpSession session, Product product) {
         User user = (User) session.getAttribute("currentUser");
         product.setCreatedByID(user.getId());
