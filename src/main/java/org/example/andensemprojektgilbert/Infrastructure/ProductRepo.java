@@ -118,12 +118,13 @@ public class ProductRepo {
         ));
     }
 
-    // andre produkttyper
+    // andre produkttyper her
+
 
     public List<Product> readUserProducts(User user) {
-        int user_id = user.getId();
-        String sql = "SELECT * FROM Product WHERE user_id = ?";
-        return jdbcTemplate.query(sql, new Object[]{user_id}, (rs, rowNum) -> new Product(
+
+        String sql = "SELECT * FROM Product WHERE createdByID = ?";
+        return jdbcTemplate.query(sql, new Object[]{user.getId()}, (rs, rowNum) -> new Product(
                 rs.getInt("id"),
                 rs.getString("name"),
                 rs.getString("brand"),

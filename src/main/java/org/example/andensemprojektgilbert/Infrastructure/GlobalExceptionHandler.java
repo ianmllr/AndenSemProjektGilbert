@@ -13,7 +13,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public String handleGeneralException(Exception e, Model model) {
-        model.addAttribute("exception", "Uventet fejl: " + e.getClass().getSimpleName());
+        model.addAttribute("exception", "Uventet fejl: " + e.getClass().getSimpleName() + ": " + e.getMessage());
         return "error";
     }
 
@@ -52,7 +52,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler
     public String handleNoResourceFoundException(NoResourceFoundException e, Model model) {
-        model.addAttribute("exception", "Siden findes ikke eller du er ikke logget ind");
+        model.addAttribute("exception", "Siden findes ikke eller du er ikke logget ind. Fejl: " + e.getClass().getSimpleName() + ": " + e.getMessage());
         return "error";
     }
 }
