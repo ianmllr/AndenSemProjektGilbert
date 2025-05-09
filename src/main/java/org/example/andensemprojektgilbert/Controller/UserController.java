@@ -63,6 +63,16 @@ public class UserController {
     @GetMapping("/gilbertprofile")
     public String getUser(Model model, HttpSession session) {
         User user = (User) session.getAttribute("currentUser");
+        if (user.getImgsrc() == null || user.getImgsrc().isEmpty()) {
+            user.setImgsrc("profil.png");
+        } else {
+            String uploadDir = "src/main/resources/static/userimage/";
+            Path filePath = Paths.get(uploadDir, user.getImgsrc());
+
+            if (!Files.exists(filePath)) {
+                user.setImgsrc("profil.png");
+            }
+        }
         model.addAttribute("user", user);
         return "gilbertprofile";
     }
