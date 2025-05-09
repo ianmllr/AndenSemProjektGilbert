@@ -8,7 +8,10 @@
     text-align: center;
 	}
 h2 {
-    font-size: 60px;
+    font-size: 100px;
+}
+h2 a {
+    text-decoration: none;
 }
 
 
@@ -21,6 +24,7 @@ h2 {
     }
     h2 {
         font-size: 45px;
+        text-decoration: none;
     }
 
     .nav-container {
@@ -98,6 +102,9 @@ h2 {
         background-color: transparent; /* Bevarer den eksisterende baggrund */
         display: inline-block;
     }
+    .login-button {
+        display: none;
+    }
 }
 @media only screen and (min-width: 600px) {
     nav {
@@ -152,6 +159,8 @@ h2 {
         color: #f8f0e5;
         text-decoration: none;
         font-size: 1.5em;
+        border-top: 2px solid #f8f0e5;
+        border-bottom: 2px solid #f8f0e5;
     }
     .button-bar-index a:hover {
             text-decoration: underline #f8f0e5;
@@ -163,15 +172,11 @@ h2 {
         justify-content: space-between;
         width: 100vw;
     }
-h2 {
-    font-size: 100px;
-    top: -100px;
-}
 
     .button-bar a {
         flex-grow: 1;
         text-align: center;
-        padding: 15px;
+        padding: 1px;
         background-color: #004224;
         color: #f8f0e5;
         text-decoration: none;
@@ -190,9 +195,18 @@ h2 {
             padding: 10px 15px;
             margin: 10px;
         }
+
         #name, #email, #password {
             color: black;
         }
+    }
+    .login-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: #004224;
+        color: #f8f0e5;
+        padding: 10px 20px;
     }
 }
 button {
