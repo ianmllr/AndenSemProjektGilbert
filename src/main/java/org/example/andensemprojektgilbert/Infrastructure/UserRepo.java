@@ -17,7 +17,7 @@ public class UserRepo {
 
     public boolean createUser(User user) {
         String sql = "INSERT INTO user (name, password, email, sales, rating, role, imgsrc) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        int result = jdbcTemplate.update(sql, user.getName(), user.getPassword(), user.getEmail(), 0, user.getRating(), 2);
+        int result = jdbcTemplate.update(sql, user.getName(), user.getPassword(), user.getEmail(), 0, user.getRating(),  2, user.getImgsrc());
         return result == 1;
     }
 
