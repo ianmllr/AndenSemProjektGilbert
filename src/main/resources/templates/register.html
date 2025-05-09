@@ -29,7 +29,7 @@
     <label for="password">Password:</label><br>
     <input type="password" id="password" placeholder="Password" th:field="*{password}" required><br><br>
 
-    <label for="image">Upload billede</label>
+    <label for="image">Upload picture</label>
     <input type="file" id="image" name="image" accept="image/*">
 
     <button type="submit">Register</button>
@@ -39,6 +39,9 @@
         <img src="/icons/POlogo.1.png" alt="Home">
     </a>
 </div>
+    <div class="alert alert-danger" th:if="${message}">
+        <strong>Fejl! </strong><span th:text="${message}"></span>
+    </div>
     <nav>
         <div class="nav-container">
             <a href="home">

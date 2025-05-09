@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -33,13 +34,17 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute User user, BindingResult bindingResult, HttpSession session, Model model, @RequestParam("image") MultipartFile image) {
+    public String registerUser(@Valid @ModelAttribute User user, BindingResult bindingResult, HttpSession session, Model model, @RequestParam("image") MultipartFile image, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "register";
         }
         if (!image.isEmpty()) {
+            if (image.getSize() > 3*1024*1024) {
+                redirectAttributes.addFlashAttribute("message", "Image is too large to upload");
+                return "redirect:/register";
+            }
             String originalFilename = image.getOriginalFilename();
             String uniqueFilename = UUID.randomUUID().toString() + "_" + originalFilename;
             String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/userimage";;
