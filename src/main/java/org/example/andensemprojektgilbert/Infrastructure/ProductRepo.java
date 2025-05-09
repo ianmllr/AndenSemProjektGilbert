@@ -118,7 +118,7 @@ public class ProductRepo {
         ));
     }
 
-    // andre produkttyper her
+    // andre produkttyper
 
     public List<Product> readUserProducts(User user) {
         int user_id = user.getId();
