@@ -9,6 +9,7 @@ public class Product {
     private String brand;
     private String department;
     private String category;
+    private String subcategory;
     private double price;
     private String p_condition;
     private String size;
@@ -16,9 +17,10 @@ public class Product {
     private Date postedDate;
     private String description;
     private String location;
+    private int createdByID;
 
 
-    public Product(int id, String name, String brand, String location, String description, String department, String category, Date postedDate, double price, String p_condition, String size, String color)
+    public Product(int id, String name, String brand, String location, String description, String department, String category, String subcategory, Date postedDate, double price, String p_condition, String size, String color, int createdByID)
     {
         this.id = id;
         this.name = name;
@@ -27,12 +29,16 @@ public class Product {
         this.description = description;
         this.department = department;
         this.category = category;
+        this.subcategory = subcategory;
         this.price = price;
         this.p_condition = p_condition;
         this.size = size;
         this.color = color;
         this.postedDate = postedDate;
+        this.createdByID = createdByID;
     }
+
+    public Product() {}
     public int getId() {
         return id;
     }
@@ -62,6 +68,12 @@ public class Product {
     }
     public void setCategory(String category) {
         this.category = category;
+    }
+    public String getSubcategory() {
+        return subcategory;
+    }
+    public void setSubcategory(String subcategory) {
+        this.subcategory = subcategory;
     }
     public double getPrice() {
         return price;
@@ -104,6 +116,12 @@ public class Product {
     }
     public void setLocation(String location) {
         this.location = location;
+    }
+    public int getCreatedByID() {
+        return createdByID;
+    }
+    public void setCreatedByID(int createdByID) {
+        this.createdByID = createdByID;
     }
 
 }

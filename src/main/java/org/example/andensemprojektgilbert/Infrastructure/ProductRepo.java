@@ -1,6 +1,7 @@
 package org.example.andensemprojektgilbert.Infrastructure;
 
 import org.example.andensemprojektgilbert.Model.Product;
+import org.example.andensemprojektgilbert.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -12,25 +13,133 @@ public class ProductRepo {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public List<Product> searchProducts(String keyword) {
-        String sql = "SELECT * FROM Product WHERE brand LIKE ? OR description LIKE ? OR department LIKE ? OR category LIKE ? OR name LIKE ?";
-        String searchTerm = "%" + keyword + "%";
-
-        return jdbcTemplate.query(sql, new Object[]{searchTerm, searchTerm, searchTerm, searchTerm, searchTerm},
-                (rs, rowNum) -> new Product(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("brand"),
-                        rs.getString("location"),
-                        rs.getString("description"),
-                        rs.getString("department"),
-                        rs.getString("category"),
-                        rs.getDate("posted_date"),
-                        rs.getDouble("price"),
-                        rs.getString("p_condition"),
-                        rs.getString("size"),
-                        rs.getString("color")
-                )
+    // til at admins kan oprette produkter
+    public void createProduct(Product product) {
+        String sql = "INSERT INTO Product (name, brand, location, description, department, category, subcategory, posted_date, price, p_condition, size, color, createdByID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql,
+                product.getName(),
+                product.getBrand(),
+                product.getLocation(),
+                product.getDescription(),
+                product.getDepartment(),
+                product.getCategory(),
+                product.getSubcategory(),
+                product.getPostedDate(),
+                product.getPrice(),
+                product.getP_condition(),
+                product.getSize(),
+                product.getColor(),
+                product.getCreatedByID()
         );
     }
+
+
+    public List<Product> searchProducts(String keyword) {
+        String sql = "SELECT * FROM Product WHERE brand LIKE ? OR description LIKE ? OR department LIKE ? OR category LIKE ? OR subcategory LIKE ? OR name LIKE ?";
+        String searchTerm = "%" + keyword + "%";
+
+        return jdbcTemplate.query(sql, new Object[]{searchTerm, searchTerm, searchTerm, searchTerm, searchTerm}, (rs, rowNum) -> new Product(
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getString("brand"),
+                rs.getString("location"),
+                rs.getString("description"),
+                rs.getString("department"),
+                rs.getString("category"),
+                rs.getString("subcategory"),
+                rs.getDate("posted_date"),
+                rs.getDouble("price"),
+                rs.getString("p_condition"),
+                rs.getString("size"),
+                rs.getString("color"),
+                rs.getInt("createdByID")
+        ));
+    }
+
+    public List<Product> readAllProducts() {
+        String sql = "SELECT * FROM Product";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new Product(
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getString("brand"),
+                rs.getString("location"),
+                rs.getString("description"),
+                rs.getString("department"),
+                rs.getString("category"),
+                rs.getString("subcategory"),
+                rs.getDate("posted_date"),
+                rs.getDouble("price"),
+                rs.getString("p_condition"),
+                rs.getString("size"),
+                rs.getString("color"),
+                rs.getInt("createdByID")
+        ));
+    }
+
+    // læser herre-produkter
+    public List<Product> readMensProducts() {
+        String sql = "SELECT * FROM Product WHERE department = 'Men'";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new Product(
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getString("brand"),
+                rs.getString("location"),
+                rs.getString("description"),
+                rs.getString("department"),
+                rs.getString("category"),
+                rs.getString("subcategory"),
+                rs.getDate("posted_date"),
+                rs.getDouble("price"),
+                rs.getString("p_condition"),
+                rs.getString("size"),
+                rs.getString("color"),
+                rs.getInt("createdByID")
+        ));
+    }
+
+    // læser kvinde-produkter
+    public List<Product> readWomensProducts() {
+        String sql = "SELECT * FROM Product WHERE department = 'Women'";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new Product(
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getString("brand"),
+                rs.getString("location"),
+                rs.getString("description"),
+                rs.getString("department"),
+                rs.getString("category"),
+                rs.getString("subcategory"),
+                rs.getDate("posted_date"),
+                rs.getDouble("price"),
+                rs.getString("p_condition"),
+                rs.getString("size"),
+                rs.getString("color"),
+                rs.getInt("createdByID")
+        ));
+    }
+
+    // andre produkttyper her
+
+    public List<Product> readUserProducts(User user) {
+        int user_id = user.getId();
+        String sql = "SELECT * FROM Product WHERE user_id = ?";
+        return jdbcTemplate.query(sql, new Object[]{user_id}, (rs, rowNum) -> new Product(
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getString("brand"),
+                rs.getString("location"),
+                rs.getString("description"),
+                rs.getString("department"),
+                rs.getString("category"),
+                rs.getString("subcategory"),
+                rs.getDate("posted_date"),
+                rs.getDouble("price"),
+                rs.getString("p_condition"),
+                rs.getString("size"),
+                rs.getString("color"),
+                rs.getInt("createdByID")
+        ));
+    }
+
+
 }
