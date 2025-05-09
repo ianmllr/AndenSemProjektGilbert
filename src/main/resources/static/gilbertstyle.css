@@ -3,16 +3,30 @@
 	border : 0px;
 	padding : 0px;
 	box-sizing : border-box;
-	background-color: #004224;
+    background-color: #004224;
 	color: #f8f0e5;
     text-align: center;
 	}
-	
+
+.icon {
+    width: 70px;
+    height: auto;
+}
+
 @media only screen and (max-width: 600px) {
     nav {
         position: fixed;
         bottom: 0;
         width: 100%;
+        border-top: 2px solid #f8f0e5;
+        border-right: 2px solid #f8f0e5;
+    }
+    .nav-container {
+        width: 100%;
+        display: inline-flex;
+        justify-content: space-around;
+        background-color: #004224;
+        align-items: center;
     }
     .button-bar {
         display: grid;
@@ -37,12 +51,51 @@
         border: #f8f0e5;
         font-weight: bolder;
     }
+    .register-bar {
+        input {
+            color: black;
+            width: 50%;
+            border: 2px #423a26;
+            background-color: #f8f0e5;
+            color: #f8f0e5;
+            padding: 10px 15px;
+            margin: 10px;
+        }
+        #name, #email, #password {
+            color: black;
+        }
+        input::placeholder {
+            ::placeholder {
+                            color: #423a26;
+                            font-style: italic;
+                        }
+        }
+    }
+
+
+
 }
 @media only screen and (min-width: 600px) {
     nav {
         display: none;
     }
+    .logo-link {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 132px; /* Justér størrelsen efter behov */
+        height: 132px;
+        background-color: #004224;
+        border-radius: 50%; /* Gør det rundt */
+        position: absolute;
+        top: 15px;
+        left: 15px;
+    }
 
+    .logo-link img {
+        width: 85px; /* Justér billedstørrelse */
+        height: auto;
+    }
     body {
         display: grid;
         grid-template-areas:
@@ -77,15 +130,29 @@
     }
     .button-bar a:hover {
         background-color: rgba(66, 58, 38, 0.7);
-
         }
+
+    .register-bar {
+        input {
+            color: black;
+            width: 20%;
+            border: 2px #423a26;
+            background-color: #f8f0e5;
+            color: #f8f0e5;
+            padding: 10px 15px;
+            margin: 10px;
+        }
+        #name, #email, #password {
+            color: black;
+        }
+    }
 }
 button {
     padding: 10px;
     font-size: 1.2em;
     background-color: #f8f0e5;
     color: #004224;
-    border: 2px solid #749a8a;
+    border: 2px solid #423a26;
 }
 header {
     display: flex;
@@ -109,6 +176,7 @@ header {
     color: #f8f0e5;
     font-size: 1.2em;
 }
+
 
 
 
