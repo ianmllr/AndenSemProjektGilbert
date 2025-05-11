@@ -45,5 +45,7 @@ public class UserService {
         }
         else return false;
     }
-
+    public boolean deleteUser(String email) {
+        return userRepo.deleteUser(email);
+    }
 }

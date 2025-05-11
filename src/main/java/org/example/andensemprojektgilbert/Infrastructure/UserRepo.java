@@ -65,4 +65,12 @@ public class UserRepo {
         }
         return false;
     }
+    public boolean deleteUser(String email) {
+        String sql = "DELETE FROM user WHERE email = ?";
+        int result = jdbcTemplate.update(sql, email);
+        if (result > 0) {
+            return true;
+        }
+        return false;
+    }
 }
