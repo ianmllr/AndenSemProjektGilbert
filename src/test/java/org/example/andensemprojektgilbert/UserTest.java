@@ -22,20 +22,28 @@ public class UserTest {
     private UserRepo userRepo;
 
 
-
-
     @Test
     void newUser() {
         User user = new User();
         user.setName("Test");
         user.setPassword("123");
-        user.setEmail("test@.com");
+        user.setEmail("test@com");
         boolean result = userService.register(user);
         assertTrue(result);
     }
 
     @Test
-    void loginUser() {
-
+    void testLoginUser() {
+        User user = userService.login("test@com", "123");
+        System.out.println(user);
+        assertEquals("Test", user.getName());
+    }
+    @Test
+    void testUpdateUser() {
+        User user = userService.login("test@com", "123");
+        System.out.println(user);
+        user.setName("TestName");
+        boolean updated = userService.updateUser(user);
+        assertTrue(updated);
     }
 }

@@ -116,6 +116,18 @@ h2 a {
         left: 20px;
         top: 4px;
     }
+    .profilpicture {
+        width: 20vw;
+        min-width: 80px;
+        max-width: 150px;
+        height: auto;
+        border-radius: 50%;
+        position: relative;
+        padding: 0;
+        margin: 0 auto;
+        display: block;
+        left: 20px;
+    }
 }
 @media only screen and (min-width: 600px) {
     nav {
@@ -223,7 +235,20 @@ h2 a {
     .profilelink {
         position: absolute;
         left: 35px;
-        top: 35px;
+        top: 25px;
+
+    }
+    .profilpicture {
+        width: 25vw;
+        min-width: 150px;
+        max-width: 200px;
+        height: auto;
+        border-radius: 50%;
+        position: relative;
+        padding: 0;
+        margin: 0 auto;
+        display: block;
+        left: 5vw;
     }
 }
 button {
@@ -259,6 +284,9 @@ header {
     max-width: 200px;
     height: auto;
     border-radius: 50%;
+}
+.profilpicture {
+    position: absolute;
 }
 .rating {
     font-size: 80%;
