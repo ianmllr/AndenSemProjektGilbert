@@ -97,7 +97,7 @@ public class UserController {
         }
         if (loggedInUser != null) {
             session.setAttribute("currentUser", loggedInUser);
-            return "redirect:/me";
+            return "redirect:/home";
         } else {
             model.addAttribute("error", "Forkert email eller password");
             return "login";

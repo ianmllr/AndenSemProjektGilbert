@@ -13,11 +13,14 @@
     <form th:action="@{/me/newproduct}" th:object="${product}" th:method="post">
         <label>Name</label>
         <br><input type="text" th:field="*{name}" required><br>
+
+        <br>
         <label>Brand</label>
         <br><input type="text" th:field="*{brand}" required><br>
 
+        <br>
         <label>Department</label>
-        <br><select id="departmentSelect" th:field="*{department}" required>
+        <br><select id="department" th:field="*{department}" required>
             <option value="" disabled selected>Select department</option>
             <option value="Women">Women</option>
             <option value="Men">Men</option>
@@ -25,26 +28,28 @@
             <option value="Beauty">Beauty</option>
         </select><br>
 
+        <br>
         <label>Category</label>
         <br><select id="category" th:field="*{category}" required>
             <option value="" disabled selected>Select category</option>
-            <option value="Bags">Bags</option>
-            <option value="Shoes">Shoes</option>
-            <option value="Clothing">Clothing</option>
-            <option value="Beauty">Accessories</option>
-            <option value="Home">Home</option>
+
+        <option value="Clothing">Clothing</option>
+        <option value="Bags">Bags</option>
+        <option value="Shoes">Shoes</option>
+        <option value="Accessories">Accessories</option>
         </select><br>
 
+        <br>
         <label>Subcategory</label><br>
-        <select id="productTypeSelect" th:field="*{subcategory}" required>
+        <select id="subcategory" th:field="*{subcategory}" required>
             <option value="" disabled selected>Select subcategory</option>
         </select><br>
 
-
-
+        <br>
         <label>Price</label>
         <br><input type="number" th:field="*{price}" required><br>
 
+        <br>
         <label>Condition</label><br>
         <select th:field="*{p_condition}" required>
             <option value="" disabled selected>Select condition</option>
@@ -55,259 +60,207 @@
             <option value="Very used">Very used</option>
        </select><br>
 
-
+        <br>
         <label>Size</label>
-        <br><select id="size" name="size" th:field="*{size}" required><br>
-            <option value="" disabled selected>-- Select Size --</option>
+        <br><select id="size" name="size" th:field="*{size}" required>
+        <option value="" disabled selected>-- Select size --</option>
         </select><br>
 
-
+        <br>
         <label>Color</label>
-            <br><input type="text" th:field="*{color}" required><br>
-            <label>Material</label>
-            <br><input type="text" th:field="*{material}" required><br>
-            <label>Condition</label>
+        <br><select th:field="*{color}" required>
+            <option value="" disabled selected>Select color</option>
+            <option value="Blue">Blue</option>
+            <option value="Green">Green</option>
+            <option value="Orange">Orange</option>
+            <option value="Purple">Purple</option>
+            <option value="Red">Red</option>
+            <option value="White">White</option>
+            <option value="Yellow">Yellow</option>
+            <option value="Black">Black</option>
+            <option value="Gray">Gray</option>
+            <option value="Brown">Brown</option>
+            <option value="Silver">Silver</option>
+            <option value="Gold">Gold</option>
+            <option value="Other">Other</option>
+        </select><br>
 
-            <br><button type="submit">Opret kat</button><br><br>
+        <br>
+        <label>Location</label>
+        <br><input type="text" th:field="*{brand}" required><br>
+
+        <br>
+        <label>Description</label>
+        <br><textarea rows="4" cols="50" th:field="*{description}" required></textarea><br>
+
+
+
+        <br><button type="submit">Opret opslag</button><br><br>
     </form>
 </div>
 
-
-</body>
-</html>
 <script>
-    const data = {
+    // alle kategorier og underkategorier
+    const subcategories = {
         Women: {
-            Bags: [
-                "Handbags",
-                "Shoulder Bags",
-                "Totes",
-                "Crossbody Bags",
-                "Clutch Bags",
-                "Belt Bags",
-                "Backpacks",
-                "Travel Bags",
-                "Satchels"
-            ],
             Shoes: [
-                "Heels",
-                "Ankle Boots",
-                "Boots",
-                "Sandals",
-                "Espadrilles",
-                "Mules & Clogs",
-                "Sneakers",
-                "Flat Shoes",
-                "Ballet Flats",
-                "Lace ups"
+                "Heels", "Ankle Boots", "Boots", "Sandals", "Espadrilles",
+                "Mules & Clogs", "Sneakers", "Flat Shoes", "Ballet Flats", "Lace ups"
             ],
-            'Tops and Jackets': [
-                "Coats",
-                "Trench Coats",
-                "Jackets",
-                "Leather Jackets",
-                "Dresses",
-                "Knitwear",
-                "Tops",
-                "Sweatshirts / Hoodies"
+            Clothing: [
+                "Coats", "Trench Coats", "Jackets", "Leather Jackets", "Dresses", "Knitwear",
+                "Tops", "Skirts", "Shorts", "Pants", "Jeans", "Jumpsuits", "Lingerie", "Swimwear"
             ],
-            Bottoms: [
-                "Jeans",
-                "Pants",
-                "Shorts",
-                "Skirts",
-                "Swimwear",
-                "Lingerie"
+            Bags: [
+                "Handbags", "Shoulder Bags", "Totes", "Crossbody Bags", "Clutch Bags",
+                "Belt Bags", "Backpacks", "Travel Bags", "Satchels"
             ],
             Accessories: [
-                "Belts",
-                "Wallets",
-                "Hats",
-                "Gloves",
-                "Sunglasses",
-                "Socks",
-                "Underwear",
-                "Ties"
+                "Handkerchiefs", "Cases", "Belts", "Wallets", "Hats", "Gloves",
+                "Sunglasses", "Scarves", "Watches"
             ]
         },
         Men: {
-            'Shirts and Jackets': [
-                "Coats",
-                "Jackets",
-                "Sweatshirts & Hoodies",
-                "Shirts",
-                "Polo Shirts",
-                "T-shirts",
-                "Suits",
-            ],
-            Bottoms: [
-                "Jeans",
-                "Pants",
-                "Shorts",
-                "Swimwear"
-            ],
             Shoes: [
-                "Sneakers",
-                "Boots",
-                "Smart Shoes",
-                "Flat Shoes",
-                "Sandals",
+                "Sneakers", "Boots", "Smart Shoes", "Flat Shoes", "Sandals", "Espadrilles"
+            ],
+            Clothing: [
+                "Coats", "Jackets", "Knitwear & Sweatshirts", "Shirts", "Polo Shirts", "T-shirts",
+                "Jeans", "Pants", "Shorts", "Suits", "Swimwear"
+            ],
+            Bags: [
+                "Bags", "Small bags, wallets & cases", "Belt Bags"
             ],
             Accessories: [
-                "Belts",
-                "Wallets",
-                "Hats",
-                "Gloves",
-                "Sunglasses",
-                "Socks",
-                "Underwear",
-                "Ties"
+                "Belts", "Sunglasses", "Scarves", "Ties", "Hats & pull on hats", "Gloves", "Cufflinks"
             ]
         },
-        Beauty: [
-            "Makeup",
-            "Skincare",
-            "Fragrances",
-            "Haircare",
-            "Nailcare",
-            "Eyecare",
-            "Lipcare",
-        ],
-        Home: [
-            "Vase",
-            "Cutlery",
-            "Tableware",
-        ],
-        Jewellery: [
-            "Necklaces",
-            "Earrings",
-            "Rings",
-            "Bracelets",
-            "Pendants",
-            "Watches"]
-    };
-
-    const departmentSelect = document.getElementById('department');
-    const categorySelect = document.getElementById('category');
-    const subcategorySelect = document.getElementById('subcategory');
-
-    departmentSelect.addEventListener('change', function() {
-        const dept = this.value;
-        categorySelect.innerHTML = '<option value="" disabled selected>-- Select Category --</option>';
-        subcategorySelect.innerHTML = '<option value="" disabled selected>-- Select Sub-category --</option>';
-        subcategorySelect.disabled = true;
-
-        if (data[dept]) {
-            Object.keys(data[dept]).forEach(function(cat) {
-                const option = document.createElement('option');
-                option.value = cat;
-                option.text = cat;
-                categorySelect.appendChild(option);
-            });
-            categorySelect.disabled = false;
-        } else {
-            categorySelect.disabled = true;
-        }
-    });
-
-    categorySelect.addEventListener('change', function() {
-        const dept = departmentSelect.value;
-        const cat = this.value;
-        subcategorySelect.innerHTML = '<option value="" disabled selected>-- Select Sub-category --</option>';
-
-        if (data[dept] && data[dept][cat] && data[dept][cat].length > 0) {
-            data[dept][cat].forEach(function(subcat) {
-                const option = document.createElement('option');
-                option.value = subcat;
-                option.text = subcat;
-                subcategorySelect.appendChild(option);
-            });
-            subcategorySelect.disabled = false;
-        } else {
-            subcategorySelect.disabled = true;
-        }
-    });
-</script>
-
-
-
-
-
-<script>
-    const sizeOptions = {
-        mens: {
-            tops: ['XS','S','M','L','XL','XXL','XXXL'],
-            bottoms: Array.from({length: 17}, (_, i) => (28 + i).toString()), // 28-44
-            shoes: Array.from({length: 18}, (_, i) => (37 + i).toString()), // 37-54
-            underwear: ['XS','S','M','L','XL','XXL','XXXL'],
-            swimwear: ['XS','S','M','L','XL','XXL','XXXL'],
-            activewear: ['XS','S','M','L','XL','XXL','XXXL'],
-            accessories: ['One Size'],
-            bags: ['One Size'],
-            other: ['One Size']
+        Home: {
+            "Interior and Furniture": [
+                "Bedroom Furniture", "Living Room Furniture", "Dining Room Furniture", "Kitchen Furniture",
+            ],
+            Decoration: [
+                "Wall Decor", "Flooring", "Lighting", "Candles", "Wall Art", "Rugs", "Curtains",
+                ],
+            Kitchen: [
+                "Appliances", "Cookware", "Dinnerware", "Dining Sets",
+            ],
         },
-        womens: {
-            tops: ['XXS','XS','S','M','L','XL','XXL'],
-            bottoms: Array.from({length: 13}, (_, i) => (24 + i).toString()), // 24-36
-            shoes: Array.from({length: 10}, (_, i) => (35 + i).toString()), // 35-44
-            dresses: ['XXS','XS','S','M','L','XL','XXL'],
-            underwear: ['XXS','XS','S','M','L','XL','XXL'],
-            swimwear: ['XXS','XS','S','M','L','XL','XXL'],
-            activewear: ['XXS','XS','S','M','L','XL','XXL'],
-            accessories: ['One Size'],
-            bags: ['One Size'],
-            other: ['One Size']
+        Beauty: {
+            Makeup: [
+                "Eyeshadow", "Lipstick", "Lip gloss", "Lip liner", "Lip balm", "Lipstick"
+            ],
+            Fragrance: [
+                "Perfume", "Deodorant", "Shaving cream", "Body lotion", "Hand cream", "Moisturizer"
+            ]
         }
     };
 
-    const typeToCategory = {
-        // Tops
-        'shirt': 'tops', 'shirts': 'tops', 't-shirt': 'tops', 't-shirts': 'tops', 'sweater': 'tops', 'sweaters': 'tops',
-        'jacket': 'tops', 'jackets': 'tops', 'coat': 'tops', 'coats': 'tops', 'blazer': 'tops', 'blazers': 'tops',
-        'hoodie': 'tops', 'hoodies': 'tops', 'polo': 'tops', 'polos': 'tops', 'vest': 'tops', 'vests': 'tops',
-        'cardigan': 'tops', 'cardigans': 'tops',
-        // Bottoms
-        'jeans': 'bottoms', 'trousers': 'bottoms', 'pants': 'bottoms', 'shorts': 'bottoms', 'skirt': 'bottoms', 'skirts': 'bottoms',
-        // Dresses
-        'dress': 'dresses', 'dresses': 'dresses',
+    // størrelser til forskellige kategorier
+    const sizeGroups = {
+        pantsSizes: ['28', '30', '32', '34', '36', '38', '40'],
+        shoesSizes: ['34', '36', '38', '40', '42', '44', '46', '48', '50', '52', '54'],
+        shirtSizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+        oneSize: ['One Size']
+    };
+
+    const subcategoryToSizeGroup = {
         // Shoes
-        'shoe': 'shoes', 'shoes': 'shoes', 'sneaker': 'shoes', 'sneakers': 'shoes', 'boot': 'shoes', 'boots': 'shoes',
-        // Underwear
-        'underwear': 'underwear', 'boxers': 'underwear', 'briefs': 'underwear', 'panties': 'underwear', 'bra': 'underwear', 'bras': 'underwear',
-        // Swimwear
-        'swimwear': 'swimwear', 'bikini': 'swimwear', 'bikinis': 'swimwear', 'swimsuit': 'swimwear', 'swimsuits': 'swimwear',
-        // Activewear
-        'activewear': 'activewear', 'leggings': 'activewear', 'sports bra': 'activewear', 'tank top': 'activewear',
-        // Accessories & Bags
-        'bag': 'bags', 'bags': 'bags', 'belt': 'accessories', 'belts': 'accessories', 'hat': 'accessories', 'hats': 'accessories',
-        'scarf': 'accessories', 'scarves': 'accessories', 'glove': 'accessories', 'gloves': 'accessories', 'tie': 'accessories', 'ties': 'accessories',
+        'Heels': 'shoesSizes', 'Ankle Boots': 'shoesSizes', 'Boots': 'shoesSizes',
+        'Sandals': 'shoesSizes', 'Espadrilles': 'shoesSizes', 'Mules & Clogs': 'shoesSizes',
+        'Sneakers': 'shoesSizes', 'Flat Shoes': 'shoesSizes', 'Ballet Flats': 'shoesSizes',
+        'Lace ups': 'shoesSizes',
+        // Clothing
+        'Coats': 'shirtSizes', 'Trench Coats': 'shirtSizes', 'Jackets': 'shirtSizes',
+        'Leather Jackets': 'shirtSizes', 'Dresses': 'shirtSizes', 'Knitwear': 'shirtSizes',
+        'Tops': 'shirtSizes', 'Skirts': 'pantsSizes', 'Shorts': 'pantsSizes',
+        'Pants': 'pantsSizes', 'Jeans': 'pantsSizes', 'Jumpsuits': 'shirtSizes',
+        'Lingerie': 'shirtSizes', 'Swimwear': 'shirtSizes',
+        // Bags & Accessories (One Size)
+        'Handbags': 'oneSize', 'Shoulder Bags': 'oneSize', 'Totes': 'oneSize',
+        'Crossbody Bags': 'oneSize', 'Clutch Bags': 'oneSize', 'Belt Bags': 'oneSize',
+        'Backpacks': 'oneSize', 'Travel Bags': 'oneSize', 'Satchels': 'oneSize',
+        'Handkerchiefs': 'oneSize', 'Cases': 'oneSize', 'Belts': 'oneSize',
+        'Wallets': 'oneSize', 'Hats': 'oneSize', 'Gloves': 'oneSize',
+        'Sunglasses': 'oneSize', 'Scarves': 'oneSize', 'Watches': 'oneSize'
     };
 
-    function updateSizeOptions() {
-        const department = document.getElementById('departmentSelect').value.toLowerCase();
-        const productType = document.getElementById('productTypeSelect').value.toLowerCase();
-        const sizeSelect = document.getElementById('sizeSelect');
-        let options = ['One Size'];
+    function updateCategories() {
+        const dept = document.getElementById('department').value;
+        const categorySelect = document.getElementById('category');
 
-        let section = 'other';
-        if (department === 'mens' || department === 'womens') {
-            const category = typeToCategory[productType] || 'other';
-            section = category;
-            options = sizeOptions[department][category] || ['One Size'];
+        categorySelect.innerHTML = '<option value="">Select Category</option>';
+
+        // tilføjer de pågældende categories
+        if (subcategories[dept]) {
+            Object.keys(subcategories[dept]).forEach(cat => {
+                const opt = document.createElement('option');
+                opt.value = cat;
+                opt.textContent = cat;
+                categorySelect.appendChild(opt);
+            });
         }
+        updateSubcategories();
+    }
 
-        // Update select
+    function updateSubcategories() {
+        const dept = document.getElementById('department').value;
+        const cat = document.getElementById('category').value;
+        const subcategorySelect = document.getElementById('subcategory');
+
+        subcategorySelect.innerHTML = '<option disabled selected value="">Select Subcategory</option>';
+
+        // tilføjer de pågældende subcategories
+        if (subcategories[dept] && subcategories[dept][cat]) {
+            subcategories[dept][cat].forEach(subcat => {
+                const opt = document.createElement('option');
+                opt.value = subcat;
+                opt.textContent = subcat;
+                subcategorySelect.appendChild(opt);
+            });
+        }
+    }
+
+    function updateSizeOptionsForSubcategory(subcategory) {
+        const sizeSelect = document.getElementById('size');
         sizeSelect.innerHTML = '';
-        options.forEach(opt => {
+
+        const group = subcategoryToSizeGroup[subcategory] || 'oneSize';
+        const options = sizeGroups[group];
+
+        options.forEach(size => {
             const option = document.createElement('option');
-            option.value = opt;
-            option.text = opt;
+            option.value = size;
+            option.text = size;
             sizeSelect.appendChild(option);
         });
     }
 
-    document.getElementById('departmentSelect').addEventListener('change', updateSizeOptions);
-    document.getElementById('productTypeSelect').addEventListener('change', updateSizeOptions);
+    // gør så subcategories loader når siden indlæses
+    document.addEventListener("DOMContentLoaded", function() {
+        var categorySelect = document.getElementById("category");
+        if (categorySelect && categorySelect.value) {
+            updateSubcategories(categorySelect.value);
+        }
+    });
+    document.addEventListener("DOMContentLoaded", function() {
+        var subcat = document.getElementById('subcategory');
+        if (subcat && subcat.value) {
+            updateSizeOptionsForSubcategory(subcat.value);
+        }
+    });
 
-    window.onload = updateSizeOptions;
+    // holder øje med om man skifter kategori eller department
+    document.getElementById('subcategory').addEventListener('change', function() {
+        updateSizeOptionsForSubcategory(this.value);
+    });
+    document.getElementById('department').addEventListener('change', updateCategories);
+    document.getElementById('category').addEventListener('change', updateSubcategories);
 </script>
+
+
+
+</body>
+</html>
+
+

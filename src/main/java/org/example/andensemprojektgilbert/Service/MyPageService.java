@@ -27,7 +27,13 @@ public class MyPageService {
     }
 
     public void createProduct(Product product) {
-        productRepo.createProduct(product);
+        if (product != null) {
+            product.setPostedDate(new java.util.Date());
+
+            productRepo.createProduct(product);
+        } else {
+            // debug logging her
+        }
     }
 
     // fjern fra favorit
