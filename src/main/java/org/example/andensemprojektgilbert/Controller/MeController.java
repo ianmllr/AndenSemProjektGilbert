@@ -22,7 +22,7 @@ public class MeController {
     @GetMapping("/me")
     public String getMyPage(Model model, HttpSession session) {
         User user = (User) session.getAttribute("currentUser");
-        System.out.println("opened my page with user " + user.getName());
+        model.addAttribute("user", user);
         List<Product> products = myPageService.getMyProducts(user);
         model.addAttribute("products", products);
         return "me";

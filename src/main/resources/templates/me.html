@@ -2,9 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/gilbertstyle.css">
     <title>Title</title> <!-- gør så navn kommer her -->
 </head>
 <body>
+
+<div class="userprofilebox">
+    <h1><p th:text="${user.name}"></p></h1>
+    <img class="profilepic" src="@${user.imgsrc}" width="150" height="150" alt="profile pic">
+    <p class="rating" th:text="${user.rating}"></p>
+    <p class="sales" th:text="${user.sales} + ' salg'"></p>
+</div>
+
+
+
+<div th:if="${#lists.isEmpty(products)}">
+    <h2>You have no listings.</h2>.</h2>
+</div>
+
+<a href="@{/edituser}">Edit profile</a>
+<a href="@{/newproduct}">Create a new listing</a>
+
+<br>
+<h3>Your listings</h3>
+<div id="myproducts" th:each="product : ${products}">
+    <div id="productlisting">
+        <img th:src="@{${product.imgsrc}}" width="200" height="200" alt="nopic.jpg">
+        <p class ="productname" th:text="${product.name}"></p>
+        <p th:text="${product.price}"></p>
+        <p th:text="${product.description}"></p>
+        <p th:text="${product.postedDate}"></p>
+        <p th:text="${product.location}"></p>
+        
+    </div>
+</div>
+
+
 
 </body>
 </html>

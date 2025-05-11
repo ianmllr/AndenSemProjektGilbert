@@ -17,10 +17,11 @@ public class Product {
     private Date postedDate;
     private String description;
     private String location;
+    private String imgsrc;
     private int createdByID;
 
 
-    public Product(int id, String name, String brand, String location, String description, String department, String category, String subcategory, Date postedDate, double price, String p_condition, String size, String color, int createdByID)
+    public Product(int id, String name, String brand, String location, String description, String department, String category, String subcategory, Date postedDate, double price, String p_condition, String size, String color, String imgsrc, int createdByID)
     {
         this.id = id;
         this.name = name;
@@ -35,6 +36,7 @@ public class Product {
         this.size = size;
         this.color = color;
         this.postedDate = postedDate;
+        this.imgsrc = imgsrc;
         this.createdByID = createdByID;
     }
 
@@ -116,6 +118,12 @@ public class Product {
     }
     public void setLocation(String location) {
         this.location = location;
+    }
+    public String getImgsrc() {
+        return imgsrc;
+    }
+    public void setImgsrc(String imgsrc) {
+        this.imgsrc = imgsrc;
     }
     public int getCreatedByID() {
         return createdByID;

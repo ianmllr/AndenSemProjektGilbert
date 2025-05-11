@@ -15,7 +15,7 @@ public class ProductRepo {
 
     // til at admins kan oprette produkter
     public void createProduct(Product product) {
-        String sql = "INSERT INTO Product (name, brand, location, description, department, category, subcategory, posted_date, price, p_condition, size, color, createdByID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Product (name, brand, location, description, department, category, subcategory, posted_date, price, p_condition, size, color, imgsrc, createdByID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql,
                 product.getName(),
                 product.getBrand(),
@@ -29,6 +29,7 @@ public class ProductRepo {
                 product.getP_condition(),
                 product.getSize(),
                 product.getColor(),
+                product.getImgsrc(),
                 product.getCreatedByID()
         );
     }
@@ -52,6 +53,7 @@ public class ProductRepo {
                 rs.getString("p_condition"),
                 rs.getString("size"),
                 rs.getString("color"),
+                rs.getString("imgsrc"),
                 rs.getInt("createdByID")
         ));
     }
@@ -72,6 +74,7 @@ public class ProductRepo {
                 rs.getString("p_condition"),
                 rs.getString("size"),
                 rs.getString("color"),
+                rs.getString("imgsrc"),
                 rs.getInt("createdByID")
         ));
     }
@@ -93,6 +96,7 @@ public class ProductRepo {
                 rs.getString("p_condition"),
                 rs.getString("size"),
                 rs.getString("color"),
+                rs.getString("imgsrc"),
                 rs.getInt("createdByID")
         ));
     }
@@ -114,6 +118,7 @@ public class ProductRepo {
                 rs.getString("p_condition"),
                 rs.getString("size"),
                 rs.getString("color"),
+                rs.getString("imgsrc"),
                 rs.getInt("createdByID")
         ));
     }
@@ -139,6 +144,7 @@ public class ProductRepo {
                 rs.getString("p_condition"),
                 rs.getString("size"),
                 rs.getString("color"),
+                rs.getString("imgsrc"),
                 rs.getInt("createdByID")
         ));
     }
