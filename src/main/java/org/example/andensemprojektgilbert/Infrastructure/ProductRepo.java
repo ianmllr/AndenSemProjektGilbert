@@ -38,9 +38,13 @@ public class ProductRepo {
 
 
     public List<Product> searchProducts(String keyword) {
+        // Laver en sql forspørgelse hvor den bare tjekker efter brand, description, department, category, subcategory eller name, så hvis man søger på noget af det
+        // Finder den produkter efter det
         String sql = "SELECT * FROM Product WHERE brand LIKE ? OR description LIKE ? OR department LIKE ? OR category LIKE ? OR subcategory LIKE ? OR name LIKE ?";
-        String searchTerm = "%" + keyword.replace("'", "''") + "%";
+        // Det bliver brugt for at lave sql forsårøgelse skal man have % ord % replace sørger bare for at man kan søge ord med tegnet
+        String searchTerm = "%" + keyword + "%";
 
+        // Indsætter searchTerm for hver ting mna søger efter, så hvis jeg søger Adidas fx, så sætter den det ind i hver searchTerm.
         return jdbcTemplate.query(sql, new Object[]{searchTerm, searchTerm, searchTerm, searchTerm, searchTerm, searchTerm}, (rs, rowNum) -> new Product(
                 rs.getInt("id"),
                 rs.getString("name"),

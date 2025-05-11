@@ -25,10 +25,13 @@ public class FrontpageController {
 
 
 
+    // Går til siden search og søger på hvad ens query er
     @GetMapping("/search")
     public String searchResults(@RequestParam String q, Model model) {
         model.addAttribute("query", q);
+        // Laver en lokal liste af de produkter der, som man søger på
         List<Product> searchProducts = productsService.searchProduct(q);
+        // Gør at produkter aldrig kan være null of hvis det ikke findes laver den bare en tom liste.
         model.addAttribute("products", searchProducts != null ? searchProducts : new ArrayList<>());
         return "search";
     }
