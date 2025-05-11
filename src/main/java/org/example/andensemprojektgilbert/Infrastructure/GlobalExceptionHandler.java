@@ -14,6 +14,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public String handleGeneralException(Exception e, Model model) {
         model.addAttribute("exception", "Uventet fejl: " + e.getClass().getSimpleName() + ": " + e.getMessage());
+        e.printStackTrace();
         return "error";
     }
 
@@ -32,6 +33,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     public String handleNullPointerException(NullPointerException e, Model model) {
         model.addAttribute("exception", "Du skal være logget ind");
+        e.printStackTrace();
         return "error";
     }
 

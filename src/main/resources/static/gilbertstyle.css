@@ -14,12 +14,14 @@ h2 a {
     text-decoration: none;
 }
 
+
 @font-face {
-    font-family: 'theseasons';
+    font-family: 'theseasons', sans-serif;
     src: url('fonts/theseasons.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
 }
+
 
 @media only screen and (max-width: 600px) {
     nav {
@@ -95,6 +97,7 @@ h2 a {
         width: 100vw;
         top: -10px; /* Justér værdien efter behov */
         text-decoration: none;
+
     }
     .button-bar-index a {
         flex-grow: 1;
@@ -262,9 +265,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    padding: 20px;
-    position: relative;
+    padding: 30px 0; /* ✅ Adds spacing */
 }
 .userprofilebox {
     align-items: center;
@@ -303,6 +304,7 @@ header {
     font-size: 105%;
     font-weight: bold;
 }
+
 
 
 

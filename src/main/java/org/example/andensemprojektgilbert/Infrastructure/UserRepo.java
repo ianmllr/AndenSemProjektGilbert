@@ -30,7 +30,7 @@ public class UserRepo {
     }
 
     public User readUserByEmail(String email) {
-        String sql = "SELECT * FROM user WHERE email = ?";
+        String sql = "SELECT * FROM user WHERE email = ?" ;
 
         try {
             return jdbcTemplate.queryForObject(sql, new Object[]{email}, (rs, rowNum) -> {

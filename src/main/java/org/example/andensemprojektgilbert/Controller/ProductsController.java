@@ -16,7 +16,7 @@ import java.util.List;
 public class ProductsController {
 
     @Autowired
-    private ProductsService productsService = new ProductsService();
+    private ProductsService productsService;
 
     @GetMapping("/men")
     public String getMen(Model model) {

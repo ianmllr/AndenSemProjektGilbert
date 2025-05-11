@@ -10,8 +10,10 @@ import java.util.List;
 
 @Repository
 public class ProductRepo {
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
 
     // til at admins kan oprette produkter
     public void createProduct(Product product) {
@@ -37,9 +39,9 @@ public class ProductRepo {
 
     public List<Product> searchProducts(String keyword) {
         String sql = "SELECT * FROM Product WHERE brand LIKE ? OR description LIKE ? OR department LIKE ? OR category LIKE ? OR subcategory LIKE ? OR name LIKE ?";
-        String searchTerm = "%" + keyword + "%";
+        String searchTerm = "%" + keyword.replace("'", "''") + "%";
 
-        return jdbcTemplate.query(sql, new Object[]{searchTerm, searchTerm, searchTerm, searchTerm, searchTerm}, (rs, rowNum) -> new Product(
+        return jdbcTemplate.query(sql, new Object[]{searchTerm, searchTerm, searchTerm, searchTerm, searchTerm, searchTerm}, (rs, rowNum) -> new Product(
                 rs.getInt("id"),
                 rs.getString("name"),
                 rs.getString("brand"),
