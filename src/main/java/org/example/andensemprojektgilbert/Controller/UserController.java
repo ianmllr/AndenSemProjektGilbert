@@ -147,21 +147,5 @@ public class UserController {
         }
     }
 
-    @GetMapping("/gilbertprofile/newproduct")
-    public String getNewProduct(Model model, HttpSession session) {
-        User user = (User) session.getAttribute("currentUser");
-        System.out.println("opened new product page with user " + user.getName());
-        model.addAttribute("user", user);
-        model.addAttribute("product", new Product());
-        return "newproduct";
-    }
 
-    @PostMapping("/gilbertprofile/newproduct")
-    public String postNewProduct(@ModelAttribute Product product, HttpSession session, Model model) {
-        User user = (User) session.getAttribute("currentUser");
-        model.addAttribute("product", product);
-        product.setCreatedByID(user.getId());
-        productsService.createProduct(product);
-        return "redirect:/me";
-    }
 }

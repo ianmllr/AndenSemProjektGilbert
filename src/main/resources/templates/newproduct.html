@@ -10,7 +10,7 @@
 
 <div id="newproduct">
     <h1>Indtast oplysninger</h1>
-    <form th:action="@{/me/newproduct}" th:object="${product}" th:method="post">
+    <form th:action="@{/gilbertprofile/newproduct}" th:object="${product}" th:method="post" enctype="multipart/form-data">
         <label>Name</label>
         <br><input type="text" th:field="*{name}" required><br>
 
@@ -92,6 +92,9 @@
         <br>
         <label>Description</label>
         <br><textarea rows="4" cols="50" th:field="*{description}" required></textarea><br>
+
+        <label for="image">Upload picture</label>
+        <input type="file" id="image" name="image" accept="image/*">
 
 
 
