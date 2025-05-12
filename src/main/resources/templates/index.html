@@ -37,6 +37,39 @@
     <a href="home">Home</a>
     <a href="beauty">Beauty</a>
 </div>
+
+<br>
+<h3>Daily listings</h3>
+
+<div class="productscontainer">
+    <p>Womens</p>
+    <div class ="productlisting" th:each="product : ${randomWomensProducts}">
+        <img th:src="@{${product.imgsrc}}" width="200" height="200" alt="no pic">
+        <p class ="productname" th:text="${product.name}"></p>
+        <p th:text="${product.price}"></p>
+    </div>
+    <p>Mens</p>
+    <div class ="productlisting" th:each="product : ${randomMensProducts}">
+        <img th:src="@{${product.imgsrc}}" width="200" height="200" alt="no pic">
+        <p class ="productname" th:text="${product.name}"></p>
+        <p th:text="${product.price}"></p>
+    </div>
+    <p>Bags</p>
+    <div class ="productlisting" th:each="product : ${randomBags}">
+        <img th:src="@{${product.imgsrc}}" width="200" height="200" alt="no pic">
+        <p class ="productname" th:text="${product.name}"></p>
+        <p th:text="${product.price}"></p>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
 <nav>
     <div class="nav-container">
         <a href="index">
@@ -57,19 +90,7 @@
     </div>
 </nav>
 
-<main>
-    <p>Her kommer måske en annonce.</p>
-    <div class="grid-container">
-        <div class="item1">one</div>
-        <div class="item2">two</div>
-        <div class="item3">three</div>
-        <div class="item4">four</div>
-        <div class="item5">five</div>
-        <div class="item6">six</div>
 
-
-    </div>
-</main>
 
 <footer>
     <p>&copy; 2025 ccco</p>
