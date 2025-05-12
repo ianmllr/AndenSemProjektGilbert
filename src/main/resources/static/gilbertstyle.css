@@ -253,6 +253,14 @@ h2 a {
         display: block;
         left: 5vw;
     }
+    .RegisterLogin-bar {
+            display: flex;
+            justify-content: space-between;
+            width: 100vw;
+            position: absolute;
+            top: 1px;
+            right: 20px;
+        }
 }
 button {
     padding: 10px;
