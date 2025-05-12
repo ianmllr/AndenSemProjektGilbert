@@ -20,8 +20,13 @@ public class FrontpageController {
 
     @GetMapping("/")
     public String getFrontPage(Model model) {
-        List<Product> products = productsService.getAllProducts();
-        model.addAttribute("products", products);
+        List<Product> randomMensProducts = productsService.getRandomMensProducts();
+        List<Product> randomWomensProducts = productsService.getRandomWomensProducts();
+        List<Product> randomBags = productsService.getRandomBags();
+
+        model.addAttribute("randomMensProducts", randomMensProducts);
+        model.addAttribute("randomWomensProducts", randomWomensProducts);
+        model.addAttribute("randomBags", randomBags);
         return "index";
     }
 

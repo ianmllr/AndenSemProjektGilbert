@@ -31,8 +31,7 @@ public class ProductsService {
             return null;
         }
     }
-
-    public List<Product> getWomensProducts() {
+        public List<Product> getWomensProducts() {
         if (productRepo.readWomensProducts() != null) {
             return productRepo.readWomensProducts();
         } else {
@@ -49,6 +48,35 @@ public class ProductsService {
             return null;
         }
     }
+
+    public List<Product> getRandomMensProducts() {
+        if (productRepo.readRandomMensProducts() != null) {
+            return productRepo.readRandomMensProducts();
+        } else {
+            // debug logging her
+            return null;
+        }
+    }
+
+    public List<Product> getRandomWomensProducts() {
+        if (productRepo.readRandomWomensProducts() != null) {
+            return productRepo.readRandomWomensProducts();
+        } else {
+            // debug logging her
+            return null;
+        }
+    }
+
+
+    public List<Product> getRandomBags() {
+        if (productRepo.readRandomBags() != null) {
+            return productRepo.readRandomBags();
+        } else {
+            // debug logging her
+            return null;
+        }
+    }
+
 
     public void createProduct(Product product) {
         if (product != null) {
