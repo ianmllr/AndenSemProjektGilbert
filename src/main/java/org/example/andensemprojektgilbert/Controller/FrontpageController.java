@@ -1,6 +1,8 @@
 package org.example.andensemprojektgilbert.Controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.example.andensemprojektgilbert.Model.Product;
+import org.example.andensemprojektgilbert.Model.User;
 import org.example.andensemprojektgilbert.Service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,11 +21,13 @@ public class FrontpageController {
     private ProductsService productsService;
 
     @GetMapping("/")
-    public String getFrontPage(Model model) {
+    public String getFrontPage(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("currentUser");
+        model.addAttribute("user", user);
+
         List<Product> randomMensProducts = productsService.getRandomMensProducts();
         List<Product> randomWomensProducts = productsService.getRandomWomensProducts();
         List<Product> randomBags = productsService.getRandomBags();
-
         model.addAttribute("randomMensProducts", randomMensProducts);
         model.addAttribute("randomWomensProducts", randomWomensProducts);
         model.addAttribute("randomBags", randomBags);

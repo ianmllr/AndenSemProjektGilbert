@@ -24,8 +24,11 @@
         <a class="heart" href="favorites">
             <img src="/icons/heart.png" class="icon" width="45px">
         </a>
-        <a href="register">Sign Up</a>
-        <a href="login">Log in</a>
+        <a th:if="${user != null}" href="gilbertprofile" class="profilelink">
+            <img th:src="${user.imgsrc != null} ? @{/userimage/} + ${user.imgsrc} : @{/icons/profil.png}" class="profilpicture" width="45" height="45">
+        </a>
+        <a th:if="${user == null}" href="register">Sign Up</a>
+        <a th:if="${user == null}" href="login">Log in</a>
     </div>
     <h2><a href="/"> Gilbert</a></h2>
 
@@ -57,7 +60,7 @@
     <div class="dropdown">
         <a href="/home">Home</a>
         <div class="dropdown-content">
-            <a href="/home/interoir">Interior and furniture</a>
+            <a href="/home/interior">Interior and furniture</a>
             <a href="/home/decoration">Decoration</a>
             <a href="/home/kitchen">Kitchen</a>
         </div>
