@@ -55,15 +55,28 @@
 </div>
 
 <main>
-    <div class="grid-container">
-        <div class="item1">one</div>
-        <div class="item2">two</div>
-        <div class="item3">three</div>
-        <div class="item4">four</div>
-        <div class="item5">five</div>
-        <div class="item6">six</div>
+    <div class="deleteUser">
+        <button th:onclick="'deleteUser();'">Delete user</button>
     </div>
 </main>
+
+<script>
+    function deleteUser() {
+        if (confirm('You are about to delete your profile. Continue?')) {
+            fetch('/deleteuser', {
+                method: 'DELETE'
+            }).then(response => {
+                console.log(response)
+                if (response.status === 200) {
+                    alert('User deleted!');
+                    window.location.replace("/");
+                } else {
+                    alert('Cannot delete user');
+                }
+            });
+        }
+    }
+</script>
 
 <footer>
     <p>&copy; 2025 ccco</p>

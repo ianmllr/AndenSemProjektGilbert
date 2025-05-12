@@ -7,13 +7,12 @@ import org.example.andensemprojektgilbert.Model.User;
 import org.example.andensemprojektgilbert.Service.ProductsService;
 import org.example.andensemprojektgilbert.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -147,7 +146,21 @@ public class UserController {
             redirectAttributes.addFlashAttribute("message", "Der er sket en fejl, prøv igen");
             return "redirect:/edituser";
         }
+    }
+    @DeleteMapping("/deleteuser")
+    public ResponseEntity<String> deleteUser(HttpSession session) {
+        User user = (User) session.getAttribute("currentUser"); // Get logged-in user
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not authenticated");
+        }
 
+        boolean userIsDeleted = userService.deleteUser(user.getEmail()); // Delete using email
+        if (userIsDeleted) {
+            session.invalidate(); // Log user out after deletion
+            return ResponseEntity.ok("User deleted successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User could not be deleted, please try again");
+        }
     }
 
 
