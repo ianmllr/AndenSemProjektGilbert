@@ -32,13 +32,58 @@
 </header>
 
 <body>
+
 <div class="button-bar-index">
-    <a href="women">Women</a>
-    <a href="men">Men</a>
-    <a href="designers">Designers</a>
-    <a href="home">Home</a>
-    <a href="beauty">Beauty</a>
+    <div class="dropdown">
+        <a href="/women">Women</a>
+        <div class="dropdown-content">
+            <a href="/women/clothing">Clothing</a>
+            <a href="/women/bags">Bags</a>
+            <a href="/women/shoes">Shoes</a>
+            <a href="/women/accessories">Accessories</a>
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <a href="/men">Men</a>
+        <div class="dropdown-content">
+            <a href="/men/clothing">Clothing</a>
+            <a href="/men/bags">Bags</a>
+            <a href="/men/shoes">Shoes</a>
+            <a href="/men/accessories">Accessories</a>
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <a href="/home">Home</a>
+        <div class="dropdown-content">
+            <a href="/home/interoir">Interior and furniture</a>
+            <a href="/home/decoration">Decoration</a>
+            <a href="/home/kitchen">Kitchen</a>
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <a href="/beauty">Beauty</a>
+        <div class="dropdown-content">
+            <a href="/beauty/makeup">Makeup</a>
+            <a href="/home/fragrance">Fragrance</a>
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <a href="/designers">Designers</a>
+        <div class="dropdown-content">
+            <a href="/designer1">Designer1</a>
+            <a href="/designer2">Designer2</a>
+            <a href="/designer3">Designer3</a>
+        </div>
+    </div>
 </div>
+
+
+
+
 
 <br>
 <h3>Daily listings</h3>
@@ -55,12 +100,14 @@
         <img th:src="@{${product.imgsrc}}" width="200" height="200" alt="no pic">
         <p class ="productname" th:text="${product.name}"></p>
         <p th:text="${product.price}"></p>
+        <button>Add to favorites</button>
     </div>
     <p>Bags</p>
     <div class ="productlisting" th:each="product : ${randomBags}">
         <img th:src="@{${product.imgsrc}}" width="200" height="200" alt="no pic">
         <p class ="productname" th:text="${product.name}"></p>
         <p th:text="${product.price}"></p>
+        <button>Add to favorites</button>
     </div>
 </div>
 

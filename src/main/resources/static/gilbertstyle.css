@@ -16,7 +16,6 @@ h2 a {
     text-decoration: none;
 }
 
-
 @font-face {
     font-family: 'theseasons', sans-serif;
     src: url('fonts/theseasons.otf') format('opentype');
@@ -26,6 +25,9 @@ h2 a {
 
 
 @media only screen and (max-width: 600px) {
+    body {
+        font-family: theseasons;
+    }
     nav {
         position: fixed;
         bottom: 0;
@@ -165,7 +167,7 @@ h2 a {
         height: auto;
     }
     body {
-        font-family: "theseasons", sans-serif;
+        font-family: theseasons;
         display: grid;
         grid-template-areas:
         "header"
@@ -190,6 +192,9 @@ h2 a {
         text-decoration: none;
     }
     .button-bar-index a {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
         flex-grow: 1;
         text-align: center;
         padding: 15px;
@@ -353,6 +358,52 @@ header {
     font-weight: bold;
 }
 
+
+
+
+
+    /* dropdown menu */
+/* Dropdown Button */
+.dropbtn {
+    background-color: #04AA6D;
+    color: #f8f0e5;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f8f0e5;
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: #f8f0e5;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #012113;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: #f8f0e5;}
 
 
 
