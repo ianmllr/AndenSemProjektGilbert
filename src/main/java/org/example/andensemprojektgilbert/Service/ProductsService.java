@@ -3,6 +3,7 @@ package org.example.andensemprojektgilbert.Service;
 import org.example.andensemprojektgilbert.Infrastructure.ProductRepo;
 import org.example.andensemprojektgilbert.Model.Product;
 import org.example.andensemprojektgilbert.Model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,8 +11,8 @@ import java.util.List;
 @Service
 public class ProductsService {
 
-
-    private ProductRepo productRepo = new ProductRepo();
+    @Autowired
+    private ProductRepo productRepo;
 
     public List<Product> getAllProducts() {
         if (productRepo.readAllProducts() != null) {
@@ -57,6 +58,10 @@ public class ProductsService {
         } else {
             // debug logging her
         }
+    }
+
+    public List<Product> searchProducts(String search) {
+        return productRepo.searchProducts(search);
     }
 
 
