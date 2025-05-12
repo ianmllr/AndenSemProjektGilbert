@@ -2,7 +2,9 @@ package org.example.andensemprojektgilbert.Controller;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.example.andensemprojektgilbert.Model.Product;
 import org.example.andensemprojektgilbert.Model.User;
+import org.example.andensemprojektgilbert.Service.ProductsService;
 import org.example.andensemprojektgilbert.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,8 @@ public class UserController {
 
     @Autowired
     private UserService userService = new UserService();
+    @Autowired
+    private ProductsService productsService;
 
     @GetMapping("/register")
     public String getRegister(Model model) {
@@ -97,7 +101,7 @@ public class UserController {
         }
         if (loggedInUser != null) {
             session.setAttribute("currentUser", loggedInUser);
-            return "redirect:/home";
+            return "redirect:/";
         } else {
             model.addAttribute("error", "Forkert email eller password");
             return "login";
@@ -141,5 +145,23 @@ public class UserController {
             redirectAttributes.addFlashAttribute("message", "Der er sket en fejl, prøv igen");
             return "redirect:/edituser";
         }
+    }
+
+    @GetMapping("/gilbertprofile/newproduct")
+    public String getNewProduct(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("currentUser");
+        System.out.println("opened new product page with user " + user.getName());
+        model.addAttribute("user", user);
+        model.addAttribute("product", new Product());
+        return "newproduct";
+    }
+
+    @PostMapping("/gilbertprofile/newproduct")
+    public String postNewProduct(@ModelAttribute Product product, HttpSession session, Model model) {
+        User user = (User) session.getAttribute("currentUser");
+        model.addAttribute("product", product);
+        product.setCreatedByID(user.getId());
+        productsService.createProduct(product);
+        return "redirect:/me";
     }
 }
