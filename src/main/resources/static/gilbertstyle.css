@@ -132,10 +132,10 @@ h3 {
     .profilelink {
         position: absolute;
         left: 20px;
-        top: 4px;
+        top: 6vw;
     }
     .profilpicture {
-        width: 20vw;
+        width: 18vw;
         min-width: 80px;
         max-width: 150px;
         height: auto;
@@ -159,7 +159,11 @@ h3 {
         top: -35px;
         font-size: 65px;
     }
-
+    .edituserclass {
+        margin: 10px;
+        border: 10px;
+        line-height: 2;
+    }
 
 }
 @media only screen and (min-width: 600px) {
