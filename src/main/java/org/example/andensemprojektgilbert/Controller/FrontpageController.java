@@ -19,7 +19,9 @@ public class FrontpageController {
     private ProductsService productsService;
 
     @GetMapping("/")
-    public String frontpage() {
+    public String getFrontPage(Model model) {
+        List<Product> products = productsService.getAllProducts();
+        model.addAttribute("products", products);
         return "index";
     }
 

@@ -25,6 +25,10 @@
   </a>
 </header>
 
+<a href="@{/edituser}">Edit profile</a>
+<a href="@{/newproduct}">Create a new listing</a>
+
+
 <nav>
   <div class="nav-container">
     <a href="home">
@@ -53,16 +57,27 @@
   <a href="gilberthelp.html">Help</a>
 </div>
 
-<main>
-  <div class="grid-container">
-    <div class="item1">one</div>
-    <div class="item2">two</div>
-    <div class="item3">three</div>
-    <div class="item4">four</div>
-    <div class="item5">five</div>
-    <div class="item6">six</div>
+<div th:if="${#lists.isEmpty(myproducts)}">
+  <p>You have no listings.</p>
+</div>
+
+<br>
+<h3>Your listings</h3>
+<div class="productscontainer">
+  <div class ="productlisting" th:each="product : ${myproducts}">
+    <img th:src="@{${product.imgsrc}}" width="200" height="200" alt="no pic">
+    <p class ="productname" th:text="${product.name}"></p>
+    <p th:text="${product.price}"></p>
+    <p th:text="${product.description}"></p>
+    <p th:text="${product.postedDate}"></p>
+    <p th:text="${product.location}"></p>
   </div>
-</main>
+</div>
+
+
+
+
+
 
 <footer>
   <p>&copy; 2025 ccco</p>

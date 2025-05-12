@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -70,8 +71,10 @@ public class UserController {
         }
     }
     @GetMapping("/gilbertprofile")
-    public String getUser(Model model, HttpSession session) {
+    public String getMyProfile(Model model, HttpSession session) {
         User user = (User) session.getAttribute("currentUser");
+        List<Product> products = productsService.getMyProducts(user);
+        model.addAttribute("myproducts", products);
         if (user.getImgsrc() == null || user.getImgsrc().isEmpty()) {
             user.setImgsrc("profil.png");
         } else {
@@ -92,6 +95,7 @@ public class UserController {
         model.addAttribute("user", new User());
         return "login";
     }
+
     @PostMapping("/login")
     public String login(@Valid @ModelAttribute User user, BindingResult bindingResult, HttpSession session, Model model) {
         User loggedInUser = userService.login(user.getEmail(), user.getPassword());
