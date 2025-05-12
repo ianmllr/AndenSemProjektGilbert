@@ -72,6 +72,9 @@ public class UserController {
     @GetMapping("/gilbertprofile")
     public String getMyProfile(Model model, HttpSession session) {
         User user = (User) session.getAttribute("currentUser");
+        if (user == null) {
+            return "redirect:/login";
+        }
         List<Product> products = productsService.getMyProducts(user);
         model.addAttribute("myproducts", products);
         if (user.getImgsrc() == null || user.getImgsrc().isEmpty()) {
@@ -162,6 +165,4 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User could not be deleted, please try again");
         }
     }
-
-
 }
