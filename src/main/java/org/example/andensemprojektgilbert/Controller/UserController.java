@@ -87,7 +87,7 @@ public class UserController {
         model.addAttribute("user", user);
         return "gilbertprofile";
     }
-
+//dd
 
     @GetMapping("/login")
     public String getLogin(Model model) {
