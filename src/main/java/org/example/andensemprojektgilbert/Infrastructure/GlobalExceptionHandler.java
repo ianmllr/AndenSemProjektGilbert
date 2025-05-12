@@ -46,6 +46,7 @@ public class GlobalExceptionHandler {
             model.addAttribute("exception", "Denne post findes allerede – brug en anden ID eller email.");
         } else if (message.contains("foreign key constraint")) {
             model.addAttribute("exception", "Handlingen kunne ikke gennemføres pga. afhængigheder i databasen.");
+            e.printStackTrace();
         } else {
             model.addAttribute("exception", "Der opstod en databasefejl – prøv igen.");
         }

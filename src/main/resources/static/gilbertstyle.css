@@ -15,7 +15,9 @@ h2 {
 h2 a {
     text-decoration: none;
 }
-
+h3 {
+    font-size: 65px;
+}
 @font-face {
     font-family: 'theseasons', sans-serif;
     src: url('fonts/theseasons.otf') format('opentype');
@@ -33,6 +35,20 @@ h2 a {
         bottom: 0;
         width: 100%;
         border-top: 2px solid #f8f0e5;
+    }
+
+    .login-labels {
+        input {
+            background-color: #f8f0e5;
+            color: black;
+            padding: 10px 40px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            margin: 10px auto;
+        }
     }
     .nav-container {
         width: 100%;
@@ -66,6 +82,7 @@ h2 a {
         border: #f8f0e5;
         font-weight: bolder;
     }
+
     .register-bar {
         input {
             color: black;
@@ -96,7 +113,6 @@ h2 a {
         width: 100vw;
         top: -60px; /* Justér værdien efter behov */
         text-decoration: none;
-
     }
     .button-bar-index a {
         flex-grow: 1;
@@ -144,10 +160,25 @@ h2 a {
         font-size: 65px;
     }
 
+
 }
 @media only screen and (min-width: 600px) {
     nav {
         display: none;
+    }
+    .login-labels {
+        input {
+            background-color: #f8f0e5;
+            color: #f8f0e5;
+            padding: 10px 15px;
+            margin: 10px;
+            align-content: space-between;
+        }
+    }
+    .indexLogo {
+        top: -60px;
+        right: 750px;
+        position: relative;
     }
     .logo-link {
         display: flex;
@@ -275,6 +306,7 @@ h2 a {
         top: 25px;
 
     }
+
     .profilpicture {
         width: 25vw;
         min-width: 150px;
