@@ -10,6 +10,7 @@
 
 <div id="newproduct">
     <h1>Indtast oplysninger</h1>
+
     <form th:action="@{/gilbertprofile/newproduct}" th:object="${product}" th:method="post" enctype="multipart/form-data">
         <label>Name</label>
         <br><input type="text" th:field="*{name}" required><br>

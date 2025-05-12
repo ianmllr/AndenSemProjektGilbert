@@ -120,7 +120,7 @@ public class UserController {
             return "edituser";
         }
         if (image != null && !image.isEmpty() && image.getSize() < 3 * 1024 * 1024) {
-        String originalFilename = image.getOriginalFilename();
+            String originalFilename = image.getOriginalFilename();
             String uniqueFilename = UUID.randomUUID().toString() + "_" + originalFilename;
             String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/userimage";
             Path filePath = Paths.get(uploadDir, uniqueFilename);
@@ -131,8 +131,7 @@ public class UserController {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }
-        else {
+        } else {
             User existingUser = (User) session.getAttribute("currentUser");
             user.setImgsrc(existingUser.getImgsrc());
         }
@@ -140,11 +139,11 @@ public class UserController {
         if (updated) {
             session.setAttribute("currentUser", user);
             return "redirect:/gilbertprofile";
-        }
-        else {
+        } else {
             redirectAttributes.addFlashAttribute("message", "Der er sket en fejl, prøv igen");
             return "redirect:/edituser";
         }
+
     }
 
 
