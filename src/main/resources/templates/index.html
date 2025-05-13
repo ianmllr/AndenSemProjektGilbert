@@ -14,15 +14,18 @@
 </head>
 
 <header>
-        <form class="search" action="/search" method="get">
+    <form class="search" action="/search" method="get">
         <input type="text" name="q" placeholder="Search for products..." required>
     </form>
     <div class="RegisterLogin-bar">
+        <a class="heart" href="favorites">
+            <img src="/icons/heart.png" class="icon" width="45px">
+        </a>
         <a class="notification" href="notifications">
             <img src="/icons/notification.png" class="icon" width="45px">
         </a>
-        <a class="heart" href="favorites">
-            <img src="/icons/heart.png" class="icon" width="45px">
+        <a class="profile" href="gilbertprofile">
+            <img src="/icons/profil.png" class="icon" width="45px">
         </a>
         <a th:if="${user != null}" href="gilbertprofile" class="profilelink">
             <img th:src="${user.imgsrc != null} ? @{/userimage/} + ${user.imgsrc} : @{/icons/profil.png}" class="profilpicture" width="45" height="45">
@@ -30,9 +33,8 @@
         <a th:if="${user == null}" href="register">Sign Up</a>
         <a th:if="${user == null}" href="login">Log in</a>
     </div>
-    <h2><a href="/"> Gilbert</a></h2>
-
 </header>
+<h2><a href="/"> Gilbert</a></h2>
 
 <body>
 
