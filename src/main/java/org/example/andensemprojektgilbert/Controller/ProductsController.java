@@ -74,7 +74,4 @@ public class ProductsController {
         productsService.createProduct(product);
         return "redirect:/gilbertprofile";
     }
-
-
-
 }

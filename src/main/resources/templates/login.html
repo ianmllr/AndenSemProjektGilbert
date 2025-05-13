@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/gilbertstyle.css">
 </head>
 <body>
-<h3>Login</h3>
+<h3 class="loginheader" >Login</h3>
 
 <form th:action="@{/login}" method="post" th:object="${user}">
     <div th:if="${error}">

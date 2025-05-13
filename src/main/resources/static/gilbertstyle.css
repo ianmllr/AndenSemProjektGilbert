@@ -39,18 +39,26 @@ h3 {
     }
 
     .login-labels {
-        input {
-            background-color: #f8f0e5;
-            color: black;
-            padding: 10px 40px;
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-            margin: 10px auto;
-        }
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
+
+    .login-labels label {
+        font-size: 20px; /* Increase font size */
+        margin-bottom: 5px;
+    }
+
+    .login-labels input {
+        background-color: #f8f0e5;
+        color: black;
+        padding: 10px 20px;
+        font-size: 18px;
+        width: 80%;
+        margin-bottom: 10px;
+        border: 1px solid black;
+    }
+
     .nav-container {
         width: 100%;
         display: inline-flex;
@@ -170,15 +178,32 @@ h3 {
     nav {
         display: none;
     }
-    .login-labels {
-        input {
-            background-color: #f8f0e5;
-            color: black;
-            padding: 10px 15px;
-            margin: 10px;
-            align-content: space-between;
-        }
+    .loginheader {
+        margin-top: 20vw;
+        font-size: 100px;
     }
+    .login-labels {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px; /* Adds space between elements */
+        margin-top: 30vw;
+    }
+
+    .login-labels label {
+        font-size: 50px; /* Makes labels larger */
+    }
+
+    .login-labels input {
+        background-color: #f8f0e5;
+        color: black;
+        padding: 12px;
+        font-size: 50px; /* Increases input font size */
+        width: 100%; /* Makes input fields stretch */
+        max-width: 600px; /* Controls maximum width */
+        text-align: center;
+    }
+
     .indexLogo {
         top: -60px;
         right: 750px;
