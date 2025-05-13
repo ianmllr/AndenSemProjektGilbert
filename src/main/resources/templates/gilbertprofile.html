@@ -64,9 +64,10 @@
 <h3>Your listings</h3>
 <div class="productscontainer">
   <div class ="productlisting" th:each="product : ${myproducts}">
-    <img th:src="@{'/productimage/' + ${product.imgsrc}}" width="200" height="200" alt="no pic">    <p th:text="${product.price}"></p>
-    <p th:text="${product.postedDate}"></p>
-    <p th:text="${product.location}"></p>
+    <img th:src="@{'/productimage/' + ${product.imgsrc}}" width="200" height="200" alt="no pic">
+    <p class ="productname" th:text="${product.name}"></p>
+    <p th:text="${product.brand}"></p>
+    <p th:text="${product.price}"></p>
     <button>Add to favorites</button>
   </div>
 </div>
