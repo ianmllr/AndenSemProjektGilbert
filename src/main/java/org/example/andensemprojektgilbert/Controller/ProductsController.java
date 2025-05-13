@@ -54,8 +54,6 @@ public class ProductsController {
         User user = (User) session.getAttribute("currentUser");
         model.addAttribute("product", product);
         product.setCreatedByID(user.getId());
-        productsService.createProduct(product);
-
         if (!image.isEmpty()) {
             if (image.getSize() > 3*1024*1024) {
                 redirectAttributes.addFlashAttribute("message", "Image is too large to upload");
@@ -63,16 +61,17 @@ public class ProductsController {
             }
             String originalFilename = image.getOriginalFilename();
             String uniqueFilename = UUID.randomUUID().toString() + "_" + originalFilename;
-            String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/userimage";;
+            String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/productimage";
             Path filePath = Paths.get(uploadDir, uniqueFilename);
             try {
                 Files.createDirectories(filePath.getParent());
                 Files.write(filePath, image.getBytes());
-                user.setImgsrc(uniqueFilename);
+                product.setImgsrc(uniqueFilename);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
+        productsService.createProduct(product);
         return "redirect:/gilbertprofile";
     }
 
