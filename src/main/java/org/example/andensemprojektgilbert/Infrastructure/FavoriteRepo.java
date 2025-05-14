@@ -48,7 +48,7 @@ public class FavoriteRepo {
         return false;
     }
     public boolean removeAsFavorite(int userId, int productId) {
-        String sql = "DELETE FROM `gilbert`.`favorite` WHERE (`userid` = ?) and (`productid` = ?);";
+        String sql = "DELETE FROM gilbert.favorite WHERE userid = ? AND productid = ?;";
         try {
             int ok = jdbcTemplate.update(sql, userId, productId);
             if (ok == 1) {
