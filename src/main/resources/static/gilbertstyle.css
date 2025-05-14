@@ -18,6 +18,17 @@ h2 a {
 h3 {
     font-size: 65px;
 }
+
+.favorite-button {
+    background: none;  /* Transparent background */
+    border: none;
+    font-size: 24px; /* Adjust size as needed */
+    cursor: pointer;
+    padding: 5px;
+}
+.favorite-button:hover {
+    transform: scale(1.2); /* Slight zoom effect on hover */
+}
 @font-face {
     font-family: 'theseasons', sans-serif;
     src: url('fonts/theseasons.otf') format('opentype');

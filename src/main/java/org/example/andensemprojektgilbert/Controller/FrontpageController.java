@@ -3,6 +3,7 @@ package org.example.andensemprojektgilbert.Controller;
 import jakarta.servlet.http.HttpSession;
 import org.example.andensemprojektgilbert.Model.Product;
 import org.example.andensemprojektgilbert.Model.User;
+import org.example.andensemprojektgilbert.Service.FavoriteService;
 import org.example.andensemprojektgilbert.Service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,11 +20,17 @@ public class FrontpageController {
 
     @Autowired
     private ProductsService productsService;
+    @Autowired
+    private FavoriteService favoriteService;
 
     @GetMapping("/")
     public String getFrontPage(Model model, HttpSession session) {
         User user = (User) session.getAttribute("currentUser");
         model.addAttribute("user", user);
+        if (user != null) {
+            List<Integer> favoriteIds = favoriteService.getFavoriteIds(user.getId());
+            model.addAttribute("favorites", favoriteIds);
+        }
 
         List<Product> randomMensProducts = productsService.getRandomMensProducts();
         List<Product> randomWomensProducts = productsService.getRandomWomensProducts();

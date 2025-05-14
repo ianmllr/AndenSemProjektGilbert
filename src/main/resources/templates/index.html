@@ -96,27 +96,60 @@
 <div class="productscontainer">
     <p>Womens</p>
     <div class ="productlisting" th:each="product : ${randomWomensProducts}">
-        <img th:src="@{'/productimage/' + ${product.imgsrc}}" width="200" height="200" alt="no pic">
+        <div class="product-picture">
+        <img th:src="@{'/productimage/' + ${product.imgsrc}}" style="max-width: 200px; max-height: 200px;" alt="no pic">
+            <form th:action="@{/products/addToFavorites/{id}(id=${product.id})}" method="post">
+                <button type="submit" class="favorite-button" th:if="${session.currentUser != null and not #lists.contains(favorites, product.id)}">
+                    🤍
+                </button>
+            </form>
+            <form th:action="@{/products/removeAsFavorite/{id}(id=${product.id})}" method="post">
+                <button type="submit" class="favorite-button" th:if="${session.currentUser != null and #lists.contains(favorites, product.id)}">
+                    ❤️
+                </button>
+            </form>
+        </div>
         <p class ="productname" th:text="${product.name}"></p>
         <p th:text="${product.brand}"></p>
         <p th:text="${product.price}"></p>
-        <button>Add to favorites</button>
     </div>
     <p>Mens</p>
     <div class ="productlisting" th:each="product : ${randomMensProducts}">
-        <img th:src="@{'/productimage/' + ${product.imgsrc}}" width="200" height="200" alt="no pic">
+        <div class="product-picture">
+        <img th:src="@{'/productimage/' + ${product.imgsrc}}" style="max-width: 200px; max-height: 200px;" alt="no pic">
+            <form th:action="@{/products/addToFavorites/{id}(id=${product.id})}" method="post">
+                <button type="submit" class="favorite-button" th:if="${session.currentUser != null and not #lists.contains(favorites, product.id)}">
+                    🤍
+                </button>
+            </form>
+            <form th:action="@{/products/removeAsFavorite/{id}(id=${product.id})}" method="post">
+                <button type="submit" class="favorite-button" th:if="${session.currentUser != null and #lists.contains(favorites, product.id)}">
+                    ❤️
+                </button>
+            </form>
+        </div>
         <p class ="productname" th:text="${product.name}"></p>
         <p th:text="${product.brand}"></p>
         <p th:text="${product.price}"></p>
-        <button>Add to favorites</button>
     </div>
     <p>Bags</p>
     <div class ="productlisting" th:each="product : ${randomBags}">
-        <img th:src="@{'/productimage/' + ${product.imgsrc}}" width="200" height="200" alt="no pic">
+        <div class="product-picture">
+        <img th:src="@{'/productimage/' + ${product.imgsrc}}" style="max-width: 200px; max-height: 200px;" alt="no pic">
+            <form th:action="@{/products/addToFavorites/{id}(id=${product.id})}" method="post">
+                <button type="submit" class="favorite-button" th:if="${session.currentUser != null and not #lists.contains(favorites, product.id)}">
+                    🤍
+                </button>
+            </form>
+            <form th:action="@{/products/removeAsFavorite/{id}(id=${product.id})}" method="post">
+                <button type="submit" class="favorite-button" th:if="${session.currentUser != null and #lists.contains(favorites, product.id)}">
+                    ❤️
+                </button>
+            </form>
+        </div>
         <p class ="productname" th:text="${product.name}"></p>
         <p th:text="${product.brand}"></p>
         <p th:text="${product.price}"></p>
-        <button>Add to favorites</button>
     </div>
 </div>
 
