@@ -4,50 +4,45 @@
     <title>Gilbert</title>
     <link rel="stylesheet" type="text/css" href="/searchCss.css">
     <meta charset="UTF-8">
-    <link rel="icon" type="image/png"  href="/icons/Profil32x32_3.png">
+    <link rel="icon" type="image/png" href="/icons/Profil32x32_3.png">
     <meta name="description" content="Køb og salg af brugt mærkevaretøj">
     <meta name="keywords" content="køb, salg, Gucci, Rolex">
     <meta name="author" content="ccco">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
 </head>
 <body>
-<header>
-
-<!--Desktop søgefelt-->
-<div class="desktop-search">
-    <form action="/search" method="get">
-        <input type="text" name="q" placeholder="Search for products..." required>
-    </form>
-</div>
-<h1><a href="/">Gilbert</a></h1>
-
-<div class="auth-links">
-    <a th:if="${user == null}" id="Sign in" href="/login">Sign in</a>
-    <a th:if="${user == null}" id="Sign up" href="/register">Sign up</a>
-    <a th:if="${user != null}" href="/favorites" class="favorites">
-        <img src="/icons/heart.png" class="icon" width="45px">
-    </a>
-    <a th:if="${user != null}" href="/notifications" class="notifications">
-        <img src="/icons/notification.png" class="icon" width="45px">
-    </a>
-    <a th:if="${user != null}" href="gilbertprofile" class="profilelink">
-        <img th:src="${user.imgsrc != null} ? @{/userimage/} + ${user.imgsrc} : @{/icons/profil.png}" class="profilpicture" width="45" height="45">
-    </a>
-</div>
-    <div class="button-bar-index">
+<header class="header-container">
+    <div class="header-content">
+        <div class="desktop-search">
+            <form action="/search" method="get">
+                <input type="text" name="q" placeholder="Search for products..." required>
+            </form>
+        </div>
+        <h1><a href="/">Gilbert</a></h1>
+        <div class="auth-links">
+            <a th:if="${user == null}" id="SignIn" href="/login">Sign in</a>
+            <a th:if="${user == null}" id="SignUp" href="/register">Sign up</a>
+            <a th:if="${user != null}" href="/favorites" class="favorites">
+                <img src="/icons/heart.png" class="icon" alt="Favorites">
+            </a>
+            <a th:if="${user != null}" href="/notifications" class="notifications">
+                <img src="/icons/notification.png" class="icon" alt="Notifications">
+            </a>
+            <a th:if="${user != null}" href="gilbertprofile" class="profilelink">
+                <img th:src="${user.imgsrc != null} ? @{/userimage/} + ${user.imgsrc} : @{/icons/profil.png}" class="profilpicture" alt="Profile">
+            </a>
+        </div>
+    </div>
+    <nav class="button-bar-index">
         <a href="women.html">Women</a>
         <a href="men.html">Men</a>
         <a href="designers.html">Designers</a>
         <a href="home.html">Home</a>
         <a href="beauty.html">Beauty</a>
-    </div>
+    </nav>
 </header>
 
-
-
-<!--Mobil søgefelt-->
+<!-- Mobil søgefelt -->
 <div class="search-overlay" id="searchOverlay">
     <div class="search-box">
         <form action="/search" method="get">
@@ -56,39 +51,64 @@
     </div>
 </div>
 
-<!-- Mobil navigationsbar-->
-<nav>
+<!-- Mobil navigationsbar -->
+<nav class="mobile-nav">
     <div class="nav-container">
         <a href="home">
-            <img src="/icons/home2.png" class="icon" width="80px" >
+            <img src="/icons/home2.png" class="icon" alt="Home">
         </a>
         <a id="search-icon">
-            <img src="/icons/sg.png" class="icon" width="70px" alt="Search">
+            <img src="/icons/sg.png" class="icon" alt="Search">
         </a>
         <a href="favorites">
-            <img src="/icons/heart.png" class="icon" width="75px" >
+            <img src="/icons/heart.png" class="icon" alt="Favorites">
         </a>
         <a href="/gilbertprofile">
-            <img src="/icons/profil.png" class="icon" width="80px">
+            <img src="/icons/profil.png" class="icon" alt="Profile">
         </a>
         <a href="notifications">
-            <img src="/icons/notification.png" class="icon" width="80px" alt="Notifications">
+            <img src="/icons/notification.png" class="icon" alt="Notifications">
         </a>
     </div>
 </nav>
-<!--Kalder javascript til søgefelt-->
+
+<!-- Kalder javascript til søgefelt -->
 <script src="/search.js"></script>
 
-<!--Resultater af hvad man har søgt på-->
-<h2 id = searchHeader>Search Results for "<span th:text="${query}"></span>"</h2>
-<div class="products-container">
-    <div th:each="product : ${products}" class="product-card">
-        <img th:src="@{'/productimage/' + ${product.imgsrc}}" width="350" height="385" alt="no pic">
-        <h3 th:text="${product.brand}"></h3>
-        <p><span th:text="${product.name}"></span></p>
-        <p><span th:text="${product.subcategory}"></span></p>
-        <p><span th:text="${product.price}"></span> €</p>
+<!-- Resultater af hvad man har søgt på -->
+<main>
+    <h2 id="searchHeader">Search Results for "<span th:text="${query}"></span>"</h2>
+    <div class="products-container">
+        <div th:each="product : ${products}" class="product-card">
+            <img th:src="@{'/productimage/' + ${product.imgsrc}}" class="product-image" alt="Product Image">
+            <h3 th:text="${product.brand}"></h3>
+            <p th:text="${product.name}"></p>
+            <p th:text="${product.subcategory}"></p>
+            <p th:text="${product.price} + ' €'"></p>
+        </div>
     </div>
-</div>
+</main>
+<footer class="footer-container">
+    <div class="footer-links-bar">
+        <a href="/about">About Us</a>
+        <a href="/help">Support</a>
+        <a href="/terms">Terms & Conditions</a>
+        <a href="/privacy">Privacy Policy</a>
+    </div>
+    <div class="footer-content">
+        <div class="footer-contact">
+            <p>Contact: info@gilbert.com | +45 1234 5678</p>
+            <p>Address: 123 Fashion Street, Copenhagen, Denmark</p>
+        </div>
+        <div class="footer-social">
+            <a href="https://facebook.com/yourFaceBookHere">Facebook</a>
+            <a href="https://instagram.com/yourInstagramHere">Instagram</a>
+            <a href="https://twitter.com/yourTwitterHere">Twitter</a>
+        </div>
+        <div class="footer-copyright">
+            <p>© 2025 ccco</p>
+        </div>
+    </div>
+</footer>
 </body>
 </html>

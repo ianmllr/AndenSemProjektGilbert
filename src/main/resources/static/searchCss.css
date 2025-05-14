@@ -1,52 +1,55 @@
+/* Reset and Font */
 * {
-    color: #f8f0e5;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'theseasons', garamond;
+    src: url('fonts/theseasons.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
 }
 
 body {
-    background-color: #004224;
-    margin: 0;
+    background-color: #f8f0e5; /* Off-white background */
+    color: #423a26; /* Dark brown text for readability */
+    font-family: 'theseasons', Garamond , serif;
+    line-height: 1.6;
+}
+
+/* Header */
+.header-container {
+    background-color: #004224; /* Dark green background */
+    padding: 15px 0;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between; /* Distributes space between items */
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 h1 {
-    text-align: center;
-    font-size: 3em;
-    margin-top: 20px;
+    font-size: 2em;
+    color: #f8f0e5; /* Light text on green background */
+    flex-grow: 1; /* Allows title to take up available space and center */
+    text-align: center; /* Centers the text within the h1 */
 }
 
 h1 a {
     text-decoration: none;
-}
-
-.button-bar-index {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 0;
-    background-color: #423a26;
-    border-top: 2px solid #f8f0e5;
-    border-bottom: 2px solid #f8f0e5;
-    width: 100vw;
-    margin-left: -8px;
-}
-
-.button-bar-index a {
-    flex-grow: 1;
-    text-align: center;
-    font-size: 1.5em;
-    padding: 2px 0;
-    text-decoration: none;
-    position: relative;
-}
-
-.button-bar-index a:hover {
-    text-decoration: underline #f8f0e5;
+    color: #f8f0e5;
 }
 
 /* Desktop Search Bar */
 .desktop-search {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    display: none;
+    flex: 0 0 auto; /* Prevents search from growing, keeps it fixed */
+    margin-right: 20px;
 }
 
 .desktop-search form {
@@ -55,7 +58,7 @@ h1 a {
 }
 
 .desktop-search input {
-    padding: 10px;
+    padding: 8px 12px;
     font-size: 16px;
     border: none;
     border-radius: 5px;
@@ -63,8 +66,63 @@ h1 a {
     color: #423a26;
     width: 200px;
     outline: none;
+    font-family: 'theseasons', garamond, serif;
 }
 
+/* Auth Links */
+.auth-links {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex: 0 0 auto; /* Prevents auth links from growing, keeps it fixed */
+}
+
+.auth-links a {
+    text-decoration: none;
+    font-size: 1.1em;
+    padding: 5px 10px;
+    color: #f8f0e5; /* Light text on green background */
+    transition: background-color 0.3s ease;
+}
+
+.auth-links a:hover {
+    text-decoration: underline #f8f0e5;
+}
+
+.auth-links img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+/* Button Bar (Navigation) */
+.button-bar-index {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 0;
+    background-color: #423a26; /* Dark brown background */
+    border-top: 1px solid #f8f0e5;
+    border-bottom: 1px solid #f8f0e5;
+    width: 100%;
+}
+
+.button-bar-index a {
+    flex: 1;
+    text-align: center;
+    font-size: 1.2em;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #f8f0e5; /* Light text on brown background */
+    transition: background-color 0.3s ease;
+}
+
+.button-bar-index a:hover {
+    text-decoration: underline #f8f0e5;
+}
+
+/* Mobile Search Overlay */
 .search-overlay {
     display: none;
     position: fixed;
@@ -84,14 +142,14 @@ h1 a {
 }
 
 .search-box {
-    background: white;
-    padding: 2rem;
+    background: #f8f0e5; /* Off-white background */
+    padding: 1.5rem;
     border-radius: 10px;
-    box-shadow: 0 0 10px black;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    width: 80%;
+    width: 90%;
     max-width: 300px;
 }
 
@@ -104,12 +162,32 @@ h1 a {
 .search-box input {
     width: 100%;
     padding: 10px;
-    font-size: 18px;
+    font-size: 16px;
     border: none;
     outline: none;
-    background-color: #f8f0e5;
+    background-color: #fff;
     color: #423a26;
     border-radius: 5px;
+    font-family: 'theseasons', Garamond, serif;
+}
+
+/* Mobile Navigation */
+.mobile-nav {
+    display: none; /* Hidden by default, shown on mobile */
+}
+
+.nav-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    background-color: #004224; /* Green background */
+    align-items: center;
+    padding: 10px 0;
+}
+
+.nav-container img {
+    width: 50px;
+    height: 50px;
 }
 
 #search-icon {
@@ -119,138 +197,203 @@ h1 a {
     justify-content: center;
 }
 
-/* Sign in and Sign up links */
-.auth-links {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    display: flex;
-    gap: 15px;
-    z-index: 100;
+/* Main Content */
+main {
+    background-color: #f8f0e5; /* Off-white background */
+    padding: 20px 0;
 }
 
-.auth-links a {
-    text-decoration: none;
-    font-size: 1.2em;
-    padding: 5px 10px;
-    transition: background-color 0.3s ease;
+main h2 {
+    color: #423a26; /* Dark brown text */
+    text-align: center;
+    font-size: 1.8em;
+    margin-bottom: 20px;
 }
 
-.auth-links a:hover {
-    text-decoration: underline;
-}
-
-.auth-links img {
-    border-radius: 50%;
-}
-/* Product container and card styling */
+/* Product Cards */
 .products-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(5, 1fr); /* 5 boxes per line */
     gap: 20px;
-    padding: 20px;
+    padding: 0 20px;
     max-width: 1200px;
     margin: 0 auto;
 }
 
 .product-card {
-    background-color: #423a26;
-    border-radius: 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
+    background-color: #004224; /* Green background for product cards */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     padding: 15px;
+    text-align: center;
+    color: #f8f0e5; /* Light text on green background */
 }
 
 .product-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
 
 .product-image {
     width: 100%;
-    height: 200px;
+    height: 250px;
     object-fit: cover;
-    border-radius: 0;
-    transition: opacity 0.3s ease;
-}
-
-.product-card:hover .product-image {
-    opacity: 0.9;
+    margin-bottom: 10px;
 }
 
 .product-card h3 {
-    font-size: 24px;
-    margin: 10px 0;
-    color: #f8f0e5;
+    font-size: 1.4em;
+    margin: 10px 0 5px;
 }
 
 .product-card p {
-    font-size: 16px;
+    font-size: 1em;
     margin: 5px 0;
-    color: #f8f0e5;
 }
 
-/* Mobile adjustments */
+/* Footer */
+.footer-container {
+    background-color: #004224; /* Dark green background */
+    padding-bottom: 20px;
+    border-top: 1px solid #f8f0e5; /* White border for separation */
+}
+
+.footer-links-bar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 0;
+    background-color: #423a26; /* Dark brown background, matching header button bar */
+    border-bottom: 1px solid #f8f0e5;
+    width: 100%;
+}
+
+.footer-links-bar a {
+    text-align: center;
+    font-size: 1.1em;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #f8f0e5; /* Light text on brown background */
+}
+
+.footer-links-bar a:hover {
+    text-decoration: underline;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 20px 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    color: #f8f0e5; /* White text */
+}
+
+.footer-contact p,
+.footer-social a,
+.footer-copyright p {
+    color: #f8f0e5; /* White text */
+    text-decoration: none;
+    font-size: 1em;
+    line-height: 1.8;
+}
+
+.footer-social a:hover {
+    text-decoration: underline;
+}
+
+.footer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.footer-social {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-copyright {
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+/* Mobile Adjustments */
 @media only screen and (max-width: 600px) {
-    nav {
+    .header-content {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 0;
+    }
+
+    .desktop-search {
+        display: none;
+    }
+
+    h1 {
+        font-size: 1.8em;
+        margin: 10px 0;
+    }
+
+    .auth-links {
+        display: none;
+    }
+
+
+    .button-bar-index {
+        flex-wrap: wrap;
+        gap: 5px;
+        padding: 5px 0;
+    }
+
+    .button-bar-index a {
+        font-size: 1em;
+        padding: 8px 10px;
+    }
+
+    .mobile-nav {
+        display: block;
         position: fixed;
         bottom: 0;
         width: 100%;
-        border-top: 2px solid #f8f0e5;
-    }
-
-    .nav-container {
-        width: 100%;
-        display: inline-flex;
-        justify-content: space-around;
+        border-top: 1px solid #f8f0e5;
         background-color: #004224;
-        align-items: center;
+        z-index: 100;
     }
 
-    .search-box {
-        display: flex;
+    .nav-container img {
+        width: 40px;
+        height: 40px;
     }
 
     .products-container {
         grid-template-columns: 1fr;
-        padding: 10px;
-    }
-
-    .product-card h3 {
-        font-size: 20px;
-    }
-
-    .product-card p {
-        font-size: 14px;
+        padding: 0 15px;
     }
 
     .product-image {
-        height: 150px;
+        height: 180px;
     }
 
-    .auth-links {
-        top: 5px;
-        right: 10px;
-        gap: 10px;
+    .product-card h3 {
+        font-size: 1.2em;
     }
 
-    .auth-links a {
-        font-size: 1em;
-        padding: 3px 8px;
+    .product-card p {
+        font-size: 0.9em;
     }
 }
-.products-container img {
-    width: 100%;
-}
 
-
-/* Desktop adjustments */
-@media only screen and (min-width: 600px) {
-    .nav-container {
-        display: none;
-    }
+/* Desktop Adjustments */
+@media only screen and (min-width: 601px) {
     .desktop-search {
         display: block;
+    }
+
+    .mobile-nav {
+        display: none;
     }
 }
