@@ -144,6 +144,4 @@ public class ProductRepo {
                 rs.getInt("createdByID")
         ));
     }
-
-
 }
