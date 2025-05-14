@@ -5,6 +5,19 @@
     <title>Title</title>
 </head>
 <body>
+<h2>Your Favorite Products</h2>
+<ul>
+    <li th:each="product : ${favorites}">
+        <img th:src="@{'/productimage/' + ${product.imgsrc}}" style="max-width: 200px; max-height: 200px;">
+        <p th:text="${product.name}"></p>
+        <p th:text="${product.brand}"></p>
+        <p th:text="${product.price}"></p>
+
+        <form th:action="@{/products/removeAsFavorite/{id}(id=${product.id})}" method="post">
+            <button type="submit">❌ Remove</button>
+        </form>
+    </li>
+</ul>
 
 </body>
 </html>
