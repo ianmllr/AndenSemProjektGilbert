@@ -1,49 +1,81 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/icons/Profil32x32_3.png">
     <title>Login</title>
     <link rel="stylesheet" href="/gilbertstyle.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<h3 class="loginheader" >Login</h3>
+<header class="simple-header">
+    <h1><a href="/">Gilbert</a></h1>
+</header>
 
-<form th:action="@{/login}" method="post" th:object="${user}">
-    <div th:if="${error}">
-        <p style="color: red;" th:text="${error}"></p>
-    </div>
-
-    <div th:if="${errors}">
-        <ul>
-            <li th:each="err : ${errors}" th:text="${err.defaultMessage}" style="color: red;"></li>
-        </ul>
-    </div>
-<div class="login-labels">
-    <label for="email">Email:</label>
-    <input type="email" id="email" th:field="*{email}" required>
-    <label for="password">Password:</label>
-    <input type="password" id="password" th:field="*{password}" required>
-    <button type="submit">Login</button>
-</div>
-    <nav>
-        <div class="nav-container">
-            <a href="home">
-                <img src="/icons/home2.png" class="icon" width="80px" >
-            </a>
-            <a href="search">
-                <img src="/icons/sg.png" class="icon" width="70px" >
-            </a>
-            <a href="favorites">
-                <img src="/icons/heart.png" class="icon" width="75px" >
-            </a>
-            <a href="/gilbertprofile">
-                <img src="/icons/profil.png" class="icon" width="80px">
-            </a>
-            <a href="notifications">
-                <img src="/icons/notification.png" class="icon" width="80px" alt="Notifications">
-            </a>
+<main>
+    <h2>Login</h2>
+    <form th:action="@{/login}" method="post" th:object="${user}" class="login-form">
+        <div th:if="${error}">
+            <p class="error-message" th:text="${error}"></p>
         </div>
-    </nav>
-</form>
+        <div th:if="${errors}">
+            <ul class="error-list">
+                <li th:each="err : ${errors}" th:text="${err.defaultMessage}"></li>
+            </ul>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" th:field="*{email}" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" th:field="*{password}" required>
+        </div>
+        <button type="submit">Login</button>
+    </form>
+</main>
+
+<nav class="mobile-nav">
+    <div class="nav-container">
+        <a href="/">
+            <img src="/icons/home2.png" class="icon" alt="Home">
+        </a>
+        <a href="/search">
+            <img src="/icons/sg.png" class="icon" alt="Search">
+        </a>
+        <a href="/favorites">
+            <img src="/icons/heart.png" class="icon" alt="Favorites">
+        </a>
+        <a href="/gilbertprofile">
+            <img src="/icons/profil.png" class="icon" alt="Profile">
+        </a>
+        <a href="/notifications">
+            <img src="/icons/notification.png" class="icon" alt="Notifications">
+        </a>
+    </div>
+</nav>
+
+<footer class="footer-container">
+    <div class="footer-links-bar">
+        <a href="/about">About Us</a>
+        <a href="/help">Support</a>
+        <a href="/terms">Terms & Conditions</a>
+        <a href="/privacy">Privacy Policy</a>
+    </div>
+    <div class="footer-content">
+        <div class="footer-contact">
+            <p>Contact: info@gilbert.com | +45 1234 5678</p>
+            <p>Address: 123 Fashion Street, Copenhagen, Denmark</p>
+        </div>
+        <div class="footer-social">
+            <a href="https://facebook.com/gilbert">Facebook</a>
+            <a href="https://instagram.com/gilbert">Instagram</a>
+            <a href="https://twitter.com/gilbert">Twitter</a>
+        </div>
+        <div class="footer-copyright">
+            <p>© 2025 ccco</p>
+        </div>
+    </div>
+</footer>
 </body>
 </html>

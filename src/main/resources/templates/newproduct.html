@@ -1,107 +1,164 @@
 <!DOCTYPE html>
-<!--suppress ALL -->
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/icons/profil.png">
     <link rel="stylesheet" href="/gilbertstyle.css">
     <title>Create a new listing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+<header class="simple-header">
+    <h1><a href="/">Gilbert</a></h1>
+</header>
 
-<div id="newproduct">
-    <h1>Indtast oplysninger</h1>
+<main>
+    <h2>Create a new listing</h2>
+    <form th:action="@{/gilbertprofile/newproduct}" th:object="${product}" th:method="post" enctype="multipart/form-data" class="newproduct-form">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" th:field="*{name}" required>
+        </div>
 
-    <form th:action="@{/gilbertprofile/newproduct}" th:object="${product}" th:method="post" enctype="multipart/form-data">
-        <label>Name</label>
-        <br><input type="text" th:field="*{name}" required><br>
+        <div class="form-group">
+            <label for="brand">Brand:</label>
+            <input type="text" id="brand" th:field="*{brand}" required>
+        </div>
 
-        <br>
-        <label>Brand</label>
-        <br><input type="text" th:field="*{brand}" required><br>
+        <div class="form-group">
+            <label for="department">Department:</label>
+            <select id="department" th:field="*{department}" required>
+                <option value="" disabled selected>Select department</option>
+                <option value="Women">Women</option>
+                <option value="Men">Men</option>
+                <option value="Home">Home</option>
+                <option value="Beauty">Beauty</option>
+            </select>
+        </div>
 
-        <br>
-        <label>Department</label>
-        <br><select id="department" th:field="*{department}" required>
-            <option value="" disabled selected>Select department</option>
-            <option value="Women">Women</option>
-            <option value="Men">Men</option>
-            <option value="Home">Home</option>
-            <option value="Beauty">Beauty</option>
-        </select><br>
+        <div class="form-group">
+            <label for="category">Category:</label>
+            <select id="category" th:field="*{category}" required>
+                <option value="" disabled selected>Select category</option>
+                <option value="Clothing">Clothing</option>
+                <option value="Bags">Bags</option>
+                <option value="Shoes">Shoes</option>
+                <option value="Accessories">Accessories</option>
+            </select>
+        </div>
 
-        <br>
-        <label>Category</label>
-        <br><select id="category" th:field="*{category}" required>
-            <option value="" disabled selected>Select category</option>
+        <div class="form-group">
+            <label for="subcategory">Subcategory:</label>
+            <select id="subcategory" th:field="*{subcategory}" required>
+                <option value="" disabled selected>Select subcategory</option>
+            </select>
+        </div>
 
-        <option value="Clothing">Clothing</option>
-        <option value="Bags">Bags</option>
-        <option value="Shoes">Shoes</option>
-        <option value="Accessories">Accessories</option>
-        </select><br>
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="number" id="price" th:field="*{price}" required>
+        </div>
 
-        <br>
-        <label>Subcategory</label><br>
-        <select id="subcategory" th:field="*{subcategory}" required>
-            <option value="" disabled selected>Select subcategory</option>
-        </select><br>
+        <div class="form-group">
+            <label for="p_condition">Condition:</label>
+            <select id="p_condition" th:field="*{p_condition}" required>
+                <option value="" disabled selected>Select condition</option>
+                <option value="Brand new">Brand new</option>
+                <option value="Like new">Like new</option>
+                <option value="Good condition">Good condition</option>
+                <option value="Used">Used</option>
+                <option value="Very used">Very used</option>
+            </select>
+        </div>
 
-        <br>
-        <label>Price</label>
-        <br><input type="number" th:field="*{price}" required><br>
+        <div class="form-group">
+            <label for="size">Size:</label>
+            <select id="size" th:field="*{size}" required>
+                <option value="" disabled selected>-- Select size --</option>
+            </select>
+        </div>
 
-        <br>
-        <label>Condition</label><br>
-        <select th:field="*{p_condition}" required>
-            <option value="" disabled selected>Select condition</option>
-            <option value="Brand new">Brand new</option>
-            <option value="Like new">Like new</option>
-            <option value="Good condition">Good condition</option>
-            <option value="Used">Used</option>
-            <option value="Very used">Very used</option>
-       </select><br>
+        <div class="form-group">
+            <label for="color">Color:</label>
+            <select id="color" th:field="*{color}" required>
+                <option value="" disabled selected>Select color</option>
+                <option value="Blue">Blue</option>
+                <option value="Green">Green</option>
+                <option value="Orange">Orange</option>
+                <option value="Purple">Purple</option>
+                <option value="Red">Red</option>
+                <option value="White">White</option>
+                <option value="Yellow">Yellow</option>
+                <option value="Black">Black</option>
+                <option value="Gray">Gray</option>
+                <option value="Brown">Brown</option>
+                <option value="Silver">Silver</option>
+                <option value="Gold">Gold</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
 
-        <br>
-        <label>Size</label>
-        <br><select id="size" name="size" th:field="*{size}" required>
-        <option value="" disabled selected>-- Select size --</option>
-        </select><br>
+        <div class="form-group">
+            <label for="location">Location:</label>
+            <input type="text" id="location" th:field="*{location}" required>
+        </div>
 
-        <br>
-        <label>Color</label>
-        <br><select th:field="*{color}" required>
-            <option value="" disabled selected>Select color</option>
-            <option value="Blue">Blue</option>
-            <option value="Green">Green</option>
-            <option value="Orange">Orange</option>
-            <option value="Purple">Purple</option>
-            <option value="Red">Red</option>
-            <option value="White">White</option>
-            <option value="Yellow">Yellow</option>
-            <option value="Black">Black</option>
-            <option value="Gray">Gray</option>
-            <option value="Brown">Brown</option>
-            <option value="Silver">Silver</option>
-            <option value="Gold">Gold</option>
-            <option value="Other">Other</option>
-        </select><br>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" rows="4" cols="50" th:field="*{description}" required></textarea>
+        </div>
 
-        <br>
-        <label>Location</label>
-        <br><input type="text" th:field="*{location}" required><br>
+        <div class="form-group">
+            <label for="image">Upload picture:</label>
+            <input type="file" id="image" name="image" accept="image/*">
+        </div>
 
-        <br>
-        <label>Description</label>
-        <br><textarea rows="4" cols="50" th:field="*{description}" required></textarea><br>
-
-        <label for="image">Upload picture</label>
-        <input type="file" id="image" name="image" accept="image/*">
-
-
-
-        <br><button type="submit">Opret opslag</button><br><br>
+        <button type="submit">Opret opslag</button>
     </form>
-</div>
+</main>
+
+<nav class="mobile-nav">
+    <div class="nav-container">
+        <a href="/">
+            <img src="/icons/home2.png" class="icon" alt="Home">
+        </a>
+        <a href="/search">
+            <img src="/icons/sg.png" class="icon" alt="Search">
+        </a>
+        <a href="/favorites">
+            <img src="/icons/heart.png" class="icon" alt="Favorites">
+        </a>
+        <a href="/gilbertprofile">
+            <img src="/icons/profil.png" class="icon" alt="Profile">
+        </a>
+        <a href="/notifications">
+            <img src="/icons/notification.png" class="icon" alt="Notifications">
+        </a>
+    </div>
+</nav>
+
+<footer class="footer-container">
+    <div class="footer-links-bar">
+        <a href="/about">About Us</a>
+        <a href="/help">Support</a>
+        <a href="/terms">Terms & Conditions</a>
+        <a href="/privacy">Privacy Policy</a>
+    </div>
+    <div class="footer-content">
+        <div class="footer-contact">
+            <p>Contact: info@gilbert.com | +45 1234 5678</p>
+            <p>Address: 123 Fashion Street, Copenhagen, Denmark</p>
+        </div>
+        <div class="footer-social">
+            <a href="https://facebook.com/gilbert">Facebook</a>
+            <a href="https://instagram.com/gilbert">Instagram</a>
+            <a href="https://twitter.com/gilbert">Twitter</a>
+        </div>
+        <div class="footer-copyright">
+            <p>© 2025 ccco</p>
+        </div>
+    </div>
+</footer>
 
 <script>
     // alle kategorier og underkategorier
@@ -145,7 +202,7 @@
             ],
             Decoration: [
                 "Wall Decor", "Flooring", "Lighting", "Candles", "Wall Art", "Rugs", "Curtains",
-                ],
+            ],
             Kitchen: [
                 "Appliances", "Cookware", "Dinnerware", "Dining Sets",
             ],
@@ -261,10 +318,5 @@
     document.getElementById('department').addEventListener('change', updateCategories);
     document.getElementById('category').addEventListener('change', updateSubcategories);
 </script>
-
-
-
 </body>
 </html>
-
-

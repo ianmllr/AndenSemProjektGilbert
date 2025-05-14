@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-
-<html>
-
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
   <title>Gilbert</title>
   <link rel="stylesheet" type="text/css" href="/gilbertstyle.css">
@@ -12,75 +10,94 @@
   <meta name="author" content="ccco">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-
 <body>
-<header>
-  <div class="user-info">
-  <h1><p th:text="${user}"></p></h1>
-  <p th:text="${user.rating}"></p>
-  <p th:text="${user.sales} + ' salg'"></p>
+<header class="profile-header">
+  <div class="profile-header-content">
+    <div class="profile-user-info">
+      <h2 th:text="${user}"></h2>
+      <p th:text="${user.sales} + ' salg'"></p>
+      <p th:text="${user.rating}"></p>
+    </div>
+    <div class="profile-title">
+
+    </div>
+    <a href="edituser" class="profile-picture-link">
+      <img th:src="${user.imgsrc != null} ? @{/userimage/} + ${user.imgsrc} : @{/icons/profil.png}" class="profile-picture" alt="Profile">
+    </a>
   </div>
-  <a href="edituser" class="profilelink">
-  <img th:src="${user.imgsrc != null} ? @{/userimage/} + ${user.imgsrc} : @{/icons/profil.png}" class="profilpicture" width="250">
-  </a>
 </header>
 
-<a class="edituserclass" href="edituser">Edit profile</a>
-<a class="createnewlistingclass" href="/gilbertprofile/newproduct">Create a new listing</a>
+<div class="profile-green-section">
+  <a class="edituserclass" href="edituser">Edit profile</a>
+  <a class="createnewlistingclass" href="/gilbertprofile/newproduct">Create a new listing</a>
 
-<nav>
+  <nav class="profile-button-bar">
+    <a href="gilbertlistings.html">Listings</a>
+    <a href="gilbertsales.html">Sales</a>
+    <a href="gilbertorders.html">Orders</a>
+    <a href="gilbertinfo.html">Info</a>
+    <a href="gilberthelp.html">Help</a>
+  </nav>
+</div>
+
+<main>
+  <div th:if="${#lists.isEmpty(myproducts)}">
+    <p class="no-listings">You have no listings.</p>
+  </div>
+
+  <h3>Your listings</h3>
+  <div class="profile-products-container">
+    <div class="profile-productlisting" th:each="product : ${myproducts}">
+      <img th:src="@{'/productimage/' + ${product.imgsrc}}" class="product-image" alt="Product Image">
+      <p class="productname" th:text="${product.name}"></p>
+      <p th:text="${product.brand}"></p>
+      <p th:text="${product.price} + ' €'"></p>
+      <button>Add to favorites</button>
+    </div>
+  </div>
+</main>
+
+<nav class="mobile-nav">
   <div class="nav-container">
     <a href="/">
-      <img src="/icons/home2.png" class="icon" width="80px" >
+      <img src="/icons/home2.png" class="icon" alt="Home">
     </a>
-    <a href="search">
-      <img src="/icons/sg.png" class="icon" width="70px" >
+    <a href="/search">
+      <img src="/icons/sg.png" class="icon" alt="Search">
     </a>
-    <a href="favorites">
-      <img src="/icons/heart.png" class="icon" width="75px" >
+    <a href="/favorites">
+      <img src="/icons/heart.png" class="icon" alt="Favorites">
     </a>
     <a href="/gilbertprofile">
-      <img src="/icons/profil.png" class="icon" width="80px">
+      <img src="/icons/profil.png" class="icon" alt="Profile">
     </a>
-    <a href="notifications">
-      <img src="/icons/notification.png" class="icon" width="80px" alt="Notifications">
+    <a href="/notifications">
+      <img src="/icons/notification.png" class="icon" alt="Notifications">
     </a>
   </div>
 </nav>
 
-<div class="button-bar">
-  <a href="gilbertlistings.html">Listings</a>
-  <a href="gilbertsales.html">Sales</a>
-  <a href="gilbertorders.html">Orders</a>
-  <a href="gilbertinfo.html">Info</a>
-  <a href="gilberthelp.html">Help</a>
-</div>
-
-<div th:if="${#lists.isEmpty(myproducts)}">
-  <p>You have no listings.</p>
-</div>
-
-<br>
-<h3>Your listings</h3>
-<div class="productscontainer">
-  <div class ="productlisting" th:each="product : ${myproducts}">
-    <img th:src="@{'/productimage/' + ${product.imgsrc}}" width="200" height="200" alt="no pic">
-    <p class ="productname" th:text="${product.name}"></p>
-    <p th:text="${product.brand}"></p>
-    <p th:text="${product.price}"></p>
-    <button>Add to favorites</button>
+<footer class="footer-container">
+  <div class="footer-links-bar">
+    <a href="/about">About Us</a>
+    <a href="/help">Support</a>
+    <a href="/terms">Terms & Conditions</a>
+    <a href="/privacy">Privacy Policy</a>
   </div>
-</div>
-
-
-
-
-
-
-<footer>
-  <p>&copy; 2025 ccco</p>
+  <div class="footer-content">
+    <div class="footer-contact">
+      <p>Contact: info@gilbert.com | +45 1234 5678</p>
+      <p>Address: 123 Fashion Street, Copenhagen, Denmark</p>
+    </div>
+    <div class="footer-social">
+      <a href="https://facebook.com/gilbert">Facebook</a>
+      <a href="https://instagram.com/gilbert">Instagram</a>
+      <a href="https://twitter.com/gilbert">Twitter</a>
+    </div>
+    <div class="footer-copyright">
+      <p>© 2025 ccco</p>
+    </div>
+  </div>
 </footer>
-
 </body>
-
 </html>

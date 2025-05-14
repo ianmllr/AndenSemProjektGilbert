@@ -1,66 +1,89 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/png"  href="/icons/Profil32x32_3.png">
+    <link rel="icon" type="image/png" href="/icons/Profil32x32_3.png">
     <title>Register</title>
     <link rel="stylesheet" href="/gilbertstyle.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+<header class="simple-header">
+    <h1><a href="/">Gilbert</a></h1>
+</header>
 
-<h3>Register</h3>
+<main>
+    <h2>Register</h2>
+    <form th:action="@{/register}" method="post" th:object="${user}" enctype="multipart/form-data" class="register-form">
+        <div th:if="${error}">
+            <p class="error-message" th:text="${error}"></p>
+        </div>
+        <div th:if="${errors}">
+            <ul class="error-list">
+                <li th:each="err : ${errors}" th:text="${err.defaultMessage}"></li>
+            </ul>
+        </div>
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" placeholder="Ex. John" th:field="*{name}" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Ex. john@gmail.com" th:field="*{email}" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" placeholder="Password" th:field="*{password}" required>
+        </div>
+        <div class="form-group">
+            <label for="image">Upload picture:</label>
+            <input type="file" id="image" name="image" accept="image/*">
+        </div>
+        <button type="submit">Register</button>
+    </form>
+</main>
 
-<form th:action="@{/register}" method="post" th:object="${user}" enctype="multipart/form-data">
-    <div th:if="${error}">
-        <p style="color: red;" th:text="${error}"></p>
-    </div>
-    <div class="indexLogo">
-        <a href="/" class="logo-link">
-            <img src="/icons/POlogo.1.png" alt="Home">
+<nav class="mobile-nav">
+    <div class="nav-container">
+        <a href="/">
+            <img src="/icons/home2.png" class="icon" alt="Home">
+        </a>
+        <a href="/search">
+            <img src="/icons/sg.png" class="icon" alt="Search">
+        </a>
+        <a href="/favorites">
+            <img src="/icons/heart.png" class="icon" alt="Favorites">
+        </a>
+        <a href="/gilbertprofile">
+            <img src="/icons/profil.png" class="icon" alt="Profile">
+        </a>
+        <a href="/notifications">
+            <img src="/icons/notification.png" class="icon" alt="Notifications">
         </a>
     </div>
-    <div th:if="${errors}">
-        <ul>
-            <li th:each="err : ${errors}" th:text="${err.defaultMessage}" style="color: red;"></li>
-        </ul>
+</nav>
+
+<footer class="footer-container">
+    <div class="footer-links-bar">
+        <a href="/about">About Us</a>
+        <a href="/help">Support</a>
+        <a href="/terms">Terms & Conditions</a>
+        <a href="/privacy">Privacy Policy</a>
     </div>
-
-<div class="register-bar">
-    <br><label for="name">Name:</label><br>
-    <input type="text" id="name" placeholder="Ex. John" th:field="*{name}" required><br><br>
-
-    <label for="email">Email:</label><br>
-    <input type="email" id="email" placeholder="Ex. john@gmail.com" th:field="*{email}" required><br><br>
-
-    <label for="password">Password:</label><br>
-    <input type="password" id="password" placeholder="Password" th:field="*{password}" required><br><br>
-
-    <label for="image">Upload picture</label>
-    <input type="file" id="image" name="image" accept="image/*">
-
-    <button type="submit">Register</button>
-</div>
-
-    <nav>
-        <div class="nav-container">
-            <a href="/">
-                <img src="/icons/home2.png" class="icon" width="80px" >
-            </a>
-            <a href="search">
-                <img src="/icons/sg.png" class="icon" width="70px" >
-            </a>
-            <a href="favorites">
-                <img src="/icons/heart.png" class="icon" width="75px" >
-            </a>
-            <a href="/gilbertprofile">
-                <img src="/icons/profil.png" class="icon" width="80px">
-            </a>
-            <a href="notifications">
-                <img src="/icons/notification.png" class="icon" width="80px" alt="Notifications">
-            </a>
+    <div class="footer-content">
+        <div class="footer-contact">
+            <p>Contact: info@gilbert.com | +45 1234 5678</p>
+            <p>Address: 123 Fashion Street, Copenhagen, Denmark</p>
         </div>
-    </nav>
-</form>
-
+        <div class="footer-social">
+            <a href="https://facebook.com/gilbert">Facebook</a>
+            <a href="https://instagram.com/gilbert">Instagram</a>
+            <a href="https://twitter.com/gilbert">Twitter</a>
+        </div>
+        <div class="footer-copyright">
+            <p>© 2025 ccco</p>
+        </div>
+    </div>
+</footer>
 </body>
 </html>
