@@ -6,7 +6,7 @@
 }
 
 @font-face {
-    font-family: 'theseasons';
+    font-family: 'theseasons', Georgia, serif;
     src: url('fonts/theseasons.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
@@ -15,7 +15,7 @@
 body {
     background-color: #f8f0e5; /* Off-white background */
     color: #423a26; /* Dark brown text */
-    font-family: 'theseasons', sans-serif;
+    font-family: 'theseasons', Garamond, serif;
     line-height: 1.6;
 }
 
@@ -86,7 +86,7 @@ h1 a {
     color: #423a26;
     width: 200px;
     outline: none;
-    font-family: 'theseasons', sans-serif;
+    font-family: 'theseasons', Garamond, serif;
 }
 
 /* Auth Links (Front Page) */
@@ -354,7 +354,7 @@ h1 a {
     background-color: #fff;
     color: #423a26;
     border-radius: 5px;
-    font-family: 'theseasons', sans-serif;
+    font-family: 'theseasons', Garamond,serif;
 }
 
 /* Mobile Navigation */
@@ -543,7 +543,7 @@ main h3 {
     background-color: #f8f0e5;
     color: #423a26;
     outline: none;
-    font-family: 'theseasons', sans-serif;
+    font-family: 'theseasons', Garamond, serif;
 }
 
 .form-group input[type="file"] {
