@@ -1,164 +1,184 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html>
+
 <head>
     <title>Gilbert</title>
     <link rel="stylesheet" type="text/css" href="/gilbertstyle.css">
     <meta charset="UTF-8">
-    <link rel="icon" type="image/png" href="/icons/Profil32x32_3.png">
+    <link rel="icon" type="image/png"  href="/icons/Profil32x32_3.png">
     <meta name="description" content="Køb og salg af brugt mærkevaretøj">
     <meta name="keywords" content="køb, salg, Gucci, Rolex, fashion, genbrug">
     <meta name="author" content="ccco">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
+<header>
+    <form class="search" action="/search" method="get">
+        <input type="text" name="q" placeholder="Search for products..." required>
+    </form>
+    <div class="RegisterLogin-bar">
+        <a class="heart" href="favorites">
+            <img src="/icons/heart.png" class="icon" width="45px">
+        </a>
+        <a class="notification" href="notifications">
+            <img src="/icons/notification.png" class="icon" width="45px">
+        </a>
+        <a class="profile" href="gilbertprofile">
+            <img src="/icons/profil.png" class="icon" width="45px">
+        </a>
+        <a th:if="${user != null}" href="gilbertprofile" class="profilelink">
+            <img th:src="${user.imgsrc != null} ? @{/userimage/} + ${user.imgsrc} : @{/icons/profil.png}" class="profilpicture" width="45" height="45">
+        </a>
+        <a th:if="${user == null}" href="register">Sign Up</a>
+        <a th:if="${user == null}" href="login">Log in</a>
+    </div>
+</header>
+<h2><a href="/"> Gilbert</a></h2>
+
 <body>
-<header class="header-container">
-    <div class="header-content">
-        <div class="desktop-search">
-            <form action="/search" method="get">
-                <input type="text" name="q" placeholder="Search for products..." required>
-            </form>
-        </div>
-        <h1><a href="/">Gilbert</a></h1>
-        <div class="auth-links">
-            <a th:if="${user == null}" id="SignIn" href="/login">Sign in</a>
-            <a th:if="${user == null}" id="SignUp" href="/register">Sign up</a>
-            <a th:if="${user != null}" href="/favorites" class="favorites">
-                <img src="/icons/heart.png" class="icon" alt="Favorites">
-            </a>
-            <a th:if="${user != null}" href="/notifications" class="notifications">
-                <img src="/icons/notification.png" class="icon" alt="Notifications">
-            </a>
-            <a th:if="${user != null}" href="/gilbertprofile" class="profilelink">
-                <img th:src="${user.imgsrc != null} ? @{/userimage/} + ${user.imgsrc} : @{/icons/profil.png}" class="profilpicture" alt="Profile">
-            </a>
+
+<div class="button-bar-index">
+    <div class="dropdown">
+        <a href="/women">Women</a>
+        <div class="dropdown-content">
+            <a href="/women/clothing">Clothing</a>
+            <a href="/women/bags">Bags</a>
+            <a href="/women/shoes">Shoes</a>
+            <a href="/women/accessories">Accessories</a>
         </div>
     </div>
-    <nav class="button-bar-index">
-        <div class="dropdown">
-            <a href="/women">Women</a>
-            <div class="dropdown-content">
-                <a href="/women/clothing">Clothing</a>
-                <a href="/women/bags">Bags</a>
-                <a href="/women/shoes">Shoes</a>
-                <a href="/women/accessories">Accessories</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <a href="/men">Men</a>
-            <div class="dropdown-content">
-                <a href="/men/clothing">Clothing</a>
-                <a href="/men/bags">Bags</a>
-                <a href="/men/shoes">Shoes</a>
-                <a href="/men/accessories">Accessories</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <a href="/home">Home</a>
-            <div class="dropdown-content">
-                <a href="/home/interior">Interior and furniture</a>
-                <a href="/home/decoration">Decoration</a>
-                <a href="/home/kitchen">Kitchen</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <a href="/beauty">Beauty</a>
-            <div class="dropdown-content">
-                <a href="/beauty/makeup">Makeup</a>
-                <a href="/home/fragrance">Fragrance</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <a href="/designers">Designers</a>
-            <div class="dropdown-content">
-                <a href="/designer1">Designer1</a>
-                <a href="/designer2">Designer2</a>
-                <a href="/designer3">Designer3</a>
-            </div>
-        </div>
-    </nav>
-</header>
 
-<div class="search-overlay" id="searchOverlay">
-    <div class="search-box">
-        <form action="/search" method="get">
-            <input type="text" name="q" placeholder="Search for products..." required>
-        </form>
+    <div class="dropdown">
+        <a href="/men">Men</a>
+        <div class="dropdown-content">
+            <a href="/men/clothing">Clothing</a>
+            <a href="/men/bags">Bags</a>
+            <a href="/men/shoes">Shoes</a>
+            <a href="/men/accessories">Accessories</a>
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <a href="/home">Home</a>
+        <div class="dropdown-content">
+            <a href="/home/interior">Interior and furniture</a>
+            <a href="/home/decoration">Decoration</a>
+            <a href="/home/kitchen">Kitchen</a>
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <a href="/beauty">Beauty</a>
+        <div class="dropdown-content">
+            <a href="/beauty/makeup">Makeup</a>
+            <a href="/home/fragrance">Fragrance</a>
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <a href="/designers">Designers</a>
+        <div class="dropdown-content">
+            <a href="/designer1">Designer1</a>
+            <a href="/designer2">Designer2</a>
+            <a href="/designer3">Designer3</a>
+        </div>
     </div>
 </div>
 
-<nav class="mobile-nav">
+
+
+
+
+<br>
+<h3>Daily listings</h3>
+
+<div class="productscontainer">
+    <p>Womens</p>
+    <div class ="productlisting" th:each="product : ${randomWomensProducts}">
+        <div class="product-picture">
+        <img th:src="@{'/productimage/' + ${product.imgsrc}}" style="max-width: 200px; max-height: 200px;" alt="no pic">
+            <form th:action="@{/products/addToFavorites/{id}(id=${product.id})}" method="post">
+                <button type="submit" class="favorite-button" th:if="${session.currentUser != null and not #lists.contains(favorites, product.id)}">
+                    🤍
+                </button>
+            </form>
+            <form th:action="@{/products/removeAsFavorite/{id}(id=${product.id})}" method="post">
+                <button type="submit" class="favorite-button" th:if="${session.currentUser != null and #lists.contains(favorites, product.id)}">
+                    ❤️
+                </button>
+            </form>
+        </div>
+        <p class ="productname" th:text="${product.name}"></p>
+        <p th:text="${product.brand}"></p>
+        <p th:text="${product.price}"></p>
+    </div>
+    <p>Mens</p>
+    <div class ="productlisting" th:each="product : ${randomMensProducts}">
+        <div class="product-picture">
+        <img th:src="@{'/productimage/' + ${product.imgsrc}}" style="max-width: 200px; max-height: 200px;" alt="no pic">
+            <form th:action="@{/products/addToFavorites/{id}(id=${product.id})}" method="post">
+                <button type="submit" class="favorite-button" th:if="${session.currentUser != null and not #lists.contains(favorites, product.id)}">
+                    🤍
+                </button>
+            </form>
+            <form th:action="@{/products/removeAsFavorite/{id}(id=${product.id})}" method="post">
+                <button type="submit" class="favorite-button" th:if="${session.currentUser != null and #lists.contains(favorites, product.id)}">
+                    ❤️
+                </button>
+            </form>
+        </div>
+        <p class ="productname" th:text="${product.name}"></p>
+        <p th:text="${product.brand}"></p>
+        <p th:text="${product.price}"></p>
+    </div>
+    <p>Bags</p>
+    <div class ="productlisting" th:each="product : ${randomBags}">
+        <div class="product-picture">
+        <img th:src="@{'/productimage/' + ${product.imgsrc}}" style="max-width: 200px; max-height: 200px;" alt="no pic">
+            <form th:action="@{/products/addToFavorites/{id}(id=${product.id})}" method="post">
+                <button type="submit" class="favorite-button" th:if="${session.currentUser != null and not #lists.contains(favorites, product.id)}">
+                    🤍
+                </button>
+            </form>
+            <form th:action="@{/products/removeAsFavorite/{id}(id=${product.id})}" method="post">
+                <button type="submit" class="favorite-button" th:if="${session.currentUser != null and #lists.contains(favorites, product.id)}">
+                    ❤️
+                </button>
+            </form>
+        </div>
+        <p class ="productname" th:text="${product.name}"></p>
+        <p th:text="${product.brand}"></p>
+        <p th:text="${product.price}"></p>
+    </div>
+</div>
+
+<nav>
     <div class="nav-container">
         <a href="/">
-            <img src="/icons/home2.png" class="icon" alt="Home">
+            <img src="/icons/home2.png" class="icon" width="80px" >
         </a>
-        <a id="search-icon">
-            <img src="/icons/sg.png" class="icon" alt="Search">
+        <a href="search">
+            <img src="/icons/sg.png" class="icon" width="70px" >
         </a>
-        <a href="/favorites">
-            <img src="/icons/heart.png" class="icon" alt="Favorites">
+        <a href="favorites">
+            <img src="/icons/heart.png" class="icon" width="75px" >
         </a>
-        <a href="/gilbertprofile">
-            <img src="/icons/profil.png" class="icon" alt="Profile">
+        <a href="gilbertprofile">
+            <img src="/icons/profil.png" class="icon" width="80px">
         </a>
-        <a href="/notifications">
-            <img src="/icons/notification.png" class="icon" alt="Notifications">
+        <a href="notifications">
+            <img src="/icons/notification.png" class="icon" width="80px" alt="Notifications">
         </a>
     </div>
 </nav>
 
-<script src="/search.js"></script>
 
-<main>
-    <h2 id="mainHeader">Daily Listings</h2>
-    <div class="products-container">
-        <h3>Womens</h3>
-        <div th:each="product : ${randomWomensProducts}" class="product-card">
-            <img th:src="@{'/productimage/' + ${product.imgsrc}}" class="product-image" alt="Product Image">
-            <p class="productname" th:text="${product.name}"></p>
-            <p th:text="${product.brand}"></p>
-            <p th:text="${product.price} + ' €'"></p>
-            <button>Add to favorites</button>
-        </div>
-        <h3>Mens</h3>
-        <div th:each="product : ${randomMensProducts}" class="product-card">
-            <img th:src="@{'/productimage/' + ${product.imgsrc}}" class="product-image" alt="Product Image">
-            <p class="productname" th:text="${product.name}"></p>
-            <p th:text="${product.brand}"></p>
-            <p th:text="${product.price} + ' €'"></p>
-            <button>Add to favorites</button>
-        </div>
-        <h3>Bags</h3>
-        <div th:each="product : ${randomBags}" class="product-card">
-            <img th:src="@{'/productimage/' + ${product.imgsrc}}" class="product-image" alt="Product Image">
-            <p class="productname" th:text="${product.name}"></p>
-            <p th:text="${product.brand}"></p>
-            <p th:text="${product.price} + ' €'"></p>
-            <button>Add to favorites</button>
-        </div>
-    </div>
-</main>
 
-<footer class="footer-container">
-    <div class="footer-links-bar">
-        <a href="/about">About Us</a>
-        <a href="/help">Support</a>
-        <a href="/terms">Terms & Conditions</a>
-        <a href="/privacy">Privacy Policy</a>
-    </div>
-    <div class="footer-content">
-        <div class="footer-contact">
-            <p>Contact: info@gilbert.com | +45 1234 5678</p>
-            <p>Address: 123 Fashion Street, Copenhagen, Denmark</p>
-        </div>
-        <div class="footer-social">
-            <a href="https://facebook.com/gilbert">Facebook</a>
-            <a href="https://instagram.com/gilbert">Instagram</a>
-            <a href="https://twitter.com/gilbert">Twitter</a>
-        </div>
-        <div class="footer-copyright">
-            <p>© 2025 ccco</p>
-        </div>
-    </div>
+<footer>
+    <p>&copy; 2025 ccco</p>
 </footer>
+
 </body>
+
 </html>

@@ -17,7 +17,7 @@ public class ProductRepo {
 
     // CREATE
     public void createProduct(Product product) {
-        String sql = "INSERT INTO Product (name, brand, location, description, department, category, subcategory, posted_date, price, p_condition, size, color, imgsrc, createdByID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO product (name, brand, location, description, department, category, subcategory, posted_date, price, p_condition, size, color, imgsrc, createdByID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql,
                 product.getName(),
                 product.getBrand(),
