@@ -38,7 +38,9 @@ public class FrontpageController {
 
     // Går til siden search og søger på hvad ens query er
     @GetMapping("/search")
-    public String searchResults(@RequestParam String q, Model model) {
+    public String searchResults(@RequestParam String q, Model model, HttpSession session) {
+        User user = (User) session.getAttribute("currentUser");
+        model.addAttribute("user", user);
         model.addAttribute("query", q);
         // Laver en lokal liste af de produkter der, som man søger på
         List<Product> searchProducts = productsService.searchProducts(q);

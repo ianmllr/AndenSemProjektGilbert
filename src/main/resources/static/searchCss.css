@@ -13,6 +13,10 @@ h1 {
     margin-top: 20px;
 }
 
+h1 a {
+    text-decoration: none;
+}
+
 .button-bar-index {
     display: flex;
     justify-content: space-between;
@@ -36,6 +40,7 @@ h1 {
 .button-bar-index a:hover {
     text-decoration: underline #f8f0e5;
 }
+
 /* Desktop Search Bar */
 .desktop-search {
     position: absolute;
@@ -114,6 +119,79 @@ h1 {
     justify-content: center;
 }
 
+/* Sign in and Sign up links */
+.auth-links {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    display: flex;
+    gap: 15px;
+    z-index: 100;
+}
+
+.auth-links a {
+    text-decoration: none;
+    font-size: 1.2em;
+    padding: 5px 10px;
+    transition: background-color 0.3s ease;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+.auth-links img {
+    border-radius: 50%;
+}
+/* Product container and card styling */
+.products-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.product-card {
+    background-color: #423a26;
+    border-radius: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 15px;
+}
+
+.product-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.product-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 0;
+    transition: opacity 0.3s ease;
+}
+
+.product-card:hover .product-image {
+    opacity: 0.9;
+}
+
+.product-card h3 {
+    font-size: 24px;
+    margin: 10px 0;
+    color: #f8f0e5;
+}
+
+.product-card p {
+    font-size: 16px;
+    margin: 5px 0;
+    color: #f8f0e5;
+}
+
+/* Mobile adjustments */
 @media only screen and (max-width: 600px) {
     nav {
         position: fixed;
@@ -130,12 +208,44 @@ h1 {
         align-items: center;
     }
 
-    /* Ensure search-box is visible on mobile when overlay is shown */
     .search-box {
         display: flex;
     }
+
+    .products-container {
+        grid-template-columns: 1fr;
+        padding: 10px;
+    }
+
+    .product-card h3 {
+        font-size: 20px;
+    }
+
+    .product-card p {
+        font-size: 14px;
+    }
+
+    .product-image {
+        height: 150px;
+    }
+
+    .auth-links {
+        top: 5px;
+        right: 10px;
+        gap: 10px;
+    }
+
+    .auth-links a {
+        font-size: 1em;
+        padding: 3px 8px;
+    }
+}
+.products-container img {
+    width: 100%;
 }
 
+
+/* Desktop adjustments */
 @media only screen and (min-width: 600px) {
     .nav-container {
         display: none;

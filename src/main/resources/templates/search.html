@@ -13,20 +13,39 @@
 
 </head>
 <body>
+<header>
+
 <!--Desktop søgefelt-->
 <div class="desktop-search">
     <form action="/search" method="get">
         <input type="text" name="q" placeholder="Search for products..." required>
     </form>
 </div>
-<h1>Gilbert</h1>
-<div class="button-bar-index">
-    <a href="women.html">Women</a>
-    <a href="men.html">Men</a>
-    <a href="designers.html">Designers</a>
-    <a href="home.html">Home</a>
-    <a href="beauty.html">Beauty</a>
+<h1><a href="/">Gilbert</a></h1>
+
+<div class="auth-links">
+    <a th:if="${user == null}" id="Sign in" href="/login">Sign in</a>
+    <a th:if="${user == null}" id="Sign up" href="/register">Sign up</a>
+    <a th:if="${user != null}" href="/favorites" class="favorites">
+        <img src="/icons/heart.png" class="icon" width="45px">
+    </a>
+    <a th:if="${user != null}" href="/notifications" class="notifications">
+        <img src="/icons/notification.png" class="icon" width="45px">
+    </a>
+    <a th:if="${user != null}" href="gilbertprofile" class="profilelink">
+        <img th:src="${user.imgsrc != null} ? @{/userimage/} + ${user.imgsrc} : @{/icons/profil.png}" class="profilpicture" width="45" height="45">
+    </a>
 </div>
+    <div class="button-bar-index">
+        <a href="women.html">Women</a>
+        <a href="men.html">Men</a>
+        <a href="designers.html">Designers</a>
+        <a href="home.html">Home</a>
+        <a href="beauty.html">Beauty</a>
+    </div>
+</header>
+
+
 
 <!--Mobil søgefelt-->
 <div class="search-overlay" id="searchOverlay">
@@ -64,10 +83,11 @@
 <h2 id = searchHeader>Search Results for "<span th:text="${query}"></span>"</h2>
 <div class="products-container">
     <div th:each="product : ${products}" class="product-card">
-        <img th:src="${product.imgsrc}" alt="Product Image" class="product-image">
-        <h3 th:text="${product.name}"></h3>
-        <p>Brand: <span th:text="${product.brand}"></span></p>
-        <p>Price: <span th:text="${product.price}"></span> DKK</p>
+        <img th:src="@{'/productimage/' + ${product.imgsrc}}" width="350" height="385" alt="no pic">
+        <h3 th:text="${product.brand}"></h3>
+        <p><span th:text="${product.name}"></span></p>
+        <p><span th:text="${product.subcategory}"></span></p>
+        <p><span th:text="${product.price}"></span> €</p>
     </div>
 </div>
 </body>
