@@ -47,6 +47,10 @@ public class FrontpageController {
     @GetMapping("/search")
     public String searchResults(@RequestParam String q, Model model, HttpSession session) {
         User user = (User) session.getAttribute("currentUser");
+        if (user != null) {
+            List<Integer> favoriteIds = favoriteService.getFavoriteIds(user.getId());
+            model.addAttribute("favorites", favoriteIds);
+        }
         model.addAttribute("user", user);
         model.addAttribute("query", q);
         // Laver en lokal liste af de produkter der, som man søger på

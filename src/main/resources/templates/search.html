@@ -80,7 +80,19 @@
     <h2 id="searchHeader">Search Results for "<span th:text="${query}"></span>"</h2>
     <div class="products-container">
         <div th:each="product : ${products}" class="product-card">
-            <img th:src="@{'/productimage/' + ${product.imgsrc}}" class="product-image" alt="Product Image">
+            <div class="product-picture">
+                <img th:src="@{'/productimage/' + ${product.imgsrc}}" style="max-width: 200px; max-height: 200px;" alt="no pic">
+                <form th:action="@{/products/addToFavorites/{id}(id=${product.id})}" method="post">
+                    <button type="submit" class="favorite-button" th:if="${session.currentUser != null and not #lists.contains(favorites, product.id)}">
+                        🤍
+                    </button>
+                </form>
+                <form th:action="@{/products/removeAsFavorite/{id}(id=${product.id})}" method="post">
+                    <button type="submit" class="favorite-button" th:if="${session.currentUser != null and #lists.contains(favorites, product.id)}">
+                        ❤️
+                    </button>
+                </form>
+            </div>
             <h3 th:text="${product.brand}"></h3>
             <p th:text="${product.name}"></p>
             <p th:text="${product.subcategory}"></p>

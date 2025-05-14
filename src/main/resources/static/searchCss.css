@@ -319,7 +319,16 @@ main h2 {
     text-align: center;
     margin-top: 20px;
 }
-
+.favorite-button {
+    background-color: transparent !important;  /* Transparent background */
+    border: none !important;
+    font-size: 24px; /* Adjust size as needed */
+    cursor: pointer;
+    padding: 5px;
+}
+.favorite-button:hover {
+    transform: scale(1.2); /* Slight zoom effect on hover */
+}
 
 /* Mobile Adjustments */
 @media only screen and (max-width: 600px) {
