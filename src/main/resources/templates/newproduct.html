@@ -11,7 +11,13 @@
 <header class="simple-header">
     <h1><a href="/">Gilbert</a></h1>
 </header>
-
+<div class="profile-button-bar">
+    <a href="gilbertlistings.html">Listings</a>
+    <a href="gilbertsales.html">Sales</a>
+    <a href="gilbertorders.html">Orders</a>
+    <a href="gilbertinfo.html">Info</a>
+    <a href="gilberthelp.html">Help</a>
+</div>
 <main>
     <h2>Create a new listing</h2>
     <form th:action="@{/gilbertprofile/newproduct}" th:object="${product}" th:method="post" enctype="multipart/form-data" class="newproduct-form">

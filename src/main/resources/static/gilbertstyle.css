@@ -28,7 +28,7 @@ body {
 }
 
 .simple-header h1 {
-    font-size: 2em;
+    font-size: 4em;
     color: #f8f0e5; /* White text */
 }
 
@@ -55,7 +55,7 @@ body {
 }
 
 h1 {
-    font-size: 2em;
+    font-size: 4em;
     color: #f8f0e5; /* White text */
     flex-grow: 1;
     text-align: center;
@@ -92,9 +92,9 @@ h1 a {
 /* Auth Links (Front Page) */
 .auth-links {
     display: flex;
-    gap: 15px;
     align-items: center;
     flex: 0 0 auto;
+
 }
 
 .auth-links a {
@@ -107,57 +107,58 @@ h1 a {
 
 .auth-links a:hover {
     text-decoration: underline;
+    transform: scale(1.15);
 }
 
 .auth-links .icon {
-    width: 40px;
-    height: 40px;
-    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    vertical-align: center;
 }
 
+
 .profilelink img {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid #f8f0e5;
     transition: transform 0.3s ease;
 }
 
-.profilelink img:hover {
-    transform: scale(1.1);
-}
-
 /* Profile Header (for Profile Page) */
 .profile-header {
     background-color: #004224; /* Dark green background */
-    padding: 15px 0;
     border-bottom: 1px solid #f8f0e5;
     width: 100%;
 }
 
 .profile-header-content {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+    justify-content: center; /* Centrerer indholdet */
+    width: 83%; /* Sørger for, at det fylder hele bredden */
+    padding: 1.5em;
+    .profile-h1 {
+        width: 100%;
+    }
 }
 
 .profile-user-info {
+
     color: #f8f0e5;
     text-align: left;
+    margin-left: 2em;
 }
-
 .profile-user-info h2 {
     font-size: 1.8em;
     margin-bottom: 5px;
 }
-
 .profile-user-info p {
     font-size: 1.1em;
     margin-bottom: 3px;
+    display: inline-block;
+    margin-right: 10px;
 }
 
 .profile-title {
@@ -166,7 +167,7 @@ h1 a {
 }
 
 .profile-title h1 {
-    font-size: 2em;
+    font-size: 4em;
     color: #f8f0e5;
     margin: 0;
 }
@@ -232,7 +233,8 @@ h1 a {
 }
 
 .button-bar-index .dropdown a:hover {
-    background-color: #004224; /* Green on hover */
+    background-color: #f8f0e5; /* Green on hover */
+    color: #423a26;
 }
 
 .button-bar-index .dropdown-content {
@@ -240,8 +242,9 @@ h1 a {
     position: absolute;
     background-color: #423a26;
     min-width: 100%;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
     z-index: 1;
+
 }
 
 .button-bar-index .dropdown-content a {
@@ -253,7 +256,7 @@ h1 a {
 }
 
 .button-bar-index .dropdown-content a:hover {
-    background-color: #004224;
+    background-color: #f8f0e5;
 }
 
 .button-bar-index .dropdown:hover .dropdown-content {
@@ -273,6 +276,7 @@ h1 a {
     margin: 0;
 }
 
+
 .profile-button-bar a {
     display: block;
     width: 100%;
@@ -285,8 +289,10 @@ h1 a {
 }
 
 .profile-button-bar a:hover {
-    background-color: #004224; /* Green on hover */
+    background-color: #f8f0e5; /* Green on hover */
+    color: #423a26;
 }
+
 
 /* Profile Buttons */
 .edituserclass, .createnewlistingclass {
@@ -389,7 +395,11 @@ main {
     padding: 40px 20px;
     min-height: calc(100vh - 120px); /* Adjust based on header/footer height */
 }
-
+.main2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 main h2 {
     color: #423a26;
     text-align: center;
@@ -713,11 +723,17 @@ main h3 {
     font-size: 24px; /* Adjust size as needed */
     cursor: pointer;
     padding: 5px;
+    position: absolute;
+    top: 1px;
+    right: 1px;
 }
 .favorite-button:hover {
     transform: scale(1.2); /* Slight zoom effect on hover */
 }
-
+.product-picture {
+    position: relative;
+    display: inline-block;
+}
 
 /* Mobile Adjustments */
 @media only screen and (max-width: 600px) {
@@ -736,8 +752,7 @@ main h3 {
     }
 
     h1 {
-        font-size: 1.8em;
-        margin: 10px 0;
+        font-size: 3em;
     }
 
     .auth-links {
@@ -834,7 +849,6 @@ main h3 {
     .product-image {
         height: 150px;
     }
-
     .profile-productlisting h3 {
         font-size: 1.2em;
     }
@@ -880,7 +894,6 @@ main h3 {
     .form-group textarea {
         font-size: 0.9em;
     }
-
     .newproduct-form button {
         font-size: 1em;
         padding: 8px;

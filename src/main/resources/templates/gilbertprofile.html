@@ -11,19 +11,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+
 <header class="profile-header">
+
   <div class="profile-header-content">
+    <div class="profile-title">
+      <a href="edituser" class="profile-picture-link">
+        <img th:src="${user.imgsrc != null} ? @{/userimage/} + ${user.imgsrc} : @{/icons/profil.png}" class="profile-picture" alt="Profile">
+      </a>
+    </div>
     <div class="profile-user-info">
       <h2 th:text="${user}"></h2>
       <p th:text="${user.sales} + ' salg'"></p>
       <p th:text="${user.rating}"></p>
     </div>
-    <div class="profile-title">
-
-    </div>
-    <a href="edituser" class="profile-picture-link">
-      <img th:src="${user.imgsrc != null} ? @{/userimage/} + ${user.imgsrc} : @{/icons/profil.png}" class="profile-picture" alt="Profile">
-    </a>
+    <h1 class="profile-h1"><a href="/">Gilbert</a></h1>
   </div>
 </header>
 
@@ -52,7 +54,7 @@
       <p class="productname" th:text="${product.name}"></p>
       <p th:text="${product.brand}"></p>
       <p th:text="${product.price} + ' €'"></p>
-      <button>Add to favorites</button>
+      <button>Edit listing</button>
     </div>
   </div>
 </main>
