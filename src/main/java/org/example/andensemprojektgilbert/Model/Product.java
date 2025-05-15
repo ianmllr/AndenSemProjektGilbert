@@ -11,17 +11,17 @@ public class Product {
     private String category;
     private String subcategory;
     private double price;
-    private String p_condition;
+    private String condition;
     private String size;
     private String color;
     private Date postedDate;
     private String description;
     private String location;
     private String imgsrc;
-    private int createdByID;
+    private String createdBy;
 
 
-    public Product(int id, String name, String brand, String location, String description, String department, String category, String subcategory, Date postedDate, double price, String p_condition, String size, String color, String imgsrc, int createdByID)
+    public Product(int id, String name, String brand, String location, String description, String department, String category, String subcategory, Date postedDate, double price, String condition, String size, String color, String imgsrc, String createdBy)
     {
         this.id = id;
         this.name = name;
@@ -32,12 +32,12 @@ public class Product {
         this.category = category;
         this.subcategory = subcategory;
         this.price = price;
-        this.p_condition = p_condition;
+        this.condition = condition;
         this.size = size;
         this.color = color;
         this.postedDate = postedDate;
         this.imgsrc = imgsrc;
-        this.createdByID = createdByID;
+        this.createdBy = createdBy;
     }
 
     public Product() {}
@@ -83,11 +83,11 @@ public class Product {
     public void setPrice(double price) {
         this.price = price;
     }
-    public String getP_condition() {
-        return p_condition;
+    public String getCondition() {
+        return condition;
     }
-    public void setP_condition(String p_condition) {
-        this.p_condition = p_condition;
+    public void setCondition(String condition) {
+        this.condition = condition;
     }
     public String getSize() {
         return size;
@@ -125,11 +125,10 @@ public class Product {
     public void setImgsrc(String imgsrc) {
         this.imgsrc = imgsrc;
     }
-    public int getCreatedByID() {
-        return createdByID;
+    public String getCreatedByID() {
+        return createdBy;
     }
-    public void setCreatedByID(int createdByID) {
-        this.createdByID = createdByID;
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
-
 }
