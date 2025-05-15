@@ -78,11 +78,11 @@ public class ProductsService {
     }
 
 
-    public void createProduct(Product product) {
+    public void createProduct(Product product, User user) {
         if (product != null) {
             product.setPostedDate(new java.util.Date());
 
-            productRepo.createProduct(product);
+            productRepo.createProduct(product, user);
         } else {
             // debug logging her
         }

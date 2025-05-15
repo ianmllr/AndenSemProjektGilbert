@@ -14,8 +14,24 @@ public class FavoriteRepo {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public List<Product> getFavorites(int userid) {
-        String sql = "SELECT * FROM product JOIN favorite ON productid = id where userid = ?";
+    public List<Product> getFavorites(int userId) {
+        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, \n" +
+                "d.name AS department, c.name AS category, s.name AS subcategory,\n" +
+                "p.posted_date, p.price, i.itemcondition AS `condition`, p.size, o.color AS color,\n" +
+                "p.imgsrc, u.name AS createdBy\n" +
+                "FROM gilbert.Favorite f\n" +
+                "JOIN gilbert.Product p ON f.productid = p.id\n" +
+                "LEFT JOIN gilbert.Brand b ON p.brand_id = b.id\n" +
+                "LEFT JOIN gilbert.Location l ON p.location_id = l.id\n" +
+                "LEFT JOIN gilbert.Category_Department cd ON cd.department_id = p.department_id\n" +
+                "LEFT JOIN gilbert.Department d ON cd.department_id = d.id \n" +
+                "LEFT JOIN gilbert.Category c ON cd.category_id = c.id\n" +
+                "LEFT JOIN gilbert.condition i ON i.idcondition = p.condition_id\n" +
+                "LEFT JOIN gilbert.color o ON o.idcolor = p.color_id\n" +
+                "LEFT JOIN gilbert.Subcategory s ON p.subcategory_id = s.id\n" +
+                "LEFT JOIN gilbert.`User` u ON p.createdByID = u.id\n" +
+                "WHERE f.userid = ?;";
+
         return jdbcTemplate.query(sql, (rs, rowNum) -> new Product(
                 rs.getInt("id"),
                 rs.getString("name"),
@@ -27,13 +43,14 @@ public class FavoriteRepo {
                 rs.getString("subcategory"),
                 rs.getDate("posted_date"),
                 rs.getDouble("price"),
-                rs.getString("p_condition"),
+                rs.getString("condition"),
                 rs.getString("size"),
                 rs.getString("color"),
                 rs.getString("imgsrc"),
-                rs.getInt("createdByID")
-                ), userid);
+                rs.getString("createdBy") // Changed to display_name from Users table
+        ), userId);
     }
+
 
     public boolean addFavorite(int userId, int productId) {
         String sql = "INSERT INTO favorite (userid, productid) VALUES (?, ?)";

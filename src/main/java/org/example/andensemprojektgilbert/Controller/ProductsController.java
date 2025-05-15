@@ -53,7 +53,7 @@ public class ProductsController {
     public String postNewProduct(@ModelAttribute Product product, HttpSession session, Model model, @RequestParam("image") MultipartFile image, RedirectAttributes redirectAttributes) {
         User user = (User) session.getAttribute("currentUser");
         model.addAttribute("product", product);
-        product.setCreatedByID(user.getId());
+        product.setCreatedBy(user.getName());
         if (!image.isEmpty()) {
             if (image.getSize() > 3*1024*1024) {
                 redirectAttributes.addFlashAttribute("message", "Image is too large to upload");
@@ -71,7 +71,7 @@ public class ProductsController {
                 throw new RuntimeException(e);
             }
         }
-        productsService.createProduct(product);
+        productsService.createProduct(product, user);
         return "redirect:/gilbertprofile";
     }
 }
