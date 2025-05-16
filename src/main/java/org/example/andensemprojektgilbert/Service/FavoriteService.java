@@ -36,11 +36,11 @@ public class FavoriteService {
     }
 
     public boolean removeFavorite(int userId, int productId) {
-         boolean removedAsFavorite = favoriteRepo.removeAsFavorite(userId, productId);
-         if (removedAsFavorite) {
-             return true;
-         }
-         return false;
+        boolean removedAsFavorite = favoriteRepo.removeAsFavorite(userId, productId);
+        if (removedAsFavorite) {
+            return true;
+        }
+        return false;
     }
 
 

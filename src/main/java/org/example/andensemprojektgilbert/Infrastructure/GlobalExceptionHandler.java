@@ -21,6 +21,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     public String handleEmptyResultDataAccessException(EmptyResultDataAccessException e, Model model) {
         model.addAttribute("exception", "Brugernavn eller kodeord eksisterer ikke");
+        e.printStackTrace();
         return "error";
     }
 

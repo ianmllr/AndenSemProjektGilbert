@@ -40,9 +40,8 @@
             <label for="category">Category:</label>
             <select id="category" th:field="*{category}" onchange="updateSubcategories();">
                 <option value="" disabled selected>Select a category</option>
-                <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+                <option th:each="cat : ${categories}" th:value="${cat.name}" th:text="${cat.name}" th:attr="data-category-id=${cat.id}"></option>
             </select>
-
 
             <label for="subcategory">Subcategory:</label>
             <select id="subcategory" th:field="*{subcategory}" onchange="updateSizesBySubcategory();" required>
@@ -91,7 +90,7 @@
             <label for="image">Upload picture:</label>
             <input type="file" id="image" name="image" accept="image/*">
 
-        <button type="submit">Opret opslag</button>
+            <button type="submit">Opret opslag</button>
         </div>
     </form>
 </main>
@@ -139,7 +138,6 @@
     </div>
 </footer>
 
-
 <script th:inline="javascript">
     let allSubcatOptions = [];
     let allSizeOptions = [];
@@ -147,18 +145,24 @@
     window.addEventListener('DOMContentLoaded', function() {
         allSubcatOptions = Array.from(document.querySelectorAll('#subcategory option[data-category-id]'));
         allSizeOptions = Array.from(document.querySelectorAll('#size option[data-size-type-id]'));
+        console.log("Loaded subcat options: ", allSubcatOptions);
     });
 
     function updateSubcategories() {
-        var catId = document.getElementById("category").value;
+        var categorySelect = document.getElementById("category");
+        var selectedOption = categorySelect.options[categorySelect.selectedIndex];
+        var catId = selectedOption ? selectedOption.getAttribute('data-category-id') : null;
+        console.log("Selected category ID: ", catId);
         var subcatSelect = document.getElementById("subcategory");
         subcatSelect.innerHTML = '<option value="" disabled selected>Select a subcategory</option>';
         allSubcatOptions.forEach(function(option) {
-            if (option.getAttribute('data-category-id') === catId) {
+            console.log("Checking option with data-category-id: ", option.getAttribute('data-category-id'));
+            if (catId && option.getAttribute('data-category-id') === catId) {
                 subcatSelect.appendChild(option.cloneNode(true));
+                console.log("Added subcategory: ", option.value);
             }
         });
-        // Nulstil sizes når subcategory ændres
+        // Reset sizes when subcategory changes
         updateSizesBySubcategory();
     }
 
@@ -175,9 +179,5 @@
         });
     }
 </script>
-
-
-
-
 </body>
 </html>

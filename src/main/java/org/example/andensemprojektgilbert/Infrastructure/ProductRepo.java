@@ -2,6 +2,7 @@ package org.example.andensemprojektgilbert.Infrastructure;
 
 import org.example.andensemprojektgilbert.Model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +15,7 @@ public class ProductRepo {
     private JdbcTemplate jdbcTemplate;
 
     private Integer getColorId(String color) {
-        String sql = "SELECT id from Color WHERE color = ?";
+        String sql = "SELECT idcolor from Color WHERE color = ?";
         return jdbcTemplate.queryForObject(sql, Integer.class, color);
     }
 
@@ -24,7 +25,7 @@ public class ProductRepo {
     }
 
     private Integer getConditionId(String condition) {
-        String sql = "SELECT id FROM ItemCondition WHERE name = ?";
+        String sql = "SELECT idcondition FROM gilbert.condition WHERE itemcondition = ?";
         return jdbcTemplate.queryForObject(sql, new Object[]{condition}, Integer.class);
     }
 
@@ -33,8 +34,16 @@ public class ProductRepo {
         return jdbcTemplate.queryForObject(sql, Integer.class, brandName);
     }
     private Integer getCategoryId(String categoryName) {
+        System.out.println("Looking for category: '" + categoryName + "'");
         String sql = "SELECT id FROM Category WHERE name = ?";
-        return jdbcTemplate.queryForObject(sql, Integer.class, categoryName);
+        try {
+            Integer categoryId = jdbcTemplate.queryForObject(sql, Integer.class, categoryName);
+            System.out.println("Found category ID: " + categoryId + " for category: " + categoryName);
+            return categoryId;
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println("No category found for: '" + categoryName + "'");
+            return null;
+        }
     }
     private Integer getSubcategoryId(String subcategoryName) {
         String sql = "SELECT id FROM Subcategory WHERE name = ?";
