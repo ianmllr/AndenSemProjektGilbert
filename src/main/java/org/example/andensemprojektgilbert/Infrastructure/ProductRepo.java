@@ -261,7 +261,7 @@ public class ProductRepo {
                 "LEFT JOIN color col ON p.color_id = col.idcolor\n" +
                 "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition\n" +
                 "LEFT JOIN size s ON p.size_id = s.id\n" +
-                "WHERE d.name = 'Bags' ORDER BY RAND() LIMIT 10";
+                "WHERE c.name = 'Bags' ORDER BY RAND() LIMIT 10";
         return getProducts(sql);
     }
 
