@@ -14,7 +14,7 @@ public class ProductRepo {
     private JdbcTemplate jdbcTemplate;
 
     private Integer getColorId(String color) {
-        String sql = "SELECT id from Color WHERE name = ?";
+        String sql = "SELECT idcolor from Color WHERE color = ?";
         return jdbcTemplate.queryForObject(sql, Integer.class, color);
     }
 
@@ -24,7 +24,7 @@ public class ProductRepo {
     }
 
     private Integer getConditionId(String condition) {
-        String sql = "SELECT id FROM ItemCondition WHERE name = ?";
+        String sql = "SELECT idcondition FROM gilbet.condition WHERE itemcondition = ?";
         return jdbcTemplate.queryForObject(sql, new Object[]{condition}, Integer.class);
     }
 
