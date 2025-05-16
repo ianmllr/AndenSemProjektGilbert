@@ -233,7 +233,7 @@ public class ProductRepo {
                 "       p.posted_date, p.price, i.itemcondition AS `condition`, p.size, o.color AS color,\n" +
                 "       p.imgsrc, u.name AS createdBy\n" +
                 "FROM Product p\n" +
-                "INNER JOIN Department d ON p.department_id = d.id\n" +
+                "JOIN Department d ON p.department_id = d.id\n" +
                 "LEFT JOIN Brand b ON p.brand_id = b.id\n" +
                 "LEFT JOIN Location l ON p.location_id = l.id\n" +
                 "LEFT JOIN Category_Department cd ON cd.category_id = p.category_id\n" +
