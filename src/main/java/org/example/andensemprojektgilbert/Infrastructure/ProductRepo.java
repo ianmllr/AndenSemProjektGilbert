@@ -140,6 +140,7 @@ public class ProductRepo {
         ));
     }
 
+
     public List<Product> readAllProducts() {
         String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, " +
                 "d.name AS department, c.name AS category, sc.name AS subcategory, " +
