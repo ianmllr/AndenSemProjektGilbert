@@ -14,7 +14,7 @@ public class ProductRepo {
     private JdbcTemplate jdbcTemplate;
 
     private Integer getColorId(String color) {
-        String sql = "SELECT idcolor from Color WHERE color = ?";
+        String sql = "SELECT idcolor from color WHERE color = ?";
         return jdbcTemplate.queryForObject(sql, Integer.class, color);
     }
 
@@ -24,28 +24,28 @@ public class ProductRepo {
     }
 
     private Integer getConditionId(String condition) {
-        String sql = "SELECT idcondition FROM gilbet.condition WHERE itemcondition = ?";
+        String sql = "SELECT idcondition FROM gilbert.condition WHERE itemcondition = ?";
         return jdbcTemplate.queryForObject(sql, new Object[]{condition}, Integer.class);
     }
 
     private Integer getBrandId(String brandName) {
-        String sql = "SELECT id FROM Brand WHERE name = ?";
+        String sql = "SELECT id FROM brand WHERE name = ?";
         return jdbcTemplate.queryForObject(sql, Integer.class, brandName);
     }
     private Integer getCategoryId(String categoryName) {
-        String sql = "SELECT id FROM Category WHERE name = ?";
+        String sql = "SELECT id FROM category WHERE name = ?";
         return jdbcTemplate.queryForObject(sql, Integer.class, categoryName);
     }
     private Integer getSubcategoryId(String subcategoryName) {
-        String sql = "SELECT id FROM Subcategory WHERE name = ?";
+        String sql = "SELECT id FROM subcategory WHERE name = ?";
         return jdbcTemplate.queryForObject(sql, Integer.class, subcategoryName);
     }
     private Integer getLocationId(String locationName) {
-        String sql = "SELECT id FROM Location WHERE name = ?";
+        String sql = "SELECT id FROM location WHERE name = ?";
         return jdbcTemplate.queryForObject(sql, Integer.class, locationName);
     }
     private Integer getDepartmentId(String departmentName) {
-        String sql = "SELECT id FROM Department WHERE name = ?";
+        String sql = "SELECT id FROM department WHERE name = ?";
         return jdbcTemplate.queryForObject(sql, Integer.class, departmentName);
     }
 
