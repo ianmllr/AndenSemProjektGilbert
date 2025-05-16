@@ -67,7 +67,7 @@ public class ProductsService {
     }
 
     public List<Product> getRandomMensProducts() {
-        if (productRepo.readRandomMensProducts().isEmpty()) {
+        if (!productRepo.readRandomMensProducts().isEmpty()) {
             return productRepo.readRandomMensProducts();
         } else {
             // debug logging her
@@ -76,7 +76,7 @@ public class ProductsService {
     }
 
     public List<Product> getRandomWomensProducts() {
-        if (productRepo.readRandomWomensProducts().isEmpty()) {
+        if (!productRepo.readRandomWomensProducts().isEmpty()) {
             return productRepo.readRandomWomensProducts();
         } else {
             // debug logging her
@@ -86,7 +86,7 @@ public class ProductsService {
 
 
     public List<Product> getRandomBags() {
-        if (productRepo.readRandomBags().isEmpty()) {
+        if (!productRepo.readRandomBags().isEmpty()) {
             return productRepo.readRandomBags();
         } else {
             // debug logging her
@@ -96,6 +96,7 @@ public class ProductsService {
 
 
     public void createProduct(Product product, User user) {
+        System.out.println(product.toString());
         if (product != null) {
             product.setPostedDate(new java.util.Date());
             productRepo.createProduct(product, user);

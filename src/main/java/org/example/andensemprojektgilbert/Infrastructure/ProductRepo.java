@@ -105,7 +105,7 @@ public class ProductRepo {
                 rs.getString("subcategory"),
                 rs.getDate("posted_date"),
                 rs.getDouble("price"),
-                rs.getString("condition"),
+                rs.getString("item_condition"),
                 rs.getString("size"),
                 rs.getString("color"),
                 rs.getString("imgsrc"),
@@ -151,111 +151,116 @@ public class ProductRepo {
 
 
     public List<Product> readAllProducts() {
-        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, " +
-                "d.name AS department, c.name AS category, sc.name AS subcategory, " +
-                "p.posted_date, p.price, cond.itemcondition AS `condition`, s.size_value AS size, col.color AS color, " +
-                "p.imgsrc, p.createdbyid " +
-                "FROM product p " +
-                "LEFT JOIN brand b ON p.brand_id = b.id " +
-                "LEFT JOIN location l ON p.location_id = l.id " +
-                "LEFT JOIN department d ON p.department_id = d.id " +
-                "LEFT JOIN category c ON p.category_id = c.id " +
-                "LEFT JOIN category sc ON p.subcategory_id = sc.id " +
-                "LEFT JOIN color col ON p.color_id = col.idcolor " +
-                "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition " +
+        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description,\n" +
+                "       d.name AS department, c.name AS category, sc.name AS subcategory,\n" +
+                "       p.posted_date, p.price, cond.itemcondition AS item_condition,\n" +
+                "       s.size_value AS size, col.color AS color,\n" +
+                "       p.imgsrc, p.createdbyid\n" +
+                "FROM product p\n" +
+                "INNER JOIN department d ON p.department_id = d.id \n" +
+                "INNER JOIN category c ON p.category_id = c.id\n" +
+                "INNER JOIN subcategory sc ON p.subcategory_id = sc.id\n" +
+                "LEFT JOIN brand b ON p.brand_id = b.id\n" +
+                "LEFT JOIN location l ON p.location_id = l.id\n" +
+                "LEFT JOIN color col ON p.color_id = col.idcolor\n" +
+                "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition\n" +
                 "LEFT JOIN size s ON p.size_id = s.id";
         return getProducts(sql);
     }
 
     // læser herre-produkter
     public List<Product> readMensProducts() {
-        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, " +
-                "d.name AS department, c.name AS category, sc.name AS subcategory, " +
-                "p.posted_date, p.price, cond.itemcondition AS `condition`, s.size_value AS size, col.color AS color, " +
-                "p.imgsrc, p.createdbyid " +
-                "FROM product p " +
-                "LEFT JOIN brand b ON p.brand_id = b.id " +
-                "LEFT JOIN location l ON p.location_id = l.id " +
-                "LEFT JOIN department d ON p.department_id = d.id " +
-                "LEFT JOIN category c ON p.category_id = c.id " +
-                "LEFT JOIN category sc ON p.subcategory_id = sc.id " +
-                "LEFT JOIN color col ON p.color_id = col.idcolor " +
-                "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition " +
-                "LEFT JOIN size s ON p.size_id = s.id " +
-                "WHERE d.name = 'Men'";
+        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description,\n" +
+                "       d.name AS department, c.name AS category, sc.name AS subcategory,\n" +
+                "       p.posted_date, p.price, cond.itemcondition AS item_condition,\n" +
+                "       s.size_value AS size, col.color AS color,\n" +
+                "       p.imgsrc, p.createdbyid\n" +
+                "FROM product p\n" +
+                "INNER JOIN department d ON p.department_id = d.id \n" +
+                "INNER JOIN category c ON p.category_id = c.id\n" +
+                "INNER JOIN subcategory sc ON p.subcategory_id = sc.id\n" +
+                "LEFT JOIN brand b ON p.brand_id = b.id\n" +
+                "LEFT JOIN location l ON p.location_id = l.id\n" +
+                "LEFT JOIN color col ON p.color_id = col.idcolor\n" +
+                "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition\n" +
+                "LEFT JOIN size s ON p.size_id = s.id\n" +
+                "WHERE d.name = 'Men';";
         return getProducts(sql);
     }
 
     // læser kvinde-produkter
     public List<Product> readWomensProducts() {
-        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, " +
-                "d.name AS department, c.name AS category, sc.name AS subcategory, " +
-                "p.posted_date, p.price, cond.itemcondition AS `condition`, s.size_value AS size, col.color AS color, " +
-                "p.imgsrc, p.createdbyid " +
-                "FROM product p " +
-                "LEFT JOIN brand b ON p.brand_id = b.id " +
-                "LEFT JOIN location l ON p.location_id = l.id " +
-                "LEFT JOIN department d ON p.department_id = d.id " +
-                "LEFT JOIN category c ON p.category_id = c.id " +
-                "LEFT JOIN category sc ON p.subcategory_id = sc.id " +
-                "LEFT JOIN color col ON p.color_id = col.idcolor " +
-                "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition " +
-                "LEFT JOIN size s ON p.size_id = s.id " +
+        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description,\n" +
+                "       d.name AS department, c.name AS category, sc.name AS subcategory,\n" +
+                "       p.posted_date, p.price, cond.itemcondition AS item_condition,\n" +
+                "       s.size_value AS size, col.color AS color,\n" +
+                "       p.imgsrc, p.createdbyid\n" +
+                "FROM product p\n" +
+                "INNER JOIN department d ON p.department_id = d.id \n" +
+                "INNER JOIN category c ON p.category_id = c.id\n" +
+                "INNER JOIN subcategory sc ON p.subcategory_id = sc.id\n" +
+                "LEFT JOIN brand b ON p.brand_id = b.id\n" +
+                "LEFT JOIN location l ON p.location_id = l.id\n" +
+                "LEFT JOIN color col ON p.color_id = col.idcolor\n" +
+                "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition\n" +
+                "LEFT JOIN size s ON p.size_id = s.id\n" +
                 "WHERE d.name = 'Women'";
         return getProducts(sql);
     }
 
     public List<Product> readRandomMensProducts() {
-        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, \n" +
-                "       d.name AS department, c.name AS category, sc.name AS subcategory, \n" +
-                "       p.posted_date, p.price, cond.itemcondition AS `condition`, \n" +
-                "       s.size_value AS size, col.color AS color, \n" +
-                "       p.imgsrc, p.createdbyid \n" +
-                "FROM product p \n" +
-                "LEFT JOIN brand b ON p.brand_id = b.id \n" +
-                "LEFT JOIN location l ON p.location_id = l.id \n" +
-                "LEFT JOIN department d ON p.department_id = d.id \n" +
-                "LEFT JOIN category c ON p.category_id = c.id \n" +
-                "LEFT JOIN category sc ON p.subcategory_id = sc.id \n" +
-                "LEFT JOIN color col ON p.color_id = col.idcolor \n" +
-                "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition \n" +
-                "LEFT JOIN size s ON p.size_id = s.id \n" +
+        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description,\n" +
+                "       d.name AS department, c.name AS category, sc.name AS subcategory,\n" +
+                "       p.posted_date, p.price, cond.itemcondition AS item_condition,\n" +
+                "       s.size_value AS size, col.color AS color,\n" +
+                "       p.imgsrc, p.createdbyid\n" +
+                "FROM product p\n" +
+                "INNER JOIN department d ON p.department_id = d.id \n" +
+                "INNER JOIN category c ON p.category_id = c.id\n" +
+                "INNER JOIN subcategory sc ON p.subcategory_id = sc.id\n" +
+                "LEFT JOIN brand b ON p.brand_id = b.id\n" +
+                "LEFT JOIN location l ON p.location_id = l.id\n" +
+                "LEFT JOIN color col ON p.color_id = col.idcolor\n" +
+                "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition\n" +
+                "LEFT JOIN size s ON p.size_id = s.id\n" +
                 "WHERE d.name = 'Men' ORDER BY RAND() LIMIT 10";
         return getProducts(sql);
     }
 
     public List<Product> readRandomWomensProducts() {
-        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, " +
-                "d.name AS department, c.name AS category, sc.name AS subcategory, " +
-                "p.posted_date, p.price, cond.itemcondition AS `condition`, s.size_value AS size, col.color AS color, " +
-                "p.imgsrc, p.createdbyid " +
-                "FROM product p " +
-                "LEFT JOIN brand b ON p.brand_id = b.id " +
-                "LEFT JOIN location l ON p.location_id = l.id " +
-                "LEFT JOIN department d ON p.department_id = d.id " +
-                "LEFT JOIN category c ON p.category_id = c.id " +
-                "LEFT JOIN category sc ON p.subcategory_id = sc.id " +
-                "LEFT JOIN color col ON p.color_id = col.idcolor " +
-                "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition " +
-                "LEFT JOIN size s ON p.size_id = s.id " +
+        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description,\n" +
+                "       d.name AS department, c.name AS category, sc.name AS subcategory,\n" +
+                "       p.posted_date, p.price, cond.itemcondition AS item_condition,\n" +
+                "       s.size_value AS size, col.color AS color,\n" +
+                "       p.imgsrc, p.createdbyid\n" +
+                "FROM product p\n" +
+                "INNER JOIN department d ON p.department_id = d.id \n" +
+                "INNER JOIN category c ON p.category_id = c.id\n" +
+                "INNER JOIN subcategory sc ON p.subcategory_id = sc.id\n" +
+                "LEFT JOIN brand b ON p.brand_id = b.id\n" +
+                "LEFT JOIN location l ON p.location_id = l.id\n" +
+                "LEFT JOIN color col ON p.color_id = col.idcolor\n" +
+                "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition\n" +
+                "LEFT JOIN size s ON p.size_id = s.id\n" +
                 "WHERE d.name = 'Women' ORDER BY RAND() LIMIT 10";
         return getProducts(sql);
     }
 
     public List<Product> readRandomBags() {
-        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, " +
-                "d.name AS department, c.name AS category, sc.name AS subcategory, " +
-                "p.posted_date, p.price, cond.itemcondition AS `condition`, s.size_value AS size, col.color AS color, " +
-                "p.imgsrc, p.createdbyid " +
-                "FROM product p " +
-                "LEFT JOIN brand b ON p.brand_id = b.id " +
-                "LEFT JOIN location l ON p.location_id = l.id " +
-                "LEFT JOIN department d ON p.department_id = d.id " +
-                "LEFT JOIN category c ON p.category_id = c.id " +
-                "LEFT JOIN category sc ON p.subcategory_id = sc.id " +
-                "LEFT JOIN color col ON p.color_id = col.idcolor " +
-                "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition " +
-                "LEFT JOIN size s ON p.size_id = s.id " +
+        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description,\n" +
+                "       d.name AS department, c.name AS category, sc.name AS subcategory,\n" +
+                "       p.posted_date, p.price, cond.itemcondition AS item_condition,\n" +
+                "       s.size_value AS size, col.color AS color,\n" +
+                "       p.imgsrc, p.createdbyid\n" +
+                "FROM product p\n" +
+                "INNER JOIN department d ON p.department_id = d.id \n" +
+                "INNER JOIN category c ON p.category_id = c.id\n" +
+                "INNER JOIN subcategory sc ON p.subcategory_id = sc.id\n" +
+                "LEFT JOIN brand b ON p.brand_id = b.id\n" +
+                "LEFT JOIN location l ON p.location_id = l.id\n" +
+                "LEFT JOIN color col ON p.color_id = col.idcolor\n" +
+                "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition\n" +
+                "LEFT JOIN size s ON p.size_id = s.id\n" +
                 "WHERE d.name = 'Bags' ORDER BY RAND() LIMIT 10";
         return getProducts(sql);
     }
