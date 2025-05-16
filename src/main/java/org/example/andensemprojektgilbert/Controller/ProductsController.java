@@ -72,7 +72,7 @@ public class ProductsController {
         if (!image.isEmpty()) {
             if (image.getSize() > 3*1024*1024) {
                 redirectAttributes.addFlashAttribute("message", "Image is too large to upload");
-                return "redirect:/register";
+                return "redirect:/index";
             }
             String originalFilename = image.getOriginalFilename();
             String uniqueFilename = UUID.randomUUID().toString() + "_" + originalFilename;
