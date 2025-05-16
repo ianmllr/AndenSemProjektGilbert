@@ -142,37 +142,32 @@
     let allSubcatOptions = [];
     let allSizeOptions = [];
 
-    window.addEventListener('DOMContentLoaded', function() {
+    window.addEventListener('DOMContentLoaded', () => {
         allSubcatOptions = Array.from(document.querySelectorAll('#subcategory option[data-category-id]'));
         allSizeOptions = Array.from(document.querySelectorAll('#size option[data-size-type-id]'));
-        console.log("Loaded subcat options: ", allSubcatOptions);
+        console.log("Loaded subcat options:", allSubcatOptions.length);
     });
 
     function updateSubcategories() {
-        var categorySelect = document.getElementById("category");
-        var selectedOption = categorySelect.options[categorySelect.selectedIndex];
-        var catId = selectedOption ? selectedOption.getAttribute('data-category-id') : null;
-        console.log("Selected category ID: ", catId);
-        var subcatSelect = document.getElementById("subcategory");
+        const catSelect = document.getElementById("category");
+        const catId = catSelect.selectedIndex > 0 ? catSelect.options[catSelect.selectedIndex].getAttribute('data-category-id') : null;
+        console.log("Selected category ID:", catId);
+        const subcatSelect = document.getElementById("subcategory");
         subcatSelect.innerHTML = '<option value="" disabled selected>Select a subcategory</option>';
-        allSubcatOptions.forEach(function(option) {
-            console.log("Checking option with data-category-id: ", option.getAttribute('data-category-id'));
+        allSubcatOptions.forEach(option => {
             if (catId && option.getAttribute('data-category-id') === catId) {
                 subcatSelect.appendChild(option.cloneNode(true));
-                console.log("Added subcategory: ", option.value);
             }
         });
-        // Reset sizes when subcategory changes
         updateSizesBySubcategory();
     }
 
     function updateSizesBySubcategory() {
-        var subcatSelect = document.getElementById("subcategory");
-        var selectedSubcat = subcatSelect.options[subcatSelect.selectedIndex];
-        var sizeTypeId = selectedSubcat ? selectedSubcat.getAttribute('data-size-type-id') : null;
-        var sizeSelect = document.getElementById("size");
+        const subcatSelect = document.getElementById("subcategory");
+        const sizeTypeId = subcatSelect.selectedIndex > 0 ? subcatSelect.options[subcatSelect.selectedIndex].getAttribute('data-size-type-id') : null;
+        const sizeSelect = document.getElementById("size");
         sizeSelect.innerHTML = '<option value="" disabled selected>Select size</option>';
-        allSizeOptions.forEach(function(option) {
+        allSizeOptions.forEach(option => {
             if (sizeTypeId && option.getAttribute('data-size-type-id') === sizeTypeId) {
                 sizeSelect.appendChild(option.cloneNode(true));
             }
