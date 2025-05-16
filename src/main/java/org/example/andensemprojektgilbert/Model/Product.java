@@ -11,17 +11,17 @@ public class Product {
     private String category;
     private String subcategory;
     private double price;
-    private String condition;
+    private String p_condition;
     private String size;
     private String color;
     private Date postedDate;
     private String description;
     private String location;
     private String imgsrc;
-    private String createdBy;
+    private int createdByID;
 
 
-    public Product(int id, String name, String brand, String location, String description, String department, String category, String subcategory, Date postedDate, double price, String condition, String size, String color, String imgsrc, String createdBy)
+    public Product(int id, String name, String brand, String location, String description, String department, String category, String subcategory, Date postedDate, double price, String p_condition, String size, String color, String imgsrc, int createdByID)
     {
         this.id = id;
         this.name = name;
@@ -32,12 +32,12 @@ public class Product {
         this.category = category;
         this.subcategory = subcategory;
         this.price = price;
-        this.condition = condition;
+        this.p_condition = p_condition;
         this.size = size;
         this.color = color;
         this.postedDate = postedDate;
         this.imgsrc = imgsrc;
-        this.createdBy = createdBy;
+        this.createdByID = createdByID;
     }
 
     public Product() {}
@@ -84,10 +84,10 @@ public class Product {
         this.price = price;
     }
     public String getCondition() {
-        return condition;
+        return p_condition;
     }
-    public void setCondition(String condition) {
-        this.condition = condition;
+    public void setCondition(String p_condition) {
+        this.p_condition = p_condition;
     }
     public String getSize() {
         return size;
@@ -125,10 +125,10 @@ public class Product {
     public void setImgsrc(String imgsrc) {
         this.imgsrc = imgsrc;
     }
-    public String getCreatedByID() {
-        return createdBy;
+    public int getCreatedByID() {
+        return createdByID;
     }
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    public void setCreatedByID(int createdByID) {
+        this.createdByID = createdByID;
     }
 }

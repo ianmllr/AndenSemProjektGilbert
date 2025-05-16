@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/gilbertstyle.css">
+  <title>Edit listing</title>
+</head>
+<body>
+
+<div id="newproduct">
+  <h1>Indtast oplysninger</h1>
+
+  <form th:action="@{/editproduct/{id}(id=${product.id})}" th:object="${product}" th:method="post" enctype="multipart/form-data">
+    <label>Name</label>
+    <br><input type="text" th:value="${product.name}" th:field="*{name}" required><br>
+
+    <br>
+    <label>Brand</label>
+    <br><input type="text" th:value="${product.brand}" th:field="*{brand}" required><br>
+
+    <br>
+    <label>Department</label>
+    <br><select id="department" th:value="${product.department}" th:field="*{department}" required>
+    <option value="" disabled selected>Select department</option>
+    <option value="Women">Women</option>
+    <option value="Men">Men</option>
+    <option value="Home">Home</option>
+    <option value="Beauty">Beauty</option>
+  </select><br>
+
+    <br>
+    <label>Category</label>
+    <br><select id="category" th:value="${product.category}" th:field="*{category}" required>
+    <option value="" disabled selected>Select category</option>
+
+    <option value="Clothing">Clothing</option>
+    <option value="Bags">Bags</option>
+    <option value="Shoes">Shoes</option>
+    <option value="Accessories">Accessories</option>
+  </select><br>
+
+    <br>
+    <label>Subcategory</label><br>
+    <select id="subcategory" th:value="${product.subcategory}" th:field="*{subcategory}" required>
+      <option value="" disabled selected>Select subcategory</option>
+    </select><br>
+
+    <br>
+    <label>Price</label>
+    <br><input type="number" th:value="${product.price}" th:field="*{price}" required><br>
+
+    <br>
+    <label>Condition</label><br>
+    <select th:value="${product.p_condition}" th:field="*{p_condition}" required>
+      <option value="" disabled selected>Select condition</option>
+      <option value="Brand new">Brand new</option>
+      <option value="Like new">Like new</option>
+      <option value="Good condition">Good condition</option>
+      <option value="Used">Used</option>
+      <option value="Very used">Very used</option>
+    </select><br>
+
+    <br>
+    <label>Size</label>
+    <br><select id="size" name="size" th:value="${product.size}" th:field="*{size}" required>
+    <option value="" disabled selected>-- Select size --</option>
+  </select><br>
+
+    <br>
+    <label>Color</label>
+    <br><select th:value="${product.color}" th:field="*{color}" required>
+    <option value="" disabled selected>Select color</option>
+    <option value="Blue">Blue</option>
+    <option value="Green">Green</option>
+    <option value="Orange">Orange</option>
+    <option value="Purple">Purple</option>
+    <option value="Red">Red</option>
+    <option value="White">White</option>
+    <option value="Yellow">Yellow</option>
+    <option value="Black">Black</option>
+    <option value="Gray">Gray</option>
+    <option value="Brown">Brown</option>
+    <option value="Silver">Silver</option>
+    <option value="Gold">Gold</option>
+    <option value="Other">Other</option>
+  </select><br>
+
+    <br>
+    <label>Location</label>
+    <br><input type="text" th:value="${product.location}" th:field="*{location}" required><br>
+
+    <br>
+    <label>Description</label>
+    <br><textarea rows="4" cols="50" th:value="${product.description}" th:field="*{description}" required></textarea><br>
+
+    <label for="image">Upload picture</label>
+    <input type="file" id="image" name="image" accept="image/*">
+
+    <br><button type="submit">Submit</button><br><br>
+  </form>
+</div>
+
+<script>
+  // alle kategorier og underkategorier
+  const subcategories = {
+    Women: {
+      Shoes: [
+        "Heels", "Ankle Boots", "Boots", "Sandals", "Espadrilles",
+        "Mules & Clogs", "Sneakers", "Flat Shoes", "Ballet Flats", "Lace ups"
+      ],
+      Clothing: [
+        "Coats", "Trench Coats", "Jackets", "Leather Jackets", "Dresses", "Knitwear",
+        "Tops", "Skirts", "Shorts", "Pants", "Jeans", "Jumpsuits", "Lingerie", "Swimwear"
+      ],
+      Bags: [
+        "Handbags", "Shoulder Bags", "Totes", "Crossbody Bags", "Clutch Bags",
+        "Belt Bags", "Backpacks", "Travel Bags", "Satchels"
+      ],
+      Accessories: [
+        "Handkerchiefs", "Cases", "Belts", "Wallets", "Hats", "Gloves",
+        "Sunglasses", "Scarves", "Watches"
+      ]
+    },
+    Men: {
+      Shoes: [
+        "Sneakers", "Boots", "Smart Shoes", "Flat Shoes", "Sandals", "Espadrilles"
+      ],
+      Clothing: [
+        "Coats", "Jackets", "Knitwear & Sweatshirts", "Shirts", "Polo Shirts", "T-shirts",
+        "Jeans", "Pants", "Shorts", "Suits", "Swimwear"
+      ],
+      Bags: [
+        "Bags", "Small bags, wallets & cases", "Belt Bags"
+      ],
+      Accessories: [
+        "Belts", "Sunglasses", "Scarves", "Ties", "Hats & pull on hats", "Gloves", "Cufflinks", "Watches"
+      ]
+    },
+    Home: {
+      "Interior and Furniture": [
+        "Bedroom Furniture", "Living Room Furniture", "Dining Room Furniture", "Kitchen Furniture",
+      ],
+      Decoration: [
+        "Wall Decor", "Flooring", "Lighting", "Candles", "Wall Art", "Rugs", "Curtains",
+      ],
+      Kitchen: [
+        "Appliances", "Cookware", "Dinnerware", "Dining Sets",
+      ],
+    },
+    Beauty: {
+      Makeup: [
+        "Eyeshadow", "Lipstick", "Lip gloss", "Lip liner", "Lip balm", "Lipstick"
+      ],
+      Fragrance: [
+        "Perfume", "Deodorant", "Shaving cream", "Body lotion", "Hand cream", "Moisturizer"
+      ]
+    }
+  };
+
+  // størrelser til forskellige kategorier
+  const sizeGroups = {
+    pantsSizes: ['28', '30', '32', '34', '36', '38', '40'],
+    shoesSizes: ['34', '36', '38', '40', '42', '44', '46', '48', '50', '52', '54'],
+    shirtSizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    oneSize: ['One Size']
+  };
+
+  const subcategoryToSizeGroup = {
+    // Shoes
+    'Heels': 'shoesSizes', 'Ankle Boots': 'shoesSizes', 'Boots': 'shoesSizes',
+    'Sandals': 'shoesSizes', 'Espadrilles': 'shoesSizes', 'Mules & Clogs': 'shoesSizes',
+    'Sneakers': 'shoesSizes', 'Flat Shoes': 'shoesSizes', 'Ballet Flats': 'shoesSizes',
+    'Lace ups': 'shoesSizes',
+    // Clothing
+    'Coats': 'shirtSizes', 'Trench Coats': 'shirtSizes', 'Jackets': 'shirtSizes',
+    'Leather Jackets': 'shirtSizes', 'Dresses': 'shirtSizes', 'Knitwear': 'shirtSizes',
+    'Tops': 'shirtSizes', 'Skirts': 'pantsSizes', 'Shorts': 'pantsSizes',
+    'Pants': 'pantsSizes', 'Jeans': 'pantsSizes', 'Jumpsuits': 'shirtSizes',
+    'Lingerie': 'shirtSizes', 'Swimwear': 'shirtSizes',
+    // Bags & Accessories (One Size)
+    'Handbags': 'oneSize', 'Shoulder Bags': 'oneSize', 'Totes': 'oneSize',
+    'Crossbody Bags': 'oneSize', 'Clutch Bags': 'oneSize', 'Belt Bags': 'oneSize',
+    'Backpacks': 'oneSize', 'Travel Bags': 'oneSize', 'Satchels': 'oneSize',
+    'Handkerchiefs': 'oneSize', 'Cases': 'oneSize', 'Belts': 'oneSize',
+    'Wallets': 'oneSize', 'Hats': 'oneSize', 'Gloves': 'oneSize',
+    'Sunglasses': 'oneSize', 'Scarves': 'oneSize', 'Watches': 'oneSize'
+  };
+
+  function updateCategories() {
+    const dept = document.getElementById('department').value;
+    const categorySelect = document.getElementById('category');
+
+    categorySelect.innerHTML = '<option value="">Select Category</option>';
+
+    // tilføjer de pågældende categories
+    if (subcategories[dept]) {
+      Object.keys(subcategories[dept]).forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value = cat;
+        opt.textContent = cat;
+        categorySelect.appendChild(opt);
+      });
+    }
+    updateSubcategories();
+  }
+
+  function updateSubcategories() {
+    const dept = document.getElementById('department').value;
+    const cat = document.getElementById('category').value;
+    const subcategorySelect = document.getElementById('subcategory');
+
+    subcategorySelect.innerHTML = '<option disabled selected value="">Select Subcategory</option>';
+
+    // tilføjer de pågældende subcategories
+    if (subcategories[dept] && subcategories[dept][cat]) {
+      subcategories[dept][cat].forEach(subcat => {
+        const opt = document.createElement('option');
+        opt.value = subcat;
+        opt.textContent = subcat;
+        subcategorySelect.appendChild(opt);
+      });
+    }
+  }
+
+  function updateSizeOptionsForSubcategory(subcategory) {
+    const sizeSelect = document.getElementById('size');
+    sizeSelect.innerHTML = '';
+
+    const group = subcategoryToSizeGroup[subcategory] || 'oneSize';
+    const options = sizeGroups[group];
+
+    options.forEach(size => {
+      const option = document.createElement('option');
+      option.value = size;
+      option.text = size;
+      sizeSelect.appendChild(option);
+    });
+  }
+
+  // gør så subcategories loader når siden indlæses
+  document.addEventListener("DOMContentLoaded", function() {
+    var categorySelect = document.getElementById("category");
+    if (categorySelect && categorySelect.value) {
+      updateSubcategories(categorySelect.value);
+    }
+  });
+  document.addEventListener("DOMContentLoaded", function() {
+    var subcat = document.getElementById('subcategory');
+    if (subcat && subcat.value) {
+      updateSizeOptionsForSubcategory(subcat.value);
+    }
+  });
+
+  // holder øje med om man skifter kategori eller department
+  document.getElementById('subcategory').addEventListener('change', function() {
+    updateSizeOptionsForSubcategory(this.value);
+  });
+  document.getElementById('department').addEventListener('change', updateCategories);
+  document.getElementById('category').addEventListener('change', updateSubcategories);
+</script>
+
+
+
+</body>
+</html>
+
+

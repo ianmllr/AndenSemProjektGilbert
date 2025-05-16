@@ -34,14 +34,6 @@ public class ProductRepo {
         String sql = "SELECT id FROM Department WHERE name = ?";
         return jdbcTemplate.queryForObject(sql, Integer.class, departmentName);
     }
-    public Integer getConditionId(String conditionName) {
-        String sql = "select idcondition from gilbert.condition where itemcondition = ?";
-        return jdbcTemplate.queryForObject(sql, Integer.class, conditionName);
-    }
-    public Integer getColorId(String colorName) {
-        String sql = "SELECT idcolor FROM Color WHERE color = ?";
-        return jdbcTemplate.queryForObject(sql, Integer.class, colorName);
-    }
 
     // CREATE
     public void createProduct(Product product, User user) {
@@ -50,9 +42,6 @@ public class ProductRepo {
         Integer subcategoryId = getSubcategoryId(product.getSubcategory());
         Integer locationId = getLocationId(product.getLocation());
         Integer departmentId = getDepartmentId(product.getDepartment());
-        Integer conditionId = getConditionId(product.getCondition());
-        Integer colorId = getColorId(product.getColor());
-
 
         String sql = "INSERT INTO Product (name, brand_id, location_id, description, department_id, category_id, subcategory_id, posted_date, price, condition_id, size, color_id, imgsrc, createdByID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -66,9 +55,9 @@ public class ProductRepo {
                 subcategoryId,
                 product.getPostedDate(),
                 product.getPrice(),
-                conditionId,
+                product.getCondition(),
                 product.getSize(),
-                colorId,
+                product.getColor(),
                 product.getImgsrc(),
                 user.getId()
         );
@@ -79,7 +68,6 @@ public class ProductRepo {
 
     // READ
     public List<Product> getProducts(String sql) {
-
         return jdbcTemplate.query(sql, (rs, rowNum) -> new Product(
                 rs.getInt("id"),
                 rs.getString("name"),
@@ -91,11 +79,11 @@ public class ProductRepo {
                 rs.getString("subcategory"),
                 rs.getDate("posted_date"),
                 rs.getDouble("price"),
-                rs.getString("condition"),
+                rs.getString("p_condition"),
                 rs.getString("size"),
                 rs.getString("color"),
                 rs.getString("imgsrc"),
-                rs.getString("createdBy")
+                rs.getInt("createdByID")
         ));
     }
 
@@ -119,18 +107,18 @@ public class ProductRepo {
                 rs.getString("subcategory"),
                 rs.getDate("posted_date"),
                 rs.getDouble("price"),
-                rs.getString("itemcondition"),
+                rs.getString("p_condition"),
                 rs.getString("size"),
                 rs.getString("color"),
                 rs.getString("imgsrc"),
-                rs.getString("createdByID")
+                rs.getInt("createdByID")
         ));
     }
 
     public List<Product> readAllProducts() {
         String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description,\n" +
                 "d.name AS department, c.name AS category, s.name AS subcategory,\n" +
-                "p.posted_date, p.price, i.itemcondition AS `condition`, p.size, o.color AS color,\n" +
+                "p.posted_date, p.price, i.p_condition AS `p_condition`, p.size, o.color AS color,\n" +
                 "p.imgsrc, u.name AS createdBy\n" +
                 "FROM Product p\n" +
                 "LEFT JOIN Brand b ON p.brand_id = b.id\n" +
@@ -139,7 +127,7 @@ public class ProductRepo {
                 "LEFT JOIN Department d ON cd.department_id = d.id\n" +
                 "LEFT JOIN Category c ON cd.category_id = c.id\n" +
                 "LEFT JOIN Subcategory s ON p.subcategory_id = s.id\n" +
-                "LEFT JOIN gilbert.condition i ON i.idcondition = p.condition_id\n" +
+                "LEFT JOIN gilbert.p_condition i ON i.p_condition = p.condition_id\n" +
                 "LEFT JOIN gilbert.color o ON o.idcolor = p.color_id\n" +
                 "LEFT JOIN `User` u ON p.createdByID = u.id\n;";
         return getProducts(sql);
@@ -267,8 +255,6 @@ public class ProductRepo {
                 "LEFT JOIN Department d ON cd.department_id = d.id\n" +
                 "LEFT JOIN Category c ON cd.category_id = c.id\n" +
                 "LEFT JOIN Subcategory s ON p.subcategory_id = s.id\n" +
-                "LEFT JOIN gilbert.condition i ON i.idcondition = p.condition_id\n" +
-                "LEFT JOIN gilbert.color o ON o.idcolor = p.color_id\n" +
                 "WHERE u.id = ?;";
         return jdbcTemplate.query(sql, new Object[]{user.getId()}, (rs, rowNum) -> new Product(
                 rs.getInt("id"),
@@ -281,11 +267,11 @@ public class ProductRepo {
                 rs.getString("subcategory"),
                 rs.getDate("posted_date"),
                 rs.getDouble("price"),
-                rs.getString("condition"),
+                rs.getString("p_condition"),
                 rs.getString("size"),
                 rs.getString("color"),
                 rs.getString("imgsrc"),
-                rs.getString("createdBy")
+                rs.getInt("createdByID")
         ));
     }
 }

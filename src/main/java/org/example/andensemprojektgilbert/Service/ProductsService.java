@@ -49,6 +49,15 @@ public class ProductsService {
         }
     }
 
+    public Product getProduct(int id) {
+        if (productRepo.readProduct(id) != null) {
+            return productRepo.readProduct(id);
+        } else {
+            // debug logging her
+            return null;
+        }
+    }
+
     public List<Product> getRandomMensProducts() {
         if (productRepo.readRandomMensProducts() != null) {
             return productRepo.readRandomMensProducts();
@@ -81,7 +90,6 @@ public class ProductsService {
     public void createProduct(Product product, User user) {
         if (product != null) {
             product.setPostedDate(new java.util.Date());
-
             productRepo.createProduct(product, user);
         } else {
             // debug logging her
@@ -93,7 +101,9 @@ public class ProductsService {
     }
 
 
-
-
-
+    public void updateProduct(Product product) {
+        if (product != null) {
+            productRepo.updateProduct(product);
+        }
+    }
 }

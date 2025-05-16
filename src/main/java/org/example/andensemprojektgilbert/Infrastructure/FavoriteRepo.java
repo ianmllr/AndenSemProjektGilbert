@@ -47,7 +47,7 @@ public class FavoriteRepo {
                 rs.getString("size"),
                 rs.getString("color"),
                 rs.getString("imgsrc"),
-                rs.getString("createdBy") // Changed to display_name from Users table
+                rs.getInt("createdByID") // Changed to display_name from Users table
         ), userId);
     }
 

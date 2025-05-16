@@ -53,7 +53,7 @@ public class ProductsController {
     public String postNewProduct(@ModelAttribute Product product, HttpSession session, Model model, @RequestParam("image") MultipartFile image, RedirectAttributes redirectAttributes) {
         User user = (User) session.getAttribute("currentUser");
         model.addAttribute("product", product);
-        product.setCreatedBy(user.getName());
+        product.setCreatedByID(user.getId());
         if (!image.isEmpty()) {
             if (image.getSize() > 3*1024*1024) {
                 redirectAttributes.addFlashAttribute("message", "Image is too large to upload");
