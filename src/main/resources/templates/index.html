@@ -31,6 +31,9 @@
             <a th:if="${user != null}" href="/gilbertprofile" class="profilelink">
                 <img th:src="${user.imgsrc != null} ? @{/userimage/} + ${user.imgsrc} : @{/icons/profil.png}" class="profilpicture" alt="Profile">
             </a>
+            <a th:if="${user != null and user.role == 'admin'}" href="adminpage" class="adminpagelink">
+                <button type="button">Go to adminpage</button>
+            </a>
         </div>
     </div>
     <nav class="button-bar-index">

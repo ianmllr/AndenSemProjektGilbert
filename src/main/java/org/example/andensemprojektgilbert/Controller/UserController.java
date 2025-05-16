@@ -107,11 +107,19 @@ public class UserController {
         }
         if (loggedInUser != null) {
             session.setAttribute("currentUser", loggedInUser);
+            System.out.println(loggedInUser.getRole());
             return "redirect:/";
         } else {
             model.addAttribute("error", "Forkert email eller password");
             return "login";
         }
+    }
+    @PostMapping("/logout")
+    public String logout(HttpSession session) {
+        if (session.getAttribute("currentUser") != null) {
+            session.invalidate();
+        }
+        return "redirect:/";
     }
     @GetMapping("/edituser")
     public String getEditUser(Model model, HttpSession session) {

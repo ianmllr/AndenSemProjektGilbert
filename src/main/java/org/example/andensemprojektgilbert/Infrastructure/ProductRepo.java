@@ -148,100 +148,103 @@ public class ProductRepo {
     // læser herre-produkter
     public List<Product> readMensProducts() {
         String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description,\n" +
-                "d.name AS department, c.name AS category, s.name AS subcategory,\n" +
-                "p.posted_date, p.price, i.itemcondition AS `condition`, p.size, o.color AS color,\n" +
-                "p.imgsrc, u.name AS createdBy\n" +
+                "       d.name AS department, c.name AS category, s.name AS subcategory,\n" +
+                "       p.posted_date, p.price, i.itemcondition AS `condition`, p.size, o.color AS color,\n" +
+                "       p.imgsrc, u.name AS createdBy\n" +
                 "FROM Product p\n" +
+                "JOIN Department d ON p.department_id = d.id\n" +
                 "LEFT JOIN Brand b ON p.brand_id = b.id\n" +
                 "LEFT JOIN Location l ON p.location_id = l.id\n" +
-                "LEFT JOIN Category_Department cd ON p.department_id = cd.department_id\n" +
-                "LEFT JOIN Department d ON cd.department_id = d.id\n" +
+                "LEFT JOIN Category_Department cd ON cd.category_id = p.category_id\n" +
                 "LEFT JOIN Category c ON cd.category_id = c.id\n" +
                 "LEFT JOIN Subcategory s ON p.subcategory_id = s.id\n" +
                 "LEFT JOIN gilbert.condition i ON i.idcondition = p.condition_id\n" +
                 "LEFT JOIN gilbert.color o ON o.idcolor = p.color_id\n" +
                 "LEFT JOIN `User` u ON p.createdByID = u.id\n" +
-                "WHERE d.name = 'Men'";
+                "WHERE d.name = 'Men';";
         return getProducts(sql);
     }
 
     // læser kvinde-produkter
     public List<Product> readWomensProducts() {
         String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description,\n" +
-                "d.name AS department, c.name AS category, s.name AS subcategory,\n" +
-                "p.posted_date, p.price, i.itemcondition AS `condition`, p.size, o.color AS color,\n" +
-                "p.imgsrc, u.name AS createdBy\n" +
+                "       d.name AS department, c.name AS category, s.name AS subcategory,\n" +
+                "       p.posted_date, p.price, i.itemcondition AS `condition`, p.size, o.color AS color,\n" +
+                "       p.imgsrc, u.name AS createdBy\n" +
                 "FROM Product p\n" +
+                "JOIN Department d ON p.department_id = d.id\n" +
                 "LEFT JOIN Brand b ON p.brand_id = b.id\n" +
                 "LEFT JOIN Location l ON p.location_id = l.id\n" +
-                "LEFT JOIN Category_Department cd ON p.department_id = cd.department_id\n" +
-                "LEFT JOIN Department d ON cd.department_id = d.id\n" +
+                "LEFT JOIN Category_Department cd ON cd.category_id = p.category_id\n" +
                 "LEFT JOIN Category c ON cd.category_id = c.id\n" +
                 "LEFT JOIN Subcategory s ON p.subcategory_id = s.id\n" +
                 "LEFT JOIN gilbert.condition i ON i.idcondition = p.condition_id\n" +
                 "LEFT JOIN gilbert.color o ON o.idcolor = p.color_id\n" +
                 "LEFT JOIN `User` u ON p.createdByID = u.id\n" +
-                "WHERE department = 'Women'";
+                "WHERE d.name = 'Women';";
         return getProducts(sql);
     }
 
     public List<Product> readRandomMensProducts() {
         String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description,\n" +
-                "d.name AS department, c.name AS category, s.name AS subcategory,\n" +
-                "p.posted_date, p.price, i.itemcondition AS `condition`, p.size, o.color AS color,\n" +
-                "p.imgsrc, u.name AS createdBy\n" +
+                "       d.name AS department, c.name AS category, s.name AS subcategory,\n" +
+                "       p.posted_date, p.price, i.itemcondition AS `condition`, p.size, o.color AS color,\n" +
+                "       p.imgsrc, u.name AS createdBy\n" +
                 "FROM Product p\n" +
+                "JOIN Department d ON p.department_id = d.id\n" +
                 "LEFT JOIN Brand b ON p.brand_id = b.id\n" +
                 "LEFT JOIN Location l ON p.location_id = l.id\n" +
-                "LEFT JOIN Category_Department cd ON p.department_id = cd.department_id\n" +
-                "LEFT JOIN Department d ON cd.department_id = d.id\n" +
+                "LEFT JOIN Category_Department cd ON cd.category_id = p.category_id\n" +
                 "LEFT JOIN Category c ON cd.category_id = c.id\n" +
                 "LEFT JOIN Subcategory s ON p.subcategory_id = s.id\n" +
                 "LEFT JOIN gilbert.condition i ON i.idcondition = p.condition_id\n" +
                 "LEFT JOIN gilbert.color o ON o.idcolor = p.color_id\n" +
                 "LEFT JOIN `User` u ON p.createdByID = u.id\n" +
                 "WHERE d.name = 'Men'\n" +
-                "ORDER BY RAND() LIMIT 10;";
+                "ORDER BY RAND()\n" +
+                "LIMIT 10;";
         return getProducts(sql);
     }
 
     public List<Product> readRandomWomensProducts() {
         String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description,\n" +
-                "d.name AS department, c.name AS category, s.name AS subcategory,\n" +
-                "p.posted_date, p.price, i.itemcondition AS `condition`, p.size, o.color AS color,\n" +
-                "p.imgsrc, u.name AS createdBy\n" +
+                "       d.name AS department, c.name AS category, s.name AS subcategory,\n" +
+                "       p.posted_date, p.price, i.itemcondition AS `condition`, p.size, o.color AS color,\n" +
+                "       p.imgsrc, u.name AS createdBy\n" +
                 "FROM Product p\n" +
+                "JOIN Department d ON p.department_id = d.id\n" +
                 "LEFT JOIN Brand b ON p.brand_id = b.id\n" +
                 "LEFT JOIN Location l ON p.location_id = l.id\n" +
-                "LEFT JOIN Category_Department cd ON p.department_id = cd.department_id\n" +
-                "LEFT JOIN Department d ON cd.department_id = d.id\n" +
+                "LEFT JOIN Category_Department cd ON cd.category_id = p.category_id\n" +
                 "LEFT JOIN Category c ON cd.category_id = c.id\n" +
                 "LEFT JOIN Subcategory s ON p.subcategory_id = s.id\n" +
                 "LEFT JOIN gilbert.condition i ON i.idcondition = p.condition_id\n" +
                 "LEFT JOIN gilbert.color o ON o.idcolor = p.color_id\n" +
                 "LEFT JOIN `User` u ON p.createdByID = u.id\n" +
-                "WHERE d.name = 'Women' \n" +
-                "ORDER BY RAND() LIMIT 10;";
+                "WHERE d.name = 'Women'\n" +
+                "ORDER BY RAND()\n" +
+                "LIMIT 10;";
         return getProducts(sql);
     }
 
     public List<Product> readRandomBags() {
         String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description,\n" +
-                "d.name AS department, c.name AS category, s.name AS subcategory,\n" +
-                "p.posted_date, p.price, i.itemcondition AS `condition`, p.size, o.color AS color,\n" +
-                "p.imgsrc, u.name AS createdBy\n" +
+                "       d.name AS department, c.name AS category, s.name AS subcategory,\n" +
+                "       p.posted_date, p.price, i.itemcondition AS `condition`, p.size, o.color AS color,\n" +
+                "       p.imgsrc, u.name AS createdBy\n" +
                 "FROM Product p\n" +
+                "INNER JOIN Department d ON p.department_id = d.id\n" +
                 "LEFT JOIN Brand b ON p.brand_id = b.id\n" +
                 "LEFT JOIN Location l ON p.location_id = l.id\n" +
-                "LEFT JOIN Category_Department cd ON p.department_id = cd.department_id\n" +
-                "LEFT JOIN Department d ON cd.department_id = d.id\n" +
+                "LEFT JOIN Category_Department cd ON cd.category_id = p.category_id\n" +
                 "LEFT JOIN Category c ON cd.category_id = c.id\n" +
                 "LEFT JOIN Subcategory s ON p.subcategory_id = s.id\n" +
                 "LEFT JOIN gilbert.condition i ON i.idcondition = p.condition_id\n" +
                 "LEFT JOIN gilbert.color o ON o.idcolor = p.color_id\n" +
                 "LEFT JOIN `User` u ON p.createdByID = u.id\n" +
-                "WHERE d.name = 'Bags' \n" +
-                "ORDER BY RAND() LIMIT 10;";
+                "WHERE d.name = 'Bags'\n" +
+                "ORDER BY RAND()\n" +
+                "LIMIT 10;";
         return getProducts(sql);
     }
 
@@ -253,19 +256,19 @@ public class ProductRepo {
 
     public List<Product> readUserProducts(User user) {
         String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description,\n" +
-                "d.name AS department, c.name AS category, s.name AS subcategory,\n" +
-                "p.posted_date, p.price, i.itemcondition AS `condition`, p.size, o.color AS color,\n" +
-                "p.imgsrc, u.name AS createdBy\n" +
+                "       d.name AS department, c.name AS category, s.name AS subcategory,\n" +
+                "       p.posted_date, p.price, i.itemcondition AS `condition`, p.size, o.color AS color,\n" +
+                "       p.imgsrc, u.name AS createdBy\n" +
                 "FROM Product p\n" +
+                "JOIN `User` u ON p.createdByID = u.id\n" +
                 "LEFT JOIN Brand b ON p.brand_id = b.id\n" +
                 "LEFT JOIN Location l ON p.location_id = l.id\n" +
-                "LEFT JOIN Category_Department cd ON p.department_id = cd.department_id\n" +
+                "LEFT JOIN Category_Department cd ON cd.category_id = p.category_id\n" +
                 "LEFT JOIN Department d ON cd.department_id = d.id\n" +
                 "LEFT JOIN Category c ON cd.category_id = c.id\n" +
                 "LEFT JOIN Subcategory s ON p.subcategory_id = s.id\n" +
                 "LEFT JOIN gilbert.condition i ON i.idcondition = p.condition_id\n" +
                 "LEFT JOIN gilbert.color o ON o.idcolor = p.color_id\n" +
-                "LEFT JOIN `User` u ON p.createdByID = u.id\n" +
                 "WHERE u.id = ?;";
         return jdbcTemplate.query(sql, new Object[]{user.getId()}, (rs, rowNum) -> new Product(
                 rs.getInt("id"),
