@@ -14,23 +14,38 @@ public class ProductRepo {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public Integer getBrandId(String brandName) {
+    private Integer getColorId(String color) {
+        String sql = "SELECT id from Color WHERE name = ?";
+        return jdbcTemplate.queryForObject(sql, Integer.class, color);
+    }
+
+    private Integer getSizeId(String size) {
+        String sql = "SELECT id FROM Size WHERE name = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{size}, Integer.class);
+    }
+
+    private Integer getConditionId(String condition) {
+        String sql = "SELECT id FROM ItemCondition WHERE name = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{condition}, Integer.class);
+    }
+
+    private Integer getBrandId(String brandName) {
         String sql = "SELECT id FROM Brand WHERE name = ?";
         return jdbcTemplate.queryForObject(sql, Integer.class, brandName);
     }
-    public Integer getCategoryId(String categoryName) {
+    private Integer getCategoryId(String categoryName) {
         String sql = "SELECT id FROM Category WHERE name = ?";
         return jdbcTemplate.queryForObject(sql, Integer.class, categoryName);
     }
-    public Integer getSubcategoryId(String subcategoryName) {
+    private Integer getSubcategoryId(String subcategoryName) {
         String sql = "SELECT id FROM Subcategory WHERE name = ?";
         return jdbcTemplate.queryForObject(sql, Integer.class, subcategoryName);
     }
-    public Integer getLocationId(String locationName) {
+    private Integer getLocationId(String locationName) {
         String sql = "SELECT id FROM Location WHERE name = ?";
         return jdbcTemplate.queryForObject(sql, Integer.class, locationName);
     }
-    public Integer getDepartmentId(String departmentName) {
+    private Integer getDepartmentId(String departmentName) {
         String sql = "SELECT id FROM Department WHERE name = ?";
         return jdbcTemplate.queryForObject(sql, Integer.class, departmentName);
     }
@@ -107,7 +122,7 @@ public class ProductRepo {
                 rs.getString("subcategory"),
                 rs.getDate("posted_date"),
                 rs.getDouble("price"),
-                rs.getString("p_condition"),
+                rs.getString("itemcondition"),
                 rs.getString("size"),
                 rs.getString("color"),
                 rs.getString("imgsrc"),
@@ -118,7 +133,7 @@ public class ProductRepo {
     public List<Product> readAllProducts() {
         String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description,\n" +
                 "d.name AS department, c.name AS category, s.name AS subcategory,\n" +
-                "p.posted_date, p.price, i.p_condition AS `p_condition`, p.size, o.color AS color,\n" +
+                "p.posted_date, p.price, i.itemcondition AS `itemcondition`, p.size, o.color AS color,\n" +
                 "p.imgsrc, u.name AS createdBy\n" +
                 "FROM Product p\n" +
                 "LEFT JOIN Brand b ON p.brand_id = b.id\n" +
@@ -274,4 +289,58 @@ public class ProductRepo {
                 rs.getInt("createdByID")
         ));
     }
+
+    public Product readProduct(int id) {
+        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, " +
+                "d.name AS department, c.name AS category, s.name AS subcategory, " +
+                "p.posted_date, p.price, p.p_condition, p.size, p.color, " +
+                "p.imgsrc, p.createdBy " +
+                "FROM product p " +
+                "JOIN brand b ON p.brand_id = b.id " +
+                "JOIN location l ON p.location_id = l.id " +
+                "JOIN department d ON p.department_id = d.id " +
+                "JOIN category c ON p.category_id = c.id " +
+                "JOIN subcategory s ON p.subcategory_id = s.id " +
+                "WHERE p.id = ?";
+
+        return jdbcTemplate.queryForObject(sql, new Object[]{id}, (rs, rowNum) -> new Product(
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getString("brand"),
+                rs.getString("location"),
+                rs.getString("description"),
+                rs.getString("department"),
+                rs.getString("category"),
+                rs.getString("subcategory"),
+                rs.getDate("posted_date"),
+                rs.getDouble("price"),
+                rs.getString("p_condition"),
+                rs.getString("size"),
+                rs.getString("color"),
+                rs.getString("imgsrc"),
+                rs.getInt("createdByID")
+        ));
+    }
+
+    public void updateProduct(Product product) {
+        String sql = "UPDATE Product SET name = ?, brand_id = ?, location_id = ?, description = ?, " +
+                "department_id = ?, category_id = ?, subcategory_id = ?, posted_date = ?, price = ?, " +
+                "condition_id = ?, size = ?, color_id = ?, imgsrc = ? WHERE id = ?";
+        int brandId = getBrandId(product.getBrand());
+        int categoryId = getCategoryId(product.getCategory());
+        int subcategoryId = getSubcategoryId(product.getSubcategory());
+        int colorId = getColorId(product.getColor());
+        int conditionId = getConditionId(product.getCondition());
+        int departmentId = getDepartmentId(product.getDepartment());
+        int locationId = getLocationId(product.getLocation());
+        int sizeId = getSizeId(product.getSize());
+
+        jdbcTemplate.update(sql, product.getName(), brandId, locationId, product.getDescription(),
+                departmentId, categoryId, subcategoryId, product.getPostedDate(), product.getPrice(),
+                conditionId, sizeId, colorId, product.getImgsrc(), product.getId());
+    }
+
+
+
+
 }
