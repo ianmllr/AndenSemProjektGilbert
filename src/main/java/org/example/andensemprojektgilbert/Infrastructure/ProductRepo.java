@@ -57,8 +57,11 @@ public class ProductRepo {
         Integer subcategoryId = getSubcategoryId(product.getSubcategory());
         Integer locationId = getLocationId(product.getLocation());
         Integer departmentId = getDepartmentId(product.getDepartment());
+        Integer sizeId = getSizeId(product.getSize());
+        Integer colorId = getColorId(product.getColor());
+        Integer conditionId = getConditionId(product.getCondition());
 
-        String sql = "INSERT INTO Product (name, brand_id, location_id, description, department_id, category_id, subcategory_id, posted_date, price, condition_id, size, color_id, imgsrc, createdByID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Product (name, brand_id, location_id, description, department_id, category_id, subcategory_id, posted_date, price, condition_id, size_id, color_id, imgsrc, createdByID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         jdbcTemplate.update(sql,
                 product.getName(),
@@ -70,9 +73,9 @@ public class ProductRepo {
                 subcategoryId,
                 product.getPostedDate(),
                 product.getPrice(),
-                product.getCondition(),
-                product.getSize(),
-                product.getColor(),
+                conditionId,
+                sizeId,
+                colorId,
                 product.getImgsrc(),
                 user.getId()
         );
@@ -134,7 +137,7 @@ public class ProductRepo {
                 rs.getString("size"),
                 rs.getString("color"),
                 rs.getString("imgsrc"),
-                rs.getInt("createdbyid")
+                rs.getInt("createdByID")
         ));
     }
 
@@ -278,7 +281,7 @@ public class ProductRepo {
                 rs.getString("size"),
                 rs.getString("color"),
                 rs.getString("imgsrc"),
-                rs.getInt("createdbyid")
+                rs.getInt("createdByID")
         ));
     }
 
@@ -320,7 +323,7 @@ public class ProductRepo {
                 rs.getString("size"),
                 rs.getString("color"),
                 rs.getString("imgsrc"),
-                rs.getInt("createdbyid")
+                rs.getInt("createdByID")
         ));
     }
 
@@ -354,7 +357,7 @@ public class ProductRepo {
                 rs.getString("size"),
                 rs.getString("color"),
                 rs.getString("imgsrc"),
-                rs.getInt("createdbyid")
+                rs.getInt("createdByID")
         ));
     }
 
