@@ -15,7 +15,7 @@ public class ProductsService {
     private ProductRepo productRepo;
 
     public List<Product> getAllProducts() {
-        if (productRepo.readAllProducts().isEmpty()) {
+        if (!productRepo.readAllProducts().isEmpty()) {
             return productRepo.readAllProducts();
         } else {
             // debug logging her
@@ -24,7 +24,7 @@ public class ProductsService {
     }
 
     public List<Product> getMensProducts() {
-        if (productRepo.readMensProducts().isEmpty()) {
+        if (!productRepo.readMensProducts().isEmpty()) {
             return productRepo.readMensProducts();
         } else {
             // debug logging her
