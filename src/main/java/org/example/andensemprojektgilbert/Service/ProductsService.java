@@ -15,7 +15,7 @@ public class ProductsService {
     private ProductRepo productRepo;
 
     public List<Product> getAllProducts() {
-        if (productRepo.readAllProducts() != null) {
+        if (productRepo.readAllProducts().isEmpty()) {
             return productRepo.readAllProducts();
         } else {
             // debug logging her
@@ -24,24 +24,32 @@ public class ProductsService {
     }
 
     public List<Product> getMensProducts() {
-        if (productRepo.readMensProducts() != null) {
+        if (productRepo.readMensProducts().isEmpty()) {
             return productRepo.readMensProducts();
         } else {
             // debug logging her
             return null;
         }
     }
+
+    public List<Product> getMensProductsBySubCategory(String subcategory) {
+        if (productRepo.readMensProductsBySubCat(subcategory) != null) {
+            return productRepo.readMensProductsBySubCat(subcategory);} else {
+            // debug logging her
+            return null;
+        }
+    }
         public List<Product> getWomensProducts() {
-        if (productRepo.readWomensProducts() != null) {
+        if (productRepo.readWomensProducts().isEmpty()) {
             return productRepo.readWomensProducts();
         } else {
-            // debug logging her
+            System.out.println("Womens products er tom");
             return null;
         }
     }
 
     public List<Product> getMyProducts(User user) {
-        if (productRepo.readUserProducts(user) != null) {
+        if (productRepo.readUserProducts(user).isEmpty()) {
             return productRepo.readUserProducts(user);
         } else {
             // debug logging her
@@ -59,7 +67,7 @@ public class ProductsService {
     }
 
     public List<Product> getRandomMensProducts() {
-        if (productRepo.readRandomMensProducts() != null) {
+        if (productRepo.readRandomMensProducts().isEmpty()) {
             return productRepo.readRandomMensProducts();
         } else {
             // debug logging her
@@ -68,7 +76,7 @@ public class ProductsService {
     }
 
     public List<Product> getRandomWomensProducts() {
-        if (productRepo.readRandomWomensProducts() != null) {
+        if (productRepo.readRandomWomensProducts().isEmpty()) {
             return productRepo.readRandomWomensProducts();
         } else {
             // debug logging her
@@ -78,7 +86,7 @@ public class ProductsService {
 
 
     public List<Product> getRandomBags() {
-        if (productRepo.readRandomBags() != null) {
+        if (productRepo.readRandomBags().isEmpty()) {
             return productRepo.readRandomBags();
         } else {
             // debug logging her
@@ -136,7 +144,11 @@ public class ProductsService {
     }
 
     public List<String> getSizes() {
-        return productRepo.getSizes();
+        return productRepo.getAllSizes();
+    }
+
+    public List<String> getSizesByType(String type) {
+        return productRepo.getSizesByType(type);
     }
 
 

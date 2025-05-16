@@ -44,6 +44,12 @@ public class ProductsController {
     public String getNewProduct(Model model, HttpSession session) {
         User user = (User) session.getAttribute("currentUser");
         System.out.println("opened new product page with user " + user.getName());
+
+        // henter arrays med forskellige slags størrelser
+        model.addAttribute("shirtsizes", productsService.getSizesByType("shirtSizes"));
+        model.addAttribute("pantsizes", productsService.getSizesByType("pantsSizes"));
+        model.addAttribute("shoesizes", productsService.getSizesByType("shoeSizes"));
+
         model.addAttribute("categories", productsService.getCategories());
         model.addAttribute("subcategories", productsService.getSubcategories());
         model.addAttribute("departments", productsService.getDepartments());
