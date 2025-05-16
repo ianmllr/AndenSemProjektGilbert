@@ -139,31 +139,31 @@
 </footer>
 
 <script th:inline="javascript">
-    let allSubcatOptions = [];
+    let allSubcatOptions = []; // variabler til at gemme
     let allSizeOptions = [];
 
     window.addEventListener('DOMContentLoaded', () => {
-        allSubcatOptions = Array.from(document.querySelectorAll('#subcategory option[data-category-id]'));
-        allSizeOptions = Array.from(document.querySelectorAll('#size option[data-size-type-id]'));
+        allSubcatOptions = Array.from(document.querySelectorAll('#subcategory option[data-category-id]')); // finder alle <option> elementer i underkategori-dropdown #subcategory med attributten og bliver gemt i allSubcatoptions
+        allSizeOptions = Array.from(document.querySelectorAll('#size option[data-size-type-id]')); // Gør det samme
         console.log("Loaded subcat options:", allSubcatOptions.length);
     });
 
     function updateSubcategories() {
-        const catSelect = document.getElementById("category");
-        const catId = catSelect.selectedIndex > 0 ? catSelect.options[catSelect.selectedIndex].getAttribute('data-category-id') : null;
+        const catSelect = document.getElementById("category"); // tjekker hvilken kategori der valgt
+        const catId = catSelect.selectedIndex > 0 ? catSelect.options[catSelect.selectedIndex].getAttribute('data-category-id') : null; // tager kategoriernes id, så fx. Clothing er id 2 ellers hvis der ikke er valgt bliver den til null
         console.log("Selected category ID:", catId);
         const subcatSelect = document.getElementById("subcategory");
-        subcatSelect.innerHTML = '<option value="" disabled selected>Select a subcategory</option>';
-        allSubcatOptions.forEach(option => {
+        subcatSelect.innerHTML = '<option value="" disabled selected>Select a subcategory</option>'; // Her rydder vi bare hvis der skulle stå noget når vi har valgt en category og skriver Select... Hvilket innerHTML gør
+        allSubcatOptions.forEach(option => { // Kører listen igennem for valgtmulgiehder når man har valgt Category, så lad os sige id 2 er Clothing, så viser den alle subcategories der passer med det
             if (catId && option.getAttribute('data-category-id') === catId) {
                 subcatSelect.appendChild(option.cloneNode(true));
             }
         });
-        updateSizesBySubcategory();
+        updateSizesBySubcategory(); // nulstiller størrelser
     }
 
     function updateSizesBySubcategory() {
-        const subcatSelect = document.getElementById("subcategory");
+        const subcatSelect = document.getElementById("subcategory");  // Det samme foregår i updateSizes, så den tjekker om det er en T-shirt, så har du fx. M, L osv.
         const sizeTypeId = subcatSelect.selectedIndex > 0 ? subcatSelect.options[subcatSelect.selectedIndex].getAttribute('data-size-type-id') : null;
         const sizeSelect = document.getElementById("size");
         sizeSelect.innerHTML = '<option value="" disabled selected>Select size</option>';

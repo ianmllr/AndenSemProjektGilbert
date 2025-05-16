@@ -112,9 +112,12 @@
 <script src="/search.js"></script>
 
 <main>
-    <h2 id="mainHeader">Daily Listings</h2>
+<h2 id="mainHeader">Daily Listings</h2>
+
+<!-- Womens Section -->
+<section class="category-section">
+    <h3>Womens</h3>
     <div class="products-container">
-        <h3>Womens</h3>
         <div th:each="product : ${randomWomensProducts}" class="product-card">
             <div class="product-picture">
                 <img th:src="@{'/productimage/' + ${product.imgsrc}}" style="max-width: 200px; max-height: 200px;" alt="no pic">
@@ -133,7 +136,13 @@
             <p th:text="${product.brand}"></p>
             <p th:text="${product.price} + ' €'"></p>
         </div>
-        <h3>Mens</h3>
+    </div>
+</section>
+
+<!-- Mens Section -->
+<section class="category-section">
+    <h3>Mens</h3>
+    <div class="products-container">
         <div th:each="product : ${randomMensProducts}" class="product-card">
             <div class="product-picture">
                 <form th:action="@{/products/addToFavorites/{id}(id=${product.id})}" method="post">
@@ -148,12 +157,17 @@
                 </form>
                 <img th:src="@{'/productimage/' + ${product.imgsrc}}" style="max-width: 200px; max-height: 200px;" alt="no pic">
             </div>
-
             <p class="productname" th:text="${product.name}"></p>
             <p th:text="${product.brand}"></p>
             <p th:text="${product.price} + ' €'"></p>
         </div>
-        <h3>Bags</h3>
+    </div>
+</section>
+
+<!-- Bags Section -->
+<section class="category-section">
+    <h3>Bags</h3>
+    <div class="products-container">
         <div th:each="product : ${randomBags}" class="product-card">
             <div class="product-picture">
                 <img th:src="@{'/productimage/' + ${product.imgsrc}}" style="max-width: 200px; max-height: 200px;" alt="no pic">
@@ -173,6 +187,7 @@
             <p th:text="${product.price} + ' €'"></p>
         </div>
     </div>
+</section>
 </main>
 
 <footer class="footer-container">
