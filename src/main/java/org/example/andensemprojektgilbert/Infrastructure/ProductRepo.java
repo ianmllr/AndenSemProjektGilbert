@@ -341,6 +341,45 @@ public class ProductRepo {
     }
 
 
+    public List<String> getCategories() {
+        String sql = "SELECT name FROM Category";
+        return jdbcTemplate.queryForList(sql, String.class);
+    }
 
+    public List<String> getDepartments() {
+        String sql = "SELECT name FROM Department";
+        return jdbcTemplate.queryForList(sql, String.class);
+    }
+
+    public List<String> getSubcategories() {
+        String sql = "SELECT name FROM Subcategory";
+        return jdbcTemplate.queryForList(sql, String.class);
+    }
+
+    public List<String> getBrands() {
+        String sql ="SELECT name FROM Brand";
+        return jdbcTemplate.queryForList(sql, String.class);
+    }
+
+    public List<String> getLocations() {
+        String sql = "SELECT name FROM Location";
+        return jdbcTemplate.queryForList(sql, String.class);
+    }
+
+    public List<String> getConditions() {
+        String sql = "SELECT itemcondition FROM condition";
+        return jdbcTemplate.queryForList(sql, String.class);
+    }
+
+
+    public List<String> getColors() {
+        String sql = "SELECT color FROM color";
+        return jdbcTemplate.queryForList(sql, String.class);
+    }
+
+    public List<String> getSizes() {
+        String sql = "SELECT size FROM size";
+        return jdbcTemplate.queryForList(sql, String.class);
+    }
 
 }

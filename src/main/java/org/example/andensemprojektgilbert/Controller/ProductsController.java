@@ -44,6 +44,15 @@ public class ProductsController {
     public String getNewProduct(Model model, HttpSession session) {
         User user = (User) session.getAttribute("currentUser");
         System.out.println("opened new product page with user " + user.getName());
+        model.addAttribute("categories", productsService.getCategories());
+        model.addAttribute("subcategories", productsService.getSubcategories());
+        model.addAttribute("departments", productsService.getDepartments());
+        model.addAttribute("brands", productsService.getBrands());
+        model.addAttribute("locations", productsService.getLocations());
+        model.addAttribute("conditions", productsService.getConditions());
+        model.addAttribute("colors", productsService.getColors());
+        model.addAttribute("sizes", productsService.getSizes());
+
         model.addAttribute("user", user);
         model.addAttribute("product", new Product());
         return "newproduct";

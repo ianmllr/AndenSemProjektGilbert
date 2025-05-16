@@ -106,4 +106,38 @@ public class ProductsService {
             productRepo.updateProduct(product);
         }
     }
+
+    public List<String> getCategories() {
+        return productRepo.getCategories();
+    }
+
+    public List<String> getDepartments() {
+        return productRepo.getDepartments();
+    }
+
+    public List<String> getSubcategories() {
+        return productRepo.getSubcategories();
+    }
+
+    public List<String> getBrands() {
+        return productRepo.getBrands();
+    }
+
+    public List<String> getLocations() {
+        return productRepo.getLocations();
+    }
+
+    public List<String> getConditions() {
+        return productRepo.getConditions();
+    }
+
+    public List<String> getColors() {
+        return productRepo.getColors();
+    }
+
+    public List<String> getSizes() {
+        return productRepo.getSizes();
+    }
+
+
 }
