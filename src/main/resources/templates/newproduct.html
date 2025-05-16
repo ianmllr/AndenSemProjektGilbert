@@ -34,17 +34,25 @@
             <label for="department">Department:</label>
             <select id="department" th:field="*{department}" required>
                 <option value="" disabled selected>Select department</option>
-                <option th:each="dep : ${departments}" th:value="${dep}" th:text="${dep}"></option>            </select>
+                <option th:each="dep : ${departments}" th:value="${dep}" th:text="${dep}"></option>
+            </select>
 
             <label for="category">Category:</label>
-            <select id="category" th:field="*{category}" onchange="updateSizes()" required>
-                <option value="" disabled selected>Select a subcategory</option>
-                <option th:each="subcat : ${subcategories}" th:value="${subcat}" th:text="${subcat}"></option>            </select>
+            <select id="category" th:field="*{category}" onchange="updateSubcategories();">
+                <option value="" disabled selected>Select a category</option>
+                <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+            </select>
+
 
             <label for="subcategory">Subcategory:</label>
-            <select id="subcategory" th:field="*{subcategory}" required>
+            <select id="subcategory" th:field="*{subcategory}" onchange="updateSizesBySubcategory();" required>
                 <option value="" disabled selected>Select a subcategory</option>
-                <option th:each="subcat : ${subcategories}" th:value="${subcat}" th:text="${subcat}"></option>            </select>
+                <option th:each="subcat : ${subcategories}"
+                        th:value="${subcat.name}"
+                        th:text="${subcat.name}"
+                        th:attr="data-category-id=${subcat.categoryId},data-size-type-id=${subcat.sizeTypeId}">
+                </option>
+            </select>
 
             <label for="price">Price:</label>
             <input type="number" id="price" th:field="*{price}" required>
@@ -52,17 +60,24 @@
             <label for="p_condition">Condition:</label>
             <select id="p_condition" th:field="*{condition}" required>
                 <option value="" disabled selected>Select condition</option>
-                <option th:each="cond : ${conditions}" th:value="${cond}" th:text="${cond}"></option>            </select>
+                <option th:each="cond : ${conditions}" th:value="${cond}" th:text="${cond}"></option>
+            </select>
 
             <label for="size">Size:</label>
             <select id="size" th:field="*{size}" required>
                 <option value="" disabled selected>Select size</option>
-                <option th:each="size : ${sizes}" th:value="${size}" th:text="${size}"></option>            </select>
+                <option th:each="size : ${sizes}"
+                        th:value="${size.size_value}"
+                        th:text="${size.size_value}"
+                        th:attr="data-size-type-id=${size.sizeTypeId}">
+                </option>
+            </select>
 
             <label for="color">Color:</label>
             <select id="color" th:field="*{color}" required>
                 <option value="" disabled selected>Select color</option>
-                <option th:each="color : ${colors}" th:value="${color}" th:text="${color}"></option>            </select>
+                <option th:each="color : ${colors}" th:value="${color}" th:text="${color}"></option>
+            </select>
 
             <label for="location">Location:</label>
             <select name="location" id="location" th:field="*{location}">
@@ -126,25 +141,40 @@
 
 
 <script th:inline="javascript">
-    var sizesByCategory = {
-        "shirt": /*[[${shirtsizes}]]*/,
-        "pants": /*[[${pantsizes}]]*/,
-        "shoes": /*[[${shoesizes}]]*/
-        // tilføj flere hvis nødvendigt
-    };
+    let allSubcatOptions = [];
+    let allSizeOptions = [];
 
-    function updateSizes() {
-        var cat = document.getElementById("category").value;
+    window.addEventListener('DOMContentLoaded', function() {
+        allSubcatOptions = Array.from(document.querySelectorAll('#subcategory option[data-category-id]'));
+        allSizeOptions = Array.from(document.querySelectorAll('#size option[data-size-type-id]'));
+    });
+
+    function updateSubcategories() {
+        var catId = document.getElementById("category").value;
+        var subcatSelect = document.getElementById("subcategory");
+        subcatSelect.innerHTML = '<option value="" disabled selected>Select a subcategory</option>';
+        allSubcatOptions.forEach(function(option) {
+            if (option.getAttribute('data-category-id') === catId) {
+                subcatSelect.appendChild(option.cloneNode(true));
+            }
+        });
+        // Nulstil sizes når subcategory ændres
+        updateSizesBySubcategory();
+    }
+
+    function updateSizesBySubcategory() {
+        var subcatSelect = document.getElementById("subcategory");
+        var selectedSubcat = subcatSelect.options[subcatSelect.selectedIndex];
+        var sizeTypeId = selectedSubcat ? selectedSubcat.getAttribute('data-size-type-id') : null;
         var sizeSelect = document.getElementById("size");
-        sizeSelect.innerHTML = '<option value="">Vælg størrelse</option>';
-        if (sizesByCategory[cat]) {
-            sizesByCategory[cat].forEach(function(size) {
-                sizeSelect.innerHTML += '<option value="' + size + '">' + size + '</option>';
-            });
-        }
+        sizeSelect.innerHTML = '<option value="" disabled selected>Select size</option>';
+        allSizeOptions.forEach(function(option) {
+            if (sizeTypeId && option.getAttribute('data-size-type-id') === sizeTypeId) {
+                sizeSelect.appendChild(option.cloneNode(true));
+            }
+        });
     }
 </script>
-
 
 
 

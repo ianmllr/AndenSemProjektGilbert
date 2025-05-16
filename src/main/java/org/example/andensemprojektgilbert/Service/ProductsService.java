@@ -1,11 +1,11 @@
 package org.example.andensemprojektgilbert.Service;
 
 import org.example.andensemprojektgilbert.Infrastructure.ProductRepo;
-import org.example.andensemprojektgilbert.Model.Product;
-import org.example.andensemprojektgilbert.Model.User;
+import org.example.andensemprojektgilbert.Model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -115,16 +115,20 @@ public class ProductsService {
         }
     }
 
-    public List<String> getCategories() {
-        return productRepo.getCategories();
-    }
-
     public List<String> getDepartments() {
         return productRepo.getDepartments();
     }
 
-    public List<String> getSubcategories() {
+    public List<Subcategory> getSubcategories() {
         return productRepo.getSubcategories();
+    }
+
+    public List<Category> getCategories() {
+        return productRepo.getCategories();
+    }
+
+    public List<Size> getSizes() {
+        return productRepo.getSizes();
     }
 
     public List<String> getBrands() {
@@ -143,13 +147,9 @@ public class ProductsService {
         return productRepo.getColors();
     }
 
-    public List<String> getSizes() {
-        return productRepo.getAllSizes();
-    }
 
     public List<String> getSizesByType(String type) {
         return productRepo.getSizesByType(type);
     }
-
 
 }

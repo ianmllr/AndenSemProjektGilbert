@@ -1,7 +1,6 @@
 package org.example.andensemprojektgilbert.Infrastructure;
 
-import org.example.andensemprojektgilbert.Model.Product;
-import org.example.andensemprojektgilbert.Model.User;
+import org.example.andensemprojektgilbert.Model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -379,20 +378,32 @@ public class ProductRepo {
                 conditionId, sizeId, colorId, product.getImgsrc(), product.getId());
     }
 
-    public List<String> getCategories() {
-        String sql = "SELECT name FROM Category";
-        return jdbcTemplate.queryForList(sql, String.class);
-    }
-
     public List<String> getDepartments() {
         String sql = "SELECT name FROM Department";
         return jdbcTemplate.queryForList(sql, String.class);
     }
 
-    public List<String> getSubcategories() {
-        String sql = "SELECT name FROM Subcategory";
-        return jdbcTemplate.queryForList(sql, String.class);
+    public List<Subcategory> getSubcategories() {
+        String sql = "SELECT * FROM subcategory";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            Subcategory sub = new Subcategory();
+            sub.setName(rs.getString("name"));
+            sub.setCategoryId(rs.getInt("category_id"));
+            sub.setSizeTypeId(rs.getInt("size_type_id"));
+            return sub;
+        });
     }
+
+    public List<Category> getCategories() {
+        String sql = "SELECT * FROM Category";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            Category cat = new Category();
+            cat.setId(rs.getInt("id"));
+            cat.setName(rs.getString("name"));
+            return cat;
+        });
+    }
+
 
     public List<String> getBrands() {
         String sql ="SELECT name FROM Brand";
@@ -414,10 +425,6 @@ public class ProductRepo {
         return jdbcTemplate.queryForList(sql, String.class);
     }
 
-    public List<String> getAllSizes() {
-        String sql = "SELECT size_value FROM size";
-        return jdbcTemplate.queryForList(sql, String.class);
-    }
 
     public List<String> getSizesByType(String type) {
         String sql = "SELECT s.size_value FROM size s JOIN size_types t ON s.size_type_id = t.id WHERE t.name = ?";
@@ -425,4 +432,14 @@ public class ProductRepo {
     }
 
 
+    public List<Size> getSizes() {
+        String sql = "SELECT * FROM size";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            Size size = new Size();
+            size.setId(rs.getInt("id"));
+            size.setSizeValue(rs.getString("size_value"));
+            size.setSizeTypeId(rs.getInt("size_type_id"));
+            return size;
+        });
+    }
 }
