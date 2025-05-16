@@ -40,7 +40,7 @@ public class ProductsService {
         }
     }
     public List<Product> getWomensProducts() {
-        if (productRepo.readWomensProducts().isEmpty()) {
+        if (!productRepo.readWomensProducts().isEmpty()) {
             return productRepo.readWomensProducts();
         } else {
             System.out.println("Womens products er tom");
@@ -49,7 +49,7 @@ public class ProductsService {
     }
 
     public List<Product> getMyProducts(User user) {
-        if (productRepo.readUserProducts(user).isEmpty()) {
+        if (!productRepo.readUserProducts(user).isEmpty()) {
             return productRepo.readUserProducts(user);
         } else {
             // debug logging her
