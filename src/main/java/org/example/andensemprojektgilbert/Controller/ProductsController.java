@@ -1,8 +1,7 @@
 package org.example.andensemprojektgilbert.Controller;
 
 import jakarta.servlet.http.HttpSession;
-import org.example.andensemprojektgilbert.Model.Product;
-import org.example.andensemprojektgilbert.Model.User;
+import org.example.andensemprojektgilbert.Model.*;
 import org.example.andensemprojektgilbert.Service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,29 +40,37 @@ public class ProductsController {
     //
     //
 
+
     @GetMapping("/gilbertprofile/newproduct")
-    public String getNewProduct(Model model, HttpSession session) {
+    public String getNewProduct(@RequestParam(value = "departmentId", required = false) Integer departmentId,
+                                @RequestParam(value = "categoryId", required = false) Integer categoryId,
+                                Model model, HttpSession session) {
+
         User user = (User) session.getAttribute("currentUser");
-        System.out.println("opened new product page with user " + user.getName());
-
-        // henter arrays med forskellige slags størrelser
-        model.addAttribute("shirtsizes", productsService.getSizesByType("shirtSizes"));
-        model.addAttribute("pantsizes", productsService.getSizesByType("pantsSizes"));
-        model.addAttribute("shoesizes", productsService.getSizesByType("shoeSizes"));
-
-        model.addAttribute("categories", productsService.getCategories());
-        model.addAttribute("subcategories", productsService.getSubcategories());
         model.addAttribute("departments", productsService.getDepartments());
+
+        List<Category> categories = (departmentId != null) ? productsService.findByDepartment(departmentId) : Collections.emptyList();
+        model.addAttribute("categories", categories);
+
+        List<Subcategory> subcategories = (categoryId != null) ? productsService.findByCategory(categoryId, departmentId) : Collections.emptyList();
+        model.addAttribute("subcategories", subcategories);
+
+        model.addAttribute("selectedDepartmentId", departmentId);
+        model.addAttribute("selectedCategoryId", categoryId);
+
         model.addAttribute("brands", productsService.getBrands());
         model.addAttribute("locations", productsService.getLocations());
         model.addAttribute("conditions", productsService.getConditions());
         model.addAttribute("colors", productsService.getColors());
         model.addAttribute("sizes", productsService.getSizes());
-
         model.addAttribute("user", user);
         model.addAttribute("product", new Product());
+
         return "newproduct";
     }
+
+
+
 
     @PostMapping("/gilbertprofile/newproduct")
     public String postNewProduct(@ModelAttribute Product product, HttpSession session, Model model, @RequestParam("image") MultipartFile image, RedirectAttributes redirectAttributes) {

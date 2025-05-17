@@ -20,79 +20,88 @@
 </div>
 <main>
     <h2>Create a new listing</h2>
-    <form th:action="@{/gilbertprofile/newproduct}" th:object="${product}" th:method="post" enctype="multipart/form-data" class="newproduct-form">
-        <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" id="name" th:field="*{name}" required>
 
-            <label for="brand">Brand:</label>
-            <select id="brand" th:field="*{brand}" required>
-                <option value="" disabled selected>Select a brand</option>
-                <option th:each="brand : ${brands}" th:value="${brand}" th:text="${brand}"></option>
-            </select>
+    <div class="newproduct-form">
+            <form th:action="@{/gilbertprofile/newproduct}" method="get">
+                <div class="form-group">
+                <label for="department">Department:</label>
+                <select id="department" name="departmentId" required onchange="this.form.submit();">
+                    <option value="" disabled>Select department</option>
+                    <option th:each="dep : ${departments}"
+                            th:value="${dep.id}"
+                            th:text="${dep.name}"
+                            th:selected="${selectedDepartmentId != null && dep.id == selectedDepartmentId}">
+                    </option>
+                </select>
 
-            <label for="department">Department:</label>
-            <select id="department" th:field="*{department}" required>
-                <option value="" disabled selected>Select department</option>
-                <option th:each="dep : ${departments}" th:value="${dep}" th:text="${dep}"></option>
-            </select>
+                <label for="category">Category:</label>
+                <select id="category" name="categoryId" required onchange="this.form.submit();">
+                    <option value="" disabled>Select a category</option>
+                    <option th:each="cat : ${categories}"
+                            th:value="${cat.id}"
+                            th:text="${cat.name}"
+                            th:selected="${selectedCategoryId != null && cat.id == selectedCategoryId}">
+                    </option>
+                </select>
+                </form>
 
-            <label for="category">Category:</label>
-            <select id="category" th:field="*{category}" onchange="updateSubcategories();">
-                <option value="" disabled selected>Select a category</option>
-                <option th:each="cat : ${categories}" th:value="${cat.name}" th:text="${cat.name}" th:attr="data-category-id=${cat.id}"></option>
-            </select>
+            <form th:action="@{/gilbertprofile/newproduct}" th:object="${product}" th:method="post" enctype="multipart/form-data">
+                <label for="subcategory">Subcategory:</label>
+                <select id="subcategory" th:field="*{subcategory}" required>
+                    <option value="" disabled>Select a subcategory</option>
+                    <option th:each="subcat : ${subcategories}" th:value="${subcat.id}" th:text="${subcat.name}"></option>
+                </select>
 
-            <label for="subcategory">Subcategory:</label>
-            <select id="subcategory" th:field="*{subcategory}" onchange="updateSizesBySubcategory();" required>
-                <option value="" disabled selected>Select a subcategory</option>
-                <option th:each="subcat : ${subcategories}"
-                        th:value="${subcat.name}"
-                        th:text="${subcat.name}"
-                        th:attr="data-category-id=${subcat.categoryId},data-size-type-id=${subcat.sizeTypeId}">
-                </option>
-            </select>
+                <label for="name">Name:</label>
+                <input type="text" id="name" th:field="*{name}" required>
 
-            <label for="price">Price:</label>
-            <input type="number" id="price" th:field="*{price}" required>
+                <label for="brand">Brand:</label>
+                <select id="brand" th:field="*{brand}" required>
+                    <option value="" disabled>Select a brand</option>
+                    <option th:each="brand : ${brands}" th:value="${brand}" th:text="${brand}"></option>
+                </select>
 
-            <label for="p_condition">Condition:</label>
-            <select id="p_condition" th:field="*{condition}" required>
-                <option value="" disabled selected>Select condition</option>
-                <option th:each="cond : ${conditions}" th:value="${cond}" th:text="${cond}"></option>
-            </select>
 
-            <label for="size">Size:</label>
-            <select id="size" th:field="*{size}" required>
-                <option value="" disabled selected>Select size</option>
-                <option th:each="size : ${sizes}"
-                        th:value="${size.size_value}"
-                        th:text="${size.size_value}"
-                        th:attr="data-size-type-id=${size.sizeTypeId}">
-                </option>
-            </select>
 
-            <label for="color">Color:</label>
-            <select id="color" th:field="*{color}" required>
-                <option value="" disabled selected>Select color</option>
-                <option th:each="color : ${colors}" th:value="${color}" th:text="${color}"></option>
-            </select>
+                <label for="price">Price:</label>
+                <input type="number" id="price" th:field="*{price}" required>
 
-            <label for="location">Location:</label>
-            <select name="location" id="location" th:field="*{location}">
-                <option value="" disabled selected>Select location</option>
-                <option th:each="loc : ${locations}" th:value="${loc}" th:text="${loc}"></option>
-            </select>
+                <label for="p_condition">Condition:</label>
+                <select id="p_condition" th:field="*{condition}" required>
+                    <option value="" disabled>Select condition</option>
+                    <option th:each="cond : ${conditions}" th:value="${cond}" th:text="${cond}"></option>
+                </select>
 
-            <label for="description">Description:</label>
-            <textarea id="description" rows="4" cols="50" th:field="*{description}" required></textarea>
+                <label for="size">Size:</label>
+                <select id="size" th:field="*{size}" required>
+                    <option value="" disabled>Select size</option>
+                    <option th:each="size : ${sizes}" th:value="${size.size_value}" th:text="${size.size_value}" th:attr="data-size-type-id=${size.sizeTypeId}"></option>
+                </select>
 
-            <label for="image">Upload picture:</label>
-            <input type="file" id="image" name="image" accept="image/*">
+                <label for="color">Color:</label>
+                <select id="color" th:field="*{color}" required>
+                    <option value="" disabled>Select color</option>
+                    <option th:each="color : ${colors}" th:value="${color}" th:text="${color}"></option>
+                </select>
 
-            <button type="submit">Opret opslag</button>
+                <label for="location">Location:</label>
+                <select name="location" id="location" th:field="*{location}">
+                    <option value="" disabled>Select location</option>
+                    <option th:each="loc : ${locations}" th:value="${loc}" th:text="${loc}"></option>
+                </select>
+
+                <label for="description">Description:</label>
+                <textarea id="description" rows="4" cols="50" th:field="*{description}" required></textarea>
+
+                <label for="image">Upload picture:</label>
+                <input type="file" id="image" name="image" accept="image/*">
+
+                <button type="submit">Submit Listing</button>
         </div>
     </form>
+    </div>
+
+
 </main>
 
 <nav class="mobile-nav">

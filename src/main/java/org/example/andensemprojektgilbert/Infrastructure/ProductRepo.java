@@ -16,22 +16,38 @@ public class ProductRepo {
 
     private Integer getColorId(String color) {
         String sql = "SELECT idcolor from Color WHERE color = ?";
-        return jdbcTemplate.queryForObject(sql, Integer.class, color);
+        try {
+            return jdbcTemplate.queryForObject(sql, Integer.class, color);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     private Integer getSizeId(String sizeValue) {
         String sql = "SELECT id FROM size WHERE size_value = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{sizeValue}, Integer.class);
+        try {
+            return jdbcTemplate.queryForObject(sql, new Object[]{sizeValue}, Integer.class);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     private Integer getConditionId(String condition) {
         String sql = "SELECT idcondition FROM gilbert.condition WHERE itemcondition = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{condition}, Integer.class);
+        try {
+            return jdbcTemplate.queryForObject(sql, new Object[]{condition}, Integer.class);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     private Integer getBrandId(String brandName) {
         String sql = "SELECT id FROM Brand WHERE name = ?";
-        return jdbcTemplate.queryForObject(sql, Integer.class, brandName);
+        try {
+            return jdbcTemplate.queryForObject(sql, Integer.class, brandName);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
     private Integer getCategoryId(String categoryName) {
         System.out.println("Looking for category: '" + categoryName + "'");
@@ -47,15 +63,27 @@ public class ProductRepo {
     }
     private Integer getSubcategoryId(String subcategoryName) {
         String sql = "SELECT id FROM Subcategory WHERE name = ?";
-        return jdbcTemplate.queryForObject(sql, Integer.class, subcategoryName);
+        try {
+            return jdbcTemplate.queryForObject(sql, Integer.class, subcategoryName);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
     private Integer getLocationId(String locationName) {
         String sql = "SELECT id FROM Location WHERE name = ?";
-        return jdbcTemplate.queryForObject(sql, Integer.class, locationName);
+        try {
+            return jdbcTemplate.queryForObject(sql, Integer.class, locationName);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
     private Integer getDepartmentId(String departmentName) {
         String sql = "SELECT id FROM Department WHERE name = ?";
-        return jdbcTemplate.queryForObject(sql, Integer.class, departmentName);
+        try {
+            return jdbcTemplate.queryForObject(sql, Integer.class, departmentName);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     // CREATE
@@ -115,19 +143,22 @@ public class ProductRepo {
 
 
     public List<Product> searchProducts(String keyword) {
-        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, " +
-                "d.name AS department, c.name AS category, sc.name AS subcategory, " +
-                "p.posted_date, p.price, cond.itemcondition AS `condition`, s.size_value AS size, col.color AS color, " +
-                "p.imgsrc, p.createdbyid " +
-                "FROM product p " +
-                "LEFT JOIN brand b ON p.brand_id = b.id " +
-                "LEFT JOIN location l ON p.location_id = l.id " +
-                "LEFT JOIN department d ON p.department_id = d.id " +
-                "LEFT JOIN category c ON p.category_id = c.id " +
-                "LEFT JOIN category sc ON p.subcategory_id = sc.id " +
-                "LEFT JOIN color col ON p.color_id = col.idcolor " +
-                "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition " +
-                "LEFT JOIN size s ON p.size_id = s.id " +
+        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, dcs.department_id,\n" +
+                "dcs.category_id, dcs.subcategory_id, d.name AS department, \n" +
+                "c.name AS category, sc.name AS subcategory, p.posted_date, p.price, \n" +
+                "cond.itemcondition AS item_condition, s.size_value AS size, col.color AS color,\n" +
+                "p.imgsrc, p.createdbyid\n" +
+                "FROM product p\n" +
+                "INNER JOIN department_category_subcategory dcs \n" +
+                "ON p.category_id = dcs.category_id AND p.subcategory_id = dcs.subcategory_id AND p.department_id = dcs.department_id\n" +
+                "INNER JOIN department d ON dcs.department_id = d.id\n" +
+                "INNER JOIN category c ON dcs.category_id = c.id\n" +
+                "LEFT JOIN subcategory sc ON dcs.subcategory_id = sc.id\n" +
+                "LEFT JOIN brand b ON p.brand_id = b.id\n" +
+                "LEFT JOIN location l ON p.location_id = l.id\n" +
+                "LEFT JOIN color col ON p.color_id = col.idcolor\n" +
+                "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition\n" +
+                "LEFT JOIN size s ON p.size_id = s.id" +
                 "WHERE p.name LIKE ? OR b.name LIKE ? OR l.name LIKE ? OR d.name LIKE ? OR c.name LIKE ? OR sc.name LIKE ? OR p.description LIKE ?";
         String searchTerm = "%" + keyword + "%";
         return jdbcTemplate.query(sql, new Object[]{searchTerm, searchTerm, searchTerm, searchTerm, searchTerm, searchTerm, searchTerm}, (rs, rowNum) -> new Product(
@@ -151,15 +182,17 @@ public class ProductRepo {
 
 
     public List<Product> readAllProducts() {
-        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description,\n" +
-                "       d.name AS department, c.name AS category, sc.name AS subcategory,\n" +
-                "       p.posted_date, p.price, cond.itemcondition AS item_condition,\n" +
-                "       s.size_value AS size, col.color AS color,\n" +
-                "       p.imgsrc, p.createdbyid\n" +
+        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, dcs.department_id,\n" +
+                "dcs.category_id, dcs.subcategory_id, d.name AS department, \n" +
+                "c.name AS category, sc.name AS subcategory, p.posted_date, p.price, \n" +
+                "cond.itemcondition AS item_condition, s.size_value AS size, col.color AS color,\n" +
+                "p.imgsrc, p.createdbyid\n" +
                 "FROM product p\n" +
-                "INNER JOIN department d ON p.department_id = d.id \n" +
-                "INNER JOIN category c ON p.category_id = c.id\n" +
-                "INNER JOIN subcategory sc ON p.subcategory_id = sc.id\n" +
+                "INNER JOIN department_category_subcategory dcs \n" +
+                "ON p.category_id = dcs.category_id AND p.subcategory_id = dcs.subcategory_id AND p.department_id = dcs.department_id\n" +
+                "INNER JOIN department d ON dcs.department_id = d.id\n" +
+                "INNER JOIN category c ON dcs.category_id = c.id\n" +
+                "LEFT JOIN subcategory sc ON dcs.subcategory_id = sc.id\n" +
                 "LEFT JOIN brand b ON p.brand_id = b.id\n" +
                 "LEFT JOIN location l ON p.location_id = l.id\n" +
                 "LEFT JOIN color col ON p.color_id = col.idcolor\n" +
@@ -170,15 +203,17 @@ public class ProductRepo {
 
     // læser herre-produkter
     public List<Product> readMensProducts() {
-        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description,\n" +
-                "       d.name AS department, c.name AS category, sc.name AS subcategory,\n" +
-                "       p.posted_date, p.price, cond.itemcondition AS item_condition,\n" +
-                "       s.size_value AS size, col.color AS color,\n" +
-                "       p.imgsrc, p.createdbyid\n" +
+        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, dcs.department_id,\n" +
+                "dcs.category_id, dcs.subcategory_id, d.name AS department, \n" +
+                "c.name AS category, sc.name AS subcategory, p.posted_date, p.price, \n" +
+                "cond.itemcondition AS item_condition, s.size_value AS size, col.color AS color,\n" +
+                "p.imgsrc, p.createdbyid\n" +
                 "FROM product p\n" +
-                "INNER JOIN department d ON p.department_id = d.id \n" +
-                "INNER JOIN category c ON p.category_id = c.id\n" +
-                "INNER JOIN subcategory sc ON p.subcategory_id = sc.id\n" +
+                "INNER JOIN department_category_subcategory dcs \n" +
+                "ON p.category_id = dcs.category_id AND p.subcategory_id = dcs.subcategory_id AND p.department_id = dcs.department_id\n" +
+                "INNER JOIN department d ON dcs.department_id = d.id\n" +
+                "INNER JOIN category c ON dcs.category_id = c.id\n" +
+                "LEFT JOIN subcategory sc ON dcs.subcategory_id = sc.id\n" +
                 "LEFT JOIN brand b ON p.brand_id = b.id\n" +
                 "LEFT JOIN location l ON p.location_id = l.id\n" +
                 "LEFT JOIN color col ON p.color_id = col.idcolor\n" +
@@ -190,15 +225,17 @@ public class ProductRepo {
 
     // læser kvinde-produkter
     public List<Product> readWomensProducts() {
-        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description,\n" +
-                "       d.name AS department, c.name AS category, sc.name AS subcategory,\n" +
-                "       p.posted_date, p.price, cond.itemcondition AS item_condition,\n" +
-                "       s.size_value AS size, col.color AS color,\n" +
-                "       p.imgsrc, p.createdbyid\n" +
+        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, dcs.department_id,\n" +
+                "dcs.category_id, dcs.subcategory_id, d.name AS department, \n" +
+                "c.name AS category, sc.name AS subcategory, p.posted_date, p.price, \n" +
+                "cond.itemcondition AS item_condition, s.size_value AS size, col.color AS color,\n" +
+                "p.imgsrc, p.createdbyid\n" +
                 "FROM product p\n" +
-                "INNER JOIN department d ON p.department_id = d.id \n" +
-                "INNER JOIN category c ON p.category_id = c.id\n" +
-                "INNER JOIN subcategory sc ON p.subcategory_id = sc.id\n" +
+                "INNER JOIN department_category_subcategory dcs \n" +
+                "ON p.category_id = dcs.category_id AND p.subcategory_id = dcs.subcategory_id AND p.department_id = dcs.department_id\n" +
+                "INNER JOIN department d ON dcs.department_id = d.id\n" +
+                "INNER JOIN category c ON dcs.category_id = c.id\n" +
+                "LEFT JOIN subcategory sc ON dcs.subcategory_id = sc.id\n" +
                 "LEFT JOIN brand b ON p.brand_id = b.id\n" +
                 "LEFT JOIN location l ON p.location_id = l.id\n" +
                 "LEFT JOIN color col ON p.color_id = col.idcolor\n" +
@@ -209,15 +246,17 @@ public class ProductRepo {
     }
 
     public List<Product> readRandomMensProducts() {
-        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description,\n" +
-                "       d.name AS department, c.name AS category, sc.name AS subcategory,\n" +
-                "       p.posted_date, p.price, cond.itemcondition AS item_condition,\n" +
-                "       s.size_value AS size, col.color AS color,\n" +
-                "       p.imgsrc, p.createdbyid\n" +
+        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, dcs.department_id,\n" +
+                "dcs.category_id, dcs.subcategory_id, d.name AS department, \n" +
+                "c.name AS category, sc.name AS subcategory, p.posted_date, p.price, \n" +
+                "cond.itemcondition AS item_condition, s.size_value AS size, col.color AS color,\n" +
+                "p.imgsrc, p.createdbyid\n" +
                 "FROM product p\n" +
-                "INNER JOIN department d ON p.department_id = d.id \n" +
-                "INNER JOIN category c ON p.category_id = c.id\n" +
-                "INNER JOIN subcategory sc ON p.subcategory_id = sc.id\n" +
+                "INNER JOIN department_category_subcategory dcs \n" +
+                "ON p.category_id = dcs.category_id AND p.subcategory_id = dcs.subcategory_id AND p.department_id = dcs.department_id\n" +
+                "INNER JOIN department d ON dcs.department_id = d.id\n" +
+                "INNER JOIN category c ON dcs.category_id = c.id\n" +
+                "LEFT JOIN subcategory sc ON dcs.subcategory_id = sc.id\n" +
                 "LEFT JOIN brand b ON p.brand_id = b.id\n" +
                 "LEFT JOIN location l ON p.location_id = l.id\n" +
                 "LEFT JOIN color col ON p.color_id = col.idcolor\n" +
@@ -228,15 +267,17 @@ public class ProductRepo {
     }
 
     public List<Product> readRandomWomensProducts() {
-        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description,\n" +
-                "       d.name AS department, c.name AS category, sc.name AS subcategory,\n" +
-                "       p.posted_date, p.price, cond.itemcondition AS item_condition,\n" +
-                "       s.size_value AS size, col.color AS color,\n" +
-                "       p.imgsrc, p.createdbyid\n" +
+        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, dcs.department_id,\n" +
+                "dcs.category_id, dcs.subcategory_id, d.name AS department, \n" +
+                "c.name AS category, sc.name AS subcategory, p.posted_date, p.price, \n" +
+                "cond.itemcondition AS item_condition, s.size_value AS size, col.color AS color,\n" +
+                "p.imgsrc, p.createdbyid\n" +
                 "FROM product p\n" +
-                "INNER JOIN department d ON p.department_id = d.id \n" +
-                "INNER JOIN category c ON p.category_id = c.id\n" +
-                "INNER JOIN subcategory sc ON p.subcategory_id = sc.id\n" +
+                "INNER JOIN department_category_subcategory dcs \n" +
+                "ON p.category_id = dcs.category_id AND p.subcategory_id = dcs.subcategory_id AND p.department_id = dcs.department_id\n" +
+                "INNER JOIN department d ON dcs.department_id = d.id\n" +
+                "INNER JOIN category c ON dcs.category_id = c.id\n" +
+                "LEFT JOIN subcategory sc ON dcs.subcategory_id = sc.id\n" +
                 "LEFT JOIN brand b ON p.brand_id = b.id\n" +
                 "LEFT JOIN location l ON p.location_id = l.id\n" +
                 "LEFT JOIN color col ON p.color_id = col.idcolor\n" +
@@ -247,15 +288,17 @@ public class ProductRepo {
     }
 
     public List<Product> readRandomBags() {
-        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description,\n" +
-                "       d.name AS department, c.name AS category, sc.name AS subcategory,\n" +
-                "       p.posted_date, p.price, cond.itemcondition AS item_condition,\n" +
-                "       s.size_value AS size, col.color AS color,\n" +
-                "       p.imgsrc, p.createdbyid\n" +
+        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, dcs.department_id,\n" +
+                "dcs.category_id, dcs.subcategory_id, d.name AS department, \n" +
+                "c.name AS category, sc.name AS subcategory, p.posted_date, p.price, \n" +
+                "cond.itemcondition AS item_condition, s.size_value AS size, col.color AS color,\n" +
+                "p.imgsrc, p.createdbyid\n" +
                 "FROM product p\n" +
-                "INNER JOIN department d ON p.department_id = d.id \n" +
-                "INNER JOIN category c ON p.category_id = c.id\n" +
-                "INNER JOIN subcategory sc ON p.subcategory_id = sc.id\n" +
+                "INNER JOIN department_category_subcategory dcs \n" +
+                "ON p.category_id = dcs.category_id AND p.subcategory_id = dcs.subcategory_id AND p.department_id = dcs.department_id\n" +
+                "INNER JOIN department d ON dcs.department_id = d.id\n" +
+                "INNER JOIN category c ON dcs.category_id = c.id\n" +
+                "LEFT JOIN subcategory sc ON dcs.subcategory_id = sc.id\n" +
                 "LEFT JOIN brand b ON p.brand_id = b.id\n" +
                 "LEFT JOIN location l ON p.location_id = l.id\n" +
                 "LEFT JOIN color col ON p.color_id = col.idcolor\n" +
@@ -266,20 +309,23 @@ public class ProductRepo {
     }
 
     public List<Product> readMensProductsBySubCat(String subcategory) {
-        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, " +
-                "d.name AS department, c.name AS category, sc.name AS subcategory, " +
-                "p.posted_date, p.price, cond.itemcondition AS `condition`, s.size_value AS size, col.color AS color, " +
-                "p.imgsrc, p.createdbyid " +
-                "FROM product p " +
-                "LEFT JOIN brand b ON p.brand_id = b.id " +
-                "LEFT JOIN location l ON p.location_id = l.id " +
-                "LEFT JOIN department d ON p.department_id = d.id " +
-                "LEFT JOIN category c ON p.category_id = c.id " +
-                "LEFT JOIN category sc ON p.subcategory_id = sc.id " +
-                "LEFT JOIN color col ON p.color_id = col.idcolor " +
-                "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition " +
-                "LEFT JOIN size s ON p.size_id = s.id " +
-                "WHERE d.name = 'Men' AND sc.name = ?";
+        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, d.name AS department,\n" +
+                "c.name AS category, sc.name AS subcategory, p.posted_date, p.price, \n" +
+                "cond.itemcondition AS `condition`, s.size_value AS size, col.color AS color, \n" +
+                "p.imgsrc, p.createdbyid \n" +
+                "FROM product p \n" +
+                "LEFT JOIN brand b ON p.brand_id = b.id \n" +
+                "LEFT JOIN location l ON p.location_id = l.id \n" +
+                "LEFT JOIN department_category_subcategory dcs ON p.department_id = dcs.department_id \n" +
+                "AND p.category_id = dcs.category_id \n" +
+                "AND (p.subcategory_id = dcs.subcategory_id OR dcs.subcategory_id IS NULL)\n" +
+                "LEFT JOIN department d ON dcs.department_id = d.id \n" +
+                "LEFT JOIN category c ON dcs.category_id = c.id \n" +
+                "LEFT JOIN subcategory sc ON dcs.subcategory_id = sc.id \n" +
+                "LEFT JOIN color col ON p.color_id = col.idcolor \n" +
+                "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition \n" +
+                "LEFT JOIN size s ON p.size_id = s.id \n" +
+                "WHERE d.name = 'Men' AND sc.name = ?;";
         return jdbcTemplate.query(sql, new Object[]{subcategory}, (rs, rowNum) -> new Product(
                 rs.getInt("id"),
                 rs.getString("name"),
@@ -308,20 +354,24 @@ public class ProductRepo {
 
 
     public List<Product> readUserProducts(User user) {
-        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, " +
-                "d.name AS department, c.name AS category, sc.name AS subcategory, " +
-                "p.posted_date, p.price, cond.itemcondition AS `condition`, s.size_value AS size, col.color AS color, " +
-                "p.imgsrc, p.createdbyid " +
-                "FROM product p " +
-                "LEFT JOIN brand b ON p.brand_id = b.id " +
-                "LEFT JOIN location l ON p.location_id = l.id " +
-                "LEFT JOIN department d ON p.department_id = d.id " +
-                "LEFT JOIN category c ON p.category_id = c.id " +
-                "LEFT JOIN category sc ON p.subcategory_id = sc.id " +
-                "LEFT JOIN color col ON p.color_id = col.idcolor " +
-                "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition " +
-                "LEFT JOIN size s ON p.size_id = s.id " +
-                "WHERE p.createdbyid = ?";
+        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, \n" +
+                "d.name AS department, c.name AS category, sc.name AS subcategory, \n" +
+                "p.posted_date, p.price, cond.itemcondition AS `condition`, \n" +
+                "s.size_value AS size, col.color AS color, p.imgsrc, p.createdbyid \n" +
+                "FROM product p \n" +
+                "LEFT JOIN brand b ON p.brand_id = b.id \n" +
+                "LEFT JOIN location l ON p.location_id = l.id \n" +
+                "LEFT JOIN department_category_subcategory dcs \n" +
+                "ON p.department_id = dcs.department_id \n" +
+                "AND p.category_id = dcs.category_id \n" +
+                "AND (p.subcategory_id = dcs.subcategory_id OR dcs.subcategory_id IS NULL)\n" +
+                "LEFT JOIN department d ON dcs.department_id = d.id \n" +
+                "LEFT JOIN category c ON dcs.category_id = c.id \n" +
+                "LEFT JOIN subcategory sc ON dcs.subcategory_id = sc.id \n" +
+                "LEFT JOIN color col ON p.color_id = col.idcolor \n" +
+                "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition \n" +
+                "LEFT JOIN size s ON p.size_id = s.id \n" +
+                "WHERE p.createdbyid = ?;";
         return jdbcTemplate.query(sql, new Object[]{user.getId()}, (rs, rowNum) -> new Product(
                 rs.getInt("id"),
                 rs.getString("name"),
@@ -342,20 +392,24 @@ public class ProductRepo {
     }
 
     public Product readProduct(int id) {
-        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, " +
-                "d.name AS department, c.name AS category, sc.name AS subcategory, " +
-                "p.posted_date, p.price, cond.itemcondition AS `condition`, s.size_value AS size, col.color AS color, " +
-                "p.imgsrc, p.createdbyid " +
-                "FROM product p " +
-                "LEFT JOIN brand b ON p.brand_id = b.id " +
-                "LEFT JOIN location l ON p.location_id = l.id " +
-                "LEFT JOIN department d ON p.department_id = d.id " +
-                "LEFT JOIN category c ON p.category_id = c.id " +
-                "LEFT JOIN category sc ON p.subcategory_id = sc.id " +
-                "LEFT JOIN color col ON p.color_id = col.idcolor " +
-                "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition " +
-                "LEFT JOIN size s ON p.size_id = s.id " +
-                "WHERE p.id = ?";
+        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, \n" +
+                "d.name AS department, c.name AS category, sc.name AS subcategory, \n" +
+                "p.posted_date, p.price, cond.itemcondition AS `condition`, s.size_value AS size, \n" +
+                "col.color AS color, p.imgsrc, p.createdbyid \n" +
+                "FROM product p \n" +
+                "LEFT JOIN brand b ON p.brand_id = b.id \n" +
+                "LEFT JOIN location l ON p.location_id = l.id \n" +
+                "LEFT JOIN department_category_subcategory dcs \n" +
+                "ON p.department_id = dcs.department_id \n" +
+                "AND p.category_id = dcs.category_id \n" +
+                "AND (p.subcategory_id = dcs.subcategory_id OR dcs.subcategory_id IS NULL)\n" +
+                "LEFT JOIN department d ON dcs.department_id = d.id \n" +
+                "LEFT JOIN category c ON dcs.category_id = c.id \n" +
+                "LEFT JOIN subcategory sc ON dcs.subcategory_id = sc.id \n" +
+                "LEFT JOIN color col ON p.color_id = col.idcolor \n" +
+                "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition \n" +
+                "LEFT JOIN size s ON p.size_id = s.id \n" +
+                "WHERE p.id = ?;";
         return jdbcTemplate.queryForObject(sql, new Object[]{id}, (rs, rowNum) -> new Product(
                 rs.getInt("id"),
                 rs.getString("name"),
@@ -393,9 +447,14 @@ public class ProductRepo {
                 conditionId, sizeId, colorId, product.getImgsrc(), product.getId());
     }
 
-    public List<String> getDepartments() {
-        String sql = "SELECT name FROM Department";
-        return jdbcTemplate.queryForList(sql, String.class);
+    public List<Department> getDepartments() {
+        String sql = "SELECT id, name FROM Department";
+        return jdbcTemplate.query(sql, (resultSet, i) -> {
+            Department department = new Department();
+            department.setId(resultSet.getInt("id"));
+            department.setName(resultSet.getString("name"));
+            return department;
+        });
     }
 
     public List<Subcategory> getSubcategories() {
@@ -455,6 +514,35 @@ public class ProductRepo {
             size.setSizeValue(rs.getString("size_value"));
             size.setSizeTypeId(rs.getInt("size_type_id"));
             return size;
+        });
+    }
+    public List<Category> findByDepartment(int departmentId) {
+        String sql = "SELECT c.id, c.name " +
+                "FROM category c " +
+                "JOIN department_category_subcategory dcs ON c.id = dcs.category_id " +
+                "WHERE dcs.department_id = ?";
+
+        return jdbcTemplate.query(sql, new Object[]{departmentId}, (rs, rowNum) -> {
+            Category cat = new Category();
+            cat.setId(rs.getInt("id"));
+            cat.setName(rs.getString("name"));
+            return cat;
+        });
+    }
+
+    public List<Subcategory> findByCategory(int categoryId, int departmentId) {
+        String sql = "SELECT sc.id, sc.name, dcs.category_id, sc.size_type_id " +
+                "FROM subcategory sc " +
+                "JOIN department_category_subcategory dcs ON sc.id = dcs.subcategory_id " +
+                "WHERE dcs.category_id = ? AND dcs.department_id = ?";
+
+        return jdbcTemplate.query(sql, new Object[]{categoryId, departmentId}, (rs, rowNum) -> {
+            Subcategory sub = new Subcategory();
+            sub.setId(rs.getInt("id"));
+            sub.setName(rs.getString("name"));
+            sub.setCategoryId(rs.getInt("category_id"));
+            sub.setSizeTypeId(rs.getInt("size_type_id"));
+            return sub;
         });
     }
 }

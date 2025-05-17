@@ -1,11 +1,13 @@
 package org.example.andensemprojektgilbert.Model;
 
 public class Subcategory {
+    private int id;
     private String name;
     private int categoryId;
     private int sizeTypeId;
 
-    public Subcategory(String name, int categoryId, int sizeTypeId) {
+    public Subcategory(int id, String name, int categoryId, int sizeTypeId) {
+        this.id = id;
         this.name = name;
         this.categoryId = categoryId;
         this.sizeTypeId = sizeTypeId;
@@ -13,6 +15,12 @@ public class Subcategory {
 
     public Subcategory() {}
 
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
     public int getCategoryId() { return categoryId; }

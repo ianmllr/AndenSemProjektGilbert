@@ -116,7 +116,7 @@ public class ProductsService {
         }
     }
 
-    public List<String> getDepartments() {
+    public List<Department> getDepartments() {
         return productRepo.getDepartments();
     }
 
@@ -151,6 +151,12 @@ public class ProductsService {
 
     public List<String> getSizesByType(String type) {
         return productRepo.getSizesByType(type);
+    }
+    public List<Category> findByDepartment(int departmentId) {
+        return productRepo.findByDepartment(departmentId);
+    }
+    public List<Subcategory> findByCategory(int categoryId, int departmentId) {
+        return productRepo.findByCategory(categoryId, departmentId);
     }
 
 }
