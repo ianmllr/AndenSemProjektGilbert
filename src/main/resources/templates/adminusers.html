@@ -24,19 +24,19 @@
             <td th:text="${users.name}">Username</td>
             <td th:text="${users.email}">Email</td>
             <td>
-                <a th:href="@{'edituserAdmin/' + ${users.id}}">
+                <a th:href="@{'edituseradmin/' + ${users.id}}">
                     <button id="controlUsersPageBtn">Rediger bruger</button>
                 </a>
             </td>
-            <td th:if="${users.role} == 'ROLE_ADMIN'">
+            <td th:if="${users.role} == 'admin'">
                 <a th:href="@{adminpage/removeadminrights/{id}(id=${users.id})}">
                     <button id="controlUsersPageBtn">Fjern adminrettigheder</button>
                 </a>
             </td>
-            <td th:if="${users.role} == 'ROLE_USER'">
+            <td th:if="${users.role} == 'user'">
                 <button id="controlUsersPageBtn" th:onclick="'deleteUser(' + ${users.id} + ');'">Slet bruger</button>
             </td>
-            <td th:if="${users.role} == 'ROLE_USER'">
+            <td th:if="${users.role} == 'user'">
                 <a th:href="@{adminpage/giveadminrights/{id}(id=${users.id})}">
                     <button id="controlUsersPageBtn">Giv adminrettigheder</button>
                 </a>
@@ -55,13 +55,13 @@
     <script>
         function deleteUser(id) {
             if (confirm('Er du sikker på du vil slette bruger?')) {
-                fetch('/delete/' + id, {
+                fetch('/deleteUser/' + id, {
                     method: 'DELETE'
                 }).then(response => {
                     console.log(response)
                     if (response.status === 200) {
                         alert('Bruger slettet!');
-                        window.location.replace("/adminpage");
+                        window.location.replace("/adminusers");
                     } else {
                         alert('Kan ikke slette bruger.');
                     }
@@ -73,8 +73,8 @@
         <strong>Success!</strong> <span th:text="${succes}"></span>
     </div>
 
-    <div th:if="${fejl}" class="alert alert-danger">
-        <strong>Error!</strong> <span th:text="${fejl}"></span>
+    <div th:if="${error}" class="alert alert-danger">
+        <strong>Error!</strong> <span th:text="${error}"></span>
     </div>
     </a>
     <br>

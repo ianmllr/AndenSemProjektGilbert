@@ -76,4 +76,37 @@ public class UserRepo {
         }
         return false;
     }
+    public boolean giveAdminRights(int id) {
+        String sql = "UPDATE gilbert.user set role = ? where id = ?";
+        int updated = jdbcTemplate.update(sql, 1, id);
+        if (updated > 0) {
+            return true;
+        }
+        return false;
+    }
+    public boolean removeAdminRights(int id) {
+        String sql = "UPDATE gilbert.user SET role = ? WHERE id = ?";
+        int updated = jdbcTemplate.update(sql, 2, id);
+        if (updated > 0) {
+            return true;
+        }
+        return false;
+    }
+    public boolean deleteUserById(int id) {
+        String sql = "delete from gilbert.user where id = ?";
+        int deleted = jdbcTemplate.update(sql, id);
+        if (deleted > 0) {
+            return true;
+        }
+        return false;
+    }
+    public List<User> getUserPages(int page, int size) {
+        String sql = "SELECT u.id, u.name, u.email, u.password, u.sales, u.rating, r.role, u.imgsrc\n" +
+                "FROM gilbert.user u\n" +
+                "JOIN user_role r ON u.role = r.idroles\n" +
+                "LIMIT ? OFFSET ?;";
+        int offset = (page - 1) * size;
+        return jdbcTemplate.query(sql, new Object[]{size, offset}, (rs, rowNum) ->
+                new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getInt("sales"), rs.getString("rating"), rs.getString("role"), rs.getString("imgsrc")));
+        }
 }

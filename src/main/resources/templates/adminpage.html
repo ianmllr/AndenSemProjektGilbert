@@ -14,7 +14,7 @@
     <a th:href="@{adminusers}">
         <button type="button">Users</button>
     </a>
-    <a th:href="@{adminreviews}">
+    <a th:href="@{adminlistings}">
         <button type="button">Listings</button>
     </a>
 
@@ -23,8 +23,8 @@
         <strong>Success!</strong> <span th:text="${succes}"></span>
     </div>
 
-    <div th:if="${fejl}" class="alert alert-danger">
-        <strong>Error!</strong> <span th:text="${fejl}"></span>
+    <div th:if="${error}" class="alert alert-danger">
+        <strong>Error!</strong> <span th:text="${error}"></span>
     </div>
 </div>
 </body>
