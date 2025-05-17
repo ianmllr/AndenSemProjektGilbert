@@ -729,9 +729,9 @@ main h3 {
     margin-top: 20px;
 }
 .favorite-button {
-    background-color: transparent !important;  /* Transparent background */
+    background-color: transparent !important;
     border: none !important;
-    font-size: 24px; /* Adjust size as needed */
+    font-size: 24px;
     cursor: pointer;
     padding: 5px;
     position: absolute;
@@ -739,7 +739,7 @@ main h3 {
     right: 1px;
 }
 .favorite-button:hover {
-    transform: scale(1.2); /* Slight zoom effect on hover */
+    transform: scale(1.2);
 }
 .product-picture {
     position: relative;
