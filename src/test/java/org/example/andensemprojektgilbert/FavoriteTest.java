@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class FavoriteTest {
     @Autowired
     private FavoriteService favoriteService;
-
+//Husk at have oprettet bruger 1 og produkterne 1 og 2 i databasen inden test
     @BeforeEach
     void setUp() {
         favoriteService.addFavorite(1, 1);
