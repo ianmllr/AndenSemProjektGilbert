@@ -21,7 +21,7 @@ public class FavoriteController {
     @Autowired
     private FavoriteService favoriteService;
     @GetMapping("/favorites")
-    public String addToFavorites(Model model, HttpSession session) {
+    public String showFavorites(Model model, HttpSession session) {
         User user = (User) session.getAttribute("currentUser");
         if (user == null) {
             return "redirect:/login";

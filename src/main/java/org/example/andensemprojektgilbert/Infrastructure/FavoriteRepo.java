@@ -19,7 +19,7 @@ public class FavoriteRepo {
                 "       d.name AS department, c.name AS category, sc.name AS subcategory,\n" +
                 "       p.posted_date, p.price, i.itemcondition AS item_condition, \n" +
                 "       sz.size_value AS size, o.color AS color,\n" +
-                "       p.imgsrc, u.name AS createdById\n" +
+                "       p.imgsrc, p.createdById\n" +
                 "FROM gilbert.Favorite f\n" +
                 "JOIN gilbert.Product p ON f.productid = p.id\n" +
                 "LEFT JOIN gilbert.Brand b ON p.brand_id = b.id\n" +
@@ -30,7 +30,6 @@ public class FavoriteRepo {
                 "LEFT JOIN gilbert.condition i ON i.idcondition = p.condition_id\n" +
                 "LEFT JOIN gilbert.color o ON o.idcolor = p.color_id\n" +
                 "LEFT JOIN gilbert.size sz ON p.size_id = sz.id\n" +
-                "LEFT JOIN gilbert.`User` u ON p.createdByID = u.id\n" +
                 "WHERE f.userid = ?;";
 
         return jdbcTemplate.query(sql, (rs, rowNum) -> new Product(
