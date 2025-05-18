@@ -29,17 +29,17 @@
                 </a>
             </td>
             <td th:if="${users.role} == 'admin'">
-                <a th:href="@{adminpage/removeadminrights/{id}(id=${users.id})}">
+                <form th:action="@{adminpage/removeadminrights/{id}(id=${users.id})}" method="post">
                     <button id="controlUsersPageBtn">Fjern adminrettigheder</button>
-                </a>
+                </form>
             </td>
             <td th:if="${users.role} == 'user'">
                 <button id="controlUsersPageBtn" th:onclick="'deleteUser(' + ${users.id} + ');'">Slet bruger</button>
             </td>
             <td th:if="${users.role} == 'user'">
-                <a th:href="@{adminpage/giveadminrights/{id}(id=${users.id})}">
+                <form th:action="@{adminpage/giveadminrights/{id}(id=${users.id})}" method="post">
                     <button id="controlUsersPageBtn">Giv adminrettigheder</button>
-                </a>
+                </form>
             </td>
             </td>
         </tr>

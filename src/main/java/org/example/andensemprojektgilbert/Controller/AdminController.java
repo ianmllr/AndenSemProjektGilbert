@@ -71,13 +71,13 @@ public class AdminController {
             return "redirect:/adminusers";
         }
     }
-@GetMapping("/adminpage/giveadminrights/{id}")
+@PostMapping("/adminpage/giveadminrights/{id}")
 public String adminRights(@PathVariable int id, Model model, HttpSession session, User user, RedirectAttributes redirectAttributes) {
     user = (User) session.getAttribute("currentUser");
     if (user.getRole().equals("admin")) {
         boolean adminrights = adminService.giveAdminRights(id);
         if (adminrights) {
-            redirectAttributes.addFlashAttribute("succes", "Admin rights have been granted");
+            redirectAttributes.addFlashAttribute("success", "Admin rights have been granted");
             return "redirect:/adminusers";
         }
         redirectAttributes.addFlashAttribute("error", "Admin rights have not been granted");
@@ -86,19 +86,19 @@ public String adminRights(@PathVariable int id, Model model, HttpSession session
     model.addAttribute("exception", "Cannot grant admin rights");
     return "error";
 }
-    @GetMapping("/adminpage/removeadminrights/{id}")
+    @PostMapping("/adminpage/removeadminrights/{id}")
     public String removeAdminRights(@PathVariable int id, Model model, HttpSession session, User user, RedirectAttributes redirectAttributes) {
         user = (User) session.getAttribute("currentUser");
         if (user.getRole().equals("admin") && user.getId() != id) {
             boolean adminrights = adminService.removeAdminRights(id);
             if (adminrights) {
-                redirectAttributes.addFlashAttribute("succes", "Admin rights have been rewoked");
+                redirectAttributes.addFlashAttribute("success", "Admin rights have been revoked");
                 return "redirect:/adminusers";
             }
-            redirectAttributes.addFlashAttribute("error", "Admin rights have not been rewoked");
+            redirectAttributes.addFlashAttribute("error", "Admin rights have not been revoked");
             return "redirect:/adminusers";
         }
-        redirectAttributes.addFlashAttribute("error", "Admin rights cannot be rewoked from own user");
+        redirectAttributes.addFlashAttribute("error", "Admin rights cannot be revoked from own user");
         return "redirect:/adminusers";
     }
     @GetMapping("/searchForUser")
