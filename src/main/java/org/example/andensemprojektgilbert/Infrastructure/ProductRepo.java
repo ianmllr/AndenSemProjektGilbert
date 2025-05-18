@@ -517,7 +517,7 @@ public class ProductRepo {
         });
     }
     public List<Category> findByDepartment(int departmentId) {
-        String sql = "SELECT c.id, c.name " +
+        String sql = "SELECT DISTINCT c.id, c.name " +
                 "FROM category c " +
                 "JOIN department_category_subcategory dcs ON c.id = dcs.category_id " +
                 "WHERE dcs.department_id = ?";
@@ -531,7 +531,7 @@ public class ProductRepo {
     }
 
     public List<Subcategory> findByCategory(int categoryId, int departmentId) {
-        String sql = "SELECT sc.id, sc.name, dcs.category_id, sc.size_type_id " +
+        String sql = "SELECT DISTINCT sc.id, sc.name, dcs.category_id, sc.size_type_id " +
                 "FROM subcategory sc " +
                 "JOIN department_category_subcategory dcs ON sc.id = dcs.subcategory_id " +
                 "WHERE dcs.category_id = ? AND dcs.department_id = ?";
