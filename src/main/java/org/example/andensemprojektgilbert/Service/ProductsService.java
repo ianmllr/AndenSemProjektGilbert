@@ -158,5 +158,23 @@ public class ProductsService {
     public List<Subcategory> findByCategory(int categoryId, int departmentId) {
         return productRepo.findByCategory(categoryId, departmentId);
     }
+    public Department getDepartmentById(int departmentId) {
+        List <Department> departments = getDepartments();
+        for (Department department : departments) {
+            if (department.getId() == departmentId) {
+                return department;
+            }
+        }
+        return null;
+    }
+    public Category getCategoryById(int categoryId) {
+        List <Category> categories = getCategories();
+        for (Category category : categories) {
+            if (category.getId() == categoryId) {
+                return category;
+            }
+        }
+        return null;
+    }
 
 }

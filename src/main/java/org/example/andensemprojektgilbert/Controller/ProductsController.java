@@ -73,19 +73,36 @@ public class ProductsController {
 
 
     @PostMapping("/gilbertprofile/newproduct")
-    public String postNewProduct(@ModelAttribute Product product, HttpSession session, Model model, @RequestParam("image") MultipartFile image, RedirectAttributes redirectAttributes) {
+    public String postNewProduct(@ModelAttribute Product product,
+                                 @RequestParam(value = "departmentId", required = false) Integer departmentId,
+                                 @RequestParam(value = "categoryId", required = false) Integer categoryId,
+                                 HttpSession session,
+                                 Model model,
+                                 @RequestParam("image") MultipartFile image,
+                                 RedirectAttributes redirectAttributes) {
         User user = (User) session.getAttribute("currentUser");
-        model.addAttribute("product", product);
+
+        System.out.println("Received departmentId: " + departmentId);
+        System.out.println("Received categoryId: " + categoryId);
+
+        Department department = (departmentId != null) ? productsService.getDepartmentById(departmentId) : null;
+        Category category = (categoryId != null) ? productsService.getCategoryById(categoryId) : null;
+
+        product.setDepartment(department.getName());
+        product.setCategory(category.getName());
         product.setCreatedByID(user.getId());
+
         if (!image.isEmpty()) {
-            if (image.getSize() > 3*1024*1024) {
+            if (image.getSize() > 3 * 1024 * 1024) {
                 redirectAttributes.addFlashAttribute("message", "Image is too large to upload");
                 return "redirect:/index";
             }
+
             String originalFilename = image.getOriginalFilename();
             String uniqueFilename = UUID.randomUUID().toString() + "_" + originalFilename;
             String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/productimage";
             Path filePath = Paths.get(uploadDir, uniqueFilename);
+
             try {
                 Files.createDirectories(filePath.getParent());
                 Files.write(filePath, image.getBytes());
@@ -97,4 +114,6 @@ public class ProductsController {
         productsService.createProduct(product, user);
         return "redirect:/gilbertprofile";
     }
+
+
 }
