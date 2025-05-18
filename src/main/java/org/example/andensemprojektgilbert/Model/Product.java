@@ -131,6 +131,8 @@ public class Product {
     public void setCreatedByID(int createdByID) {
         this.createdByID = createdByID;
     }
+
+
     @Override
     public String toString() {
         return "Product [id=" + id + ", name=" + name + ", brand=" + brand + ", department=" + department + ", category=" + category + ", subcategory=" + subcategory + ", price=" + price + ", p_condition=" + p_condition + ", size=" + size + color;
