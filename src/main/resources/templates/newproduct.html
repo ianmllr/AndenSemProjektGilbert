@@ -158,9 +158,9 @@
     let allSizeOptions = [];
 
     window.addEventListener('DOMContentLoaded', () => {
-        allSizeOptions = Array.from(document.querySelectorAll('#size option[data-size-type-id]'));
+        allSizeOptions = Array.from(document.querySelectorAll('#size option[data-size-type-id]')); // Lægger sizes options ind i listen udfra size_type_id
         console.log("Loaded size options:", allSizeOptions.length);
-        updateSizesBySubcategory(); // Initialize sizes on page load
+        updateSizesBySubcategory(); // Kalder metoden når siden bliver indlæst
     });
 
     function updateSizesBySubcategory() {
@@ -171,16 +171,16 @@
         const sizeSelect = document.getElementById("size");
         sizeSelect.innerHTML = '<option value="" disabled selected>Select size</option>';
         if (sizeTypeId) {
-            allSizeOptions.forEach(option => {
+            allSizeOptions.forEach(option => { // Kører igennem og filterer størrelserne, så de passer til tingene
                 const optionSizeTypeId = option.getAttribute('data-size-type-id');
                 console.log("Checking size option:", option.text, "with sizeTypeId:", optionSizeTypeId);
                 if (optionSizeTypeId === sizeTypeId) {
-                    sizeSelect.appendChild(option.cloneNode(true));
+                    sizeSelect.appendChild(option.cloneNode(true)); // Kopier og sørger for at få vist de relevante størrelser
                 }
             });
         }
 
-        // Submit the form to preserve state
+        // Sender form direkte når man har valgt en subcategory
         const form = document.getElementById("categoryForm");
         form.submit();
     }
