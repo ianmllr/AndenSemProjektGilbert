@@ -14,7 +14,7 @@
 
 body {
     background-color: #f8f0e5; /* Off-white background */
-    color: #423a26; /* Dark brown text */
+    color: #004224; /* Dark brown text */
     font-family: 'theseasons', Garamond, serif;
     line-height: 1.6;
 }
@@ -41,7 +41,7 @@ body {
 .header-container {
     background-color: #004224; /* Dark green background */
     padding: 15px 0;
-    border-bottom: 1px solid #f8f0e5;
+    border-bottom: 2px solid #f8f0e5;
     width: 100%;
 }
 
@@ -220,6 +220,7 @@ h1 a {
 .button-bar-index .dropdown {
     position: relative;
     width: 20%; /* Equal distribution */
+    border: 2px #423a26;
 }
 
 .button-bar-index .dropdown a {
@@ -230,20 +231,23 @@ h1 a {
     color: #f8f0e5;
     text-align: center;
     transition: background-color 0.3s ease;
+    border: 2px #423a26;
 }
 
 .button-bar-index .dropdown a:hover {
     background-color: #f8f0e5; /* Green on hover */
-    color: #423a26;
+    color: #004224;
+    border: 2px #423a26;
 }
 
 .button-bar-index .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #423a26;
+    background-color: #004224;
     min-width: 100%;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
     z-index: 1;
+    border: 2px #423a26;
 
 }
 
@@ -253,10 +257,12 @@ h1 a {
     font-size: 1em;
     color: #f8f0e5;
     text-decoration: none;
+    border: 2px #423a26;
 }
 
 .button-bar-index .dropdown-content a:hover {
     background-color: #f8f0e5;
+    border: 2px #423a26;
 }
 
 .button-bar-index .dropdown:hover .dropdown-content {
@@ -401,7 +407,7 @@ main {
     align-items: center;
 }
 main h2 {
-    color: #423a26;
+    color: #004224;
     text-align: center;
     font-size: 1.8em;
     margin-bottom: 30px;
@@ -411,14 +417,14 @@ main h2 {
     margin-bottom: 40px; /* Space between sections */
 }
 .category-section h3 {
-    color: #423a26;
+    color: #004224;
     font-size: 1.4em;
     margin-bottom: 20px;
     text-align: center;
 }
 
 main h3 {
-    color: #423a26;
+    color: #004224;
     font-size: 1.4em;
     margin: 20px 0 10px;
 }
@@ -585,7 +591,7 @@ main h3 {
 }
 
 .login-form button:hover {
-    background-color: #423a26;
+    background-color: #004224;
 }
 
 .error-message {
@@ -630,7 +636,7 @@ main h3 {
 }
 
 .register-form button:hover {
-    background-color: #423a26;
+    background-color: #004224;
 }
 
 /* New Product Form */
@@ -657,7 +663,7 @@ main h3 {
 }
 
 .newproduct-form button:hover {
-    background-color: #423a26;
+    background-color: #004224;
 }
 
 /* Footer (Same as Front Page) */
@@ -672,7 +678,7 @@ main h3 {
     justify-content: center;
     gap: 10px;
     padding: 10px 0;
-    background-color: #423a26;
+    background-color: #004224;
     border-bottom: 1px solid #f8f0e5;
     width: 100%;
 }
