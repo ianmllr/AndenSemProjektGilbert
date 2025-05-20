@@ -116,5 +116,25 @@ public class ProductsController {
         return "redirect:/gilbertprofile";
     }
 
+    @PostMapping("/gilbertprofile/deleteproduct")
+    public String deleteProduct(@RequestParam("productId") int productId,
+                                HttpSession session,
+                                RedirectAttributes redirectAttributes) {
+        User user = (User) session.getAttribute("currentUser");
+        if (user == null) {
+            redirectAttributes.addFlashAttribute("message", "Du skal være logget ind for at slette et produkt.");
+            return "redirect:/login";
+        }
+
+        Product product = productsService.getProduct(productId);
+        if (product != null && product.getCreatedByID() == user.getId()) {
+            productsService.deleteProductById(productId);
+            redirectAttributes.addFlashAttribute("message", "Produktet blev slettet.");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Du har ikke tilladelse til at slette dette produkt, eller produktet blev ikke fundet.");
+        }
+
+        return "redirect:/gilbertprofile";
+    }
 
 }

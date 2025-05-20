@@ -546,4 +546,8 @@ public class ProductRepo {
         });
     }
 
+    public void deleteProductById(int productId) {
+        String sql = "DELETE FROM Product WHERE id = ?";
+        jdbcTemplate.update(sql, productId);
+    }
 }

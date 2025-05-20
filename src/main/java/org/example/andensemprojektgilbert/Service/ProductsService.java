@@ -177,4 +177,13 @@ public class ProductsService {
         return null;
     }
 
+    public void deleteProductById(int productId) {
+        Product product = getProduct(productId);
+        if (product != null) {
+            productRepo.deleteProductById(productId);
+        } else {
+            // Debug logging eller håndtering af ikke-eksisterende produkt
+            System.out.println("Produkt med ID " + productId + " blev ikke fundet.");
+        }
+    }
 }
