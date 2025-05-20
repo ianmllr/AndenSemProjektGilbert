@@ -302,7 +302,7 @@ h1 a {
     padding: 10px;
     font-size: 1.1em;
     background-color: #004224;
-    border: 2px #f8f0e5;
+    border: 2px solid #f8f0e5;
     color: #f8f0e5;
     text-decoration: none;
     text-align: center;
@@ -312,7 +312,7 @@ h1 a {
 
 .edituserclass:hover, .createnewlistingclass:hover {
     background-color: #f8f0e5;
-    color: #f8f0e5;
+    color: #004224;
 }
 
 /* Mobile Search Overlay */
