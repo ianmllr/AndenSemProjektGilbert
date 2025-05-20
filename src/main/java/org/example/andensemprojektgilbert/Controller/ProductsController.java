@@ -55,33 +55,18 @@ public class ProductsController {
     }
 
 
-
-
     @PostMapping("/gilbertprofile/newproduct")
     public String postNewProduct(@ModelAttribute Product product, HttpSession session,
                                  @RequestParam("image") MultipartFile image, RedirectAttributes redirectAttributes) {
         User user = (User) session.getAttribute("currentUser");
-
         product.setCreatedByID(user.getId());
 
         if (!image.isEmpty()) {
             if (image.getSize() > 3 * 1024 * 1024) {
                 redirectAttributes.addFlashAttribute("message", "Image is too large to upload");
-                return "redirect:/index";
+                return "redirect:/gilbertprofile/newproduct";
             }
-
-            String originalFilename = image.getOriginalFilename();
-            String uniqueFilename = UUID.randomUUID().toString() + "_" + originalFilename;
-            String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/productimage";
-            Path filePath = Paths.get(uploadDir, uniqueFilename);
-
-            try {
-                Files.createDirectories(filePath.getParent());
-                Files.write(filePath, image.getBytes());
-                product.setImgsrc(uniqueFilename);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            productsService.createImage(image, product);
         }
         productsService.createProduct(product, user);
         return "redirect:/gilbertprofile";

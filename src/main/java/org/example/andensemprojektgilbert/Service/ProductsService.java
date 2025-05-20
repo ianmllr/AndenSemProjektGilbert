@@ -4,9 +4,15 @@ import org.example.andensemprojektgilbert.Infrastructure.ProductRepo;
 import org.example.andensemprojektgilbert.Model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ProductsService {
@@ -175,6 +181,21 @@ public class ProductsService {
             }
         }
         return null;
+    }
+
+    public void createImage(MultipartFile image, Product product) {
+        String originalFilename = image.getOriginalFilename();
+        String uniqueFilename = UUID.randomUUID().toString() + "_" + originalFilename;
+        String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/productimage";
+        Path filePath = Paths.get(uploadDir, uniqueFilename);
+
+        try {
+            Files.createDirectories(filePath.getParent());
+            Files.write(filePath, image.getBytes());
+            product.setImgsrc(uniqueFilename);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
