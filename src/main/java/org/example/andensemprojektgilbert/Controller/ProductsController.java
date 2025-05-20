@@ -4,8 +4,6 @@ import jakarta.servlet.http.HttpSession;
 import org.example.andensemprojektgilbert.Model.*;
 import org.example.andensemprojektgilbert.Service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +17,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,21 +39,15 @@ public class ProductsController {
 
 
     @GetMapping("/gilbertprofile/newproduct")
-    public String getNewProduct(@RequestParam(value = "departmentId", required = false) Integer departmentId,
-                                @RequestParam(value = "categoryId", required = false) Integer categoryId,
-                                Model model, HttpSession session) {
-
+    public String getNewProduct(Model model, HttpSession session) {
         User user = (User) session.getAttribute("currentUser");
         model.addAttribute("departments", productsService.getDepartments());
 
-        List<Category> categories = (departmentId != null) ? productsService.findByDepartment(departmentId) : Collections.emptyList();
+        List<Category> categories = productsService.getCategories();
         model.addAttribute("categories", categories);
 
-        List<Subcategory> subcategories = (categoryId != null) ? productsService.findByCategory(categoryId, departmentId) : Collections.emptyList();
+        List<Subcategory> subcategories = productsService.getSubcategories();
         model.addAttribute("subcategories", subcategories);
-
-        model.addAttribute("selectedDepartmentId", departmentId);
-        model.addAttribute("selectedCategoryId", categoryId);
 
         model.addAttribute("brands", productsService.getBrands());
         model.addAttribute("locations", productsService.getLocations());
@@ -74,23 +64,10 @@ public class ProductsController {
 
 
     @PostMapping("/gilbertprofile/newproduct")
-    public String postNewProduct(@ModelAttribute Product product,
-                                 @RequestParam(value = "departmentId", required = false) Integer departmentId,
-                                 @RequestParam(value = "categoryId", required = false) Integer categoryId,
-                                 HttpSession session,
-                                 Model model,
-                                 @RequestParam("image") MultipartFile image,
-                                 RedirectAttributes redirectAttributes) {
+    public String postNewProduct(@ModelAttribute Product product, HttpSession session,
+                                 @RequestParam("image") MultipartFile image, RedirectAttributes redirectAttributes) {
         User user = (User) session.getAttribute("currentUser");
 
-        System.out.println("Received departmentId: " + departmentId);
-        System.out.println("Received categoryId: " + categoryId);
-
-        Department department = (departmentId != null) ? productsService.getDepartmentById(departmentId) : null;
-        Category category = (categoryId != null) ? productsService.getCategoryById(categoryId) : null;
-
-        product.setDepartment(department.getName());
-        product.setCategory(category.getName());
         product.setCreatedByID(user.getId());
 
         if (!image.isEmpty()) {

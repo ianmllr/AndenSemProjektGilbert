@@ -20,46 +20,8 @@
 </div>
 <main>
     <h2>Create a new listing</h2>
-
-    <div class="newproduct-form">
-
-        <form th:action="@{/gilbertprofile/newproduct}" method="get">
-            <div class="form-group">
-                <label for="department">Department:</label>
-                <select id="department" name="departmentId" required onchange="this.form.submit();">
-                    <option value="" disabled selected>Select department</option>
-                    <option th:each="dep : ${departments}"
-                            th:value="${dep.id}"
-                            th:text="${dep.name}"
-                            th:selected="${selectedDepartmentId != null && dep.id == selectedDepartmentId}">
-                    </option>
-                </select>
-
-                <label for="category">Category:</label>
-                <select id="category" name="categoryId" required onchange="this.form.submit();">
-                    <option value="" disabled selected>Select a category</option>
-                    <option th:each="cat : ${categories}"
-                            th:value="${cat.id}"
-                            th:text="${cat.name}"
-                        th:selected="${selectedCategoryId != null && cat.id == selectedCategoryId}">
-                    </option>
-                </select>
-            </form>
-
-        <form th:action="@{/gilbertprofile/newproduct}" th:object="${product}" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="departmentId" th:value="${selectedDepartmentId}">
-            <input type="hidden" name="categoryId" th:value="${selectedCategoryId}">
-
-            <label for="subcategory">Subcategory:</label>
-            <select id="subcategory" th:field="*{subcategory}" required onchange="updateSizesBySubcategory()">
-                <option value="" disabled selected>Select a subcategory</option>
-                <option th:each="subcat : ${subcategories}" th:value="${subcat.name}" th:text="${subcat.name}"
-                        th:attr="data-size-type-id=${subcat.sizeTypeId}"
-                        th:selected="${product.subcategory != null && product.subcategory == subcat.name}">
-                </option>
-
-            </select>
-
+    <form th:action="@{/gilbertprofile/newproduct}" th:object="${product}" th:method="post" enctype="multipart/form-data" class="newproduct-form">
+        <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" id="name" th:field="*{name}" required>
 
@@ -69,7 +31,29 @@
                 <option th:each="brand : ${brands}" th:value="${brand}" th:text="${brand}"></option>
             </select>
 
-            <label for="price">Price:</label>
+            <label for="department">Department:</label>
+            <select id="department" th:field="*{department}" onchange="updateCategoriesByDepartment();" required>                <option value="" disabled selected>Select department</option>
+                <option th:each="dep : ${departments}" th:value="${dep}" th:text="${dep}"></option>
+            </select>
+
+            <label for="category">Category:</label>
+            <select id="category" th:field="*{category}" onchange="updateSubcategories();">
+                <option value="" disabled selected>Select a category</option>
+                <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+            </select>
+
+
+            <label for="subcategory">Subcategory:</label>
+            <select id="subcategory" th:field="*{subcategory}" onchange="updateSizesBySubcategory();" required>
+                <option value="" disabled selected>Select a subcategory</option>
+                <option th:each="subcat : ${subcategories}"
+                        th:value="${subcat.name}"
+                        th:text="${subcat.name}"
+                        th:attr="data-category-id=${subcat.categoryId},data-size-type-id=${subcat.sizeTypeId}">
+                </option>
+            </select>
+
+            <label for="price">Price (€):</label>
             <input type="number" id="price" th:field="*{price}" required>
 
             <label for="p_condition">Condition:</label>
@@ -81,11 +65,15 @@
             <label for="size">Size:</label>
             <select id="size" th:field="*{size}" required>
                 <option value="" disabled selected>Select size</option>
-                <option th:each="size : ${sizes}" th:value="${size.size_value}" th:text="${size.size_value}" th:attr="data-size-type-id=${size.sizeTypeId}"></option>
+                <option th:each="size : ${sizes}"
+                        th:value="${size.size_value}"
+                        th:text="${size.size_value}"
+                        th:attr="data-size-type-id=${size.sizeTypeId}">
+                </option>
             </select>
 
             <label for="color">Color:</label>
-            <select id="color" th:field="*{color}" required>
+            <select id="color" th:field="*{color}">
                 <option value="" disabled selected>Select color</option>
                 <option th:each="color : ${colors}" th:value="${color}" th:text="${color}"></option>
             </select>
@@ -102,13 +90,9 @@
             <label for="image">Upload picture:</label>
             <input type="file" id="image" name="image" accept="image/*">
 
-            <button type="submit">Submit Listing</button>
-        </form>
+            <button type="submit">Opret opslag</button>
         </div>
-    </div>
-
-
-
+    </form>
 </main>
 
 <nav class="mobile-nav">
@@ -154,36 +138,74 @@
     </div>
 </footer>
 
+
 <script th:inline="javascript">
+    let allCategoryOptions = [];
+    let allSubcatOptions = [];
     let allSizeOptions = [];
 
-    window.addEventListener('DOMContentLoaded', () => {
-        allSizeOptions = Array.from(document.querySelectorAll('#size option[data-size-type-id]')); // Lægger sizes options ind i listen udfra size_type_id
-        console.log("Loaded size options:", allSizeOptions.length);
-        updateSizesBySubcategory(); // Kalder metoden når siden bliver indlæst
+    window.addEventListener('DOMContentLoaded', function() {
+        allCategoryOptions = Array.from(document.querySelectorAll('#category option[value]'));
+        allSubcatOptions = Array.from(document.querySelectorAll('#subcategory option[data-category-id]'));
+        allSizeOptions = Array.from(document.querySelectorAll('#size option[data-size-type-id]'));
+        updateCategoriesByDepartment();
+        updateSubcategories();
+        updateSizesBySubcategory();
     });
 
-    function updateSizesBySubcategory() {
-        const subcatSelect = document.getElementById("subcategory");
-        const sizeTypeId = subcatSelect.selectedIndex > 0 ? subcatSelect.options[subcatSelect.selectedIndex].getAttribute('data-size-type-id') : null;
-        console.log("Selected sizeTypeId:", sizeTypeId);
-
-        const sizeSelect = document.getElementById("size");
-        sizeSelect.innerHTML = '<option value="" disabled selected>Select size</option>';
-        if (sizeTypeId) {
-            allSizeOptions.forEach(option => { // Kører igennem og filterer størrelserne, så de passer til tingene
-                const optionSizeTypeId = option.getAttribute('data-size-type-id');
-                console.log("Checking size option:", option.text, "with sizeTypeId:", optionSizeTypeId);
-                if (optionSizeTypeId === sizeTypeId) {
-                    sizeSelect.appendChild(option.cloneNode(true)); // Kopier og sørger for at få vist de relevante størrelser
+    function updateCategoriesByDepartment() {
+        var dep = document.getElementById("department").value;
+        var catSelect = document.getElementById("category");
+        catSelect.innerHTML = '<option value="" disabled selected>Select a category</option>';
+        if (dep === "Home") {
+            allCategoryOptions.forEach(function(option) {
+                if (
+                    option.textContent.trim() === "Living room" ||
+                    option.textContent.trim() === "Kitchen" ||
+                    option.textContent.trim() === "Bedroom"
+                ) {
+                    catSelect.appendChild(option.cloneNode(true));
                 }
             });
+        } else {
+            // Show all categories
+            allCategoryOptions.forEach(function(option) {
+                catSelect.appendChild(option.cloneNode(true));
+            });
         }
+        // Optionally, update subcategories as well
+        updateSubcategories();
+    }
 
-        // Sender form direkte når man har valgt en subcategory
-        const form = document.getElementById("categoryForm");
-        form.submit();
+    function updateSubcategories() {
+        var catId = document.getElementById("category").value;
+        var subcatSelect = document.getElementById("subcategory");
+        subcatSelect.innerHTML = '<option value="" disabled selected>Select a subcategory</option>';
+        allSubcatOptions.forEach(function(option) {
+            if (option.getAttribute('data-category-id') === catId) {
+                subcatSelect.appendChild(option.cloneNode(true));
+            }
+        });
+        // Nulstil sizes når subcategory ændres
+        updateSizesBySubcategory();
+    }
+
+    function updateSizesBySubcategory() {
+        var subcatSelect = document.getElementById("subcategory");
+        var selectedSubcat = subcatSelect.options[subcatSelect.selectedIndex];
+        var sizeTypeId = selectedSubcat ? selectedSubcat.getAttribute('data-size-type-id') : null;
+        var sizeSelect = document.getElementById("size");
+        sizeSelect.innerHTML = '<option value="" disabled selected>Select size</option>';
+        allSizeOptions.forEach(function(option) {
+            if (sizeTypeId && option.getAttribute('data-size-type-id') === sizeTypeId) {
+                sizeSelect.appendChild(option.cloneNode(true));
+            }
+        });
     }
 </script>
+
+
+
+
 </body>
 </html>
