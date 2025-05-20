@@ -142,42 +142,47 @@ public class ProductRepo {
     }
 
 
-    public List<Product> searchProducts(String keyword) {
-        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, dcs.department_id,\n" +
-                "dcs.category_id, dcs.subcategory_id, d.name AS department, \n" +
-                "c.name AS category, sc.name AS subcategory, p.posted_date, p.price, \n" +
-                "cond.itemcondition AS item_condition, s.size_value AS size, col.color AS color,\n" +
-                "p.imgsrc, p.createdbyid\n" +
-                "FROM product p\n" +
-                "INNER JOIN department_category_subcategory dcs \n" +
-                "ON p.category_id = dcs.category_id AND p.subcategory_id = dcs.subcategory_id AND p.department_id = dcs.department_id\n" +
-                "INNER JOIN department d ON dcs.department_id = d.id\n" +
-                "INNER JOIN category c ON dcs.category_id = c.id\n" +
-                "LEFT JOIN subcategory sc ON dcs.subcategory_id = sc.id\n" +
-                "LEFT JOIN brand b ON p.brand_id = b.id\n" +
-                "LEFT JOIN location l ON p.location_id = l.id\n" +
-                "LEFT JOIN color col ON p.color_id = col.idcolor\n" +
-                "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition\n" +
-                "LEFT JOIN size s ON p.size_id = s.id" +
+    public List<Product> searchProducts(String searchTerm) {
+        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, dcs.department_id, " +
+                "dcs.category_id, dcs.subcategory_id, d.name AS department, c.name AS category, sc.name AS subcategory, " +
+                "p.posted_date, p.price, cond.itemcondition AS item_condition, s.size_value AS size, col.color AS color, " +
+                "p.imgsrc, p.createdbyid " +
+                "FROM product p " +
+                "INNER JOIN department_category_subcategory dcs ON p.category_id = dcs.category_id AND p.subcategory_id = dcs.subcategory_id AND p.department_id = dcs.department_id " +
+                "INNER JOIN department d ON dcs.department_id = d.id " +
+                "INNER JOIN category c ON dcs.category_id = c.id " +
+                "LEFT JOIN subcategory sc ON dcs.subcategory_id = sc.id " +
+                "LEFT JOIN brand b ON p.brand_id = b.id " +
+                "LEFT JOIN location l ON p.location_id = l.id " +
+                "LEFT JOIN color col ON p.color_id = col.idcolor " +
+                "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition " +
+                "LEFT JOIN size s ON p.size_id = s.id " +
                 "WHERE p.name LIKE ? OR b.name LIKE ? OR l.name LIKE ? OR d.name LIKE ? OR c.name LIKE ? OR sc.name LIKE ? OR p.description LIKE ?";
-        String searchTerm = "%" + keyword + "%";
-        return jdbcTemplate.query(sql, new Object[]{searchTerm, searchTerm, searchTerm, searchTerm, searchTerm, searchTerm, searchTerm}, (rs, rowNum) -> new Product(
-                rs.getInt("id"),
-                rs.getString("name"),
-                rs.getString("brand"),
-                rs.getString("location"),
-                rs.getString("description"),
-                rs.getString("department"),
-                rs.getString("category"),
-                rs.getString("subcategory"),
-                rs.getDate("posted_date"),
-                rs.getDouble("price"),
-                rs.getString("condition"),
-                rs.getString("size"),
-                rs.getString("color"),
-                rs.getString("imgsrc"),
-                rs.getInt("createdByID")
-        ));
+
+        String searchPattern = "%" + searchTerm + "%";
+        return jdbcTemplate.query(sql, new Object[]{searchPattern, searchPattern, searchPattern, searchPattern, searchPattern, searchPattern, searchPattern},
+                (rs, rowNum) -> {
+                    Product product = new Product();
+                    product.setId(rs.getInt("id"));
+                    product.setName(rs.getString("name"));
+                    product.setBrand(rs.getString("brand"));
+                    product.setLocation(rs.getString("location"));
+                    product.setDescription(rs.getString("description"));
+                    product.setDepartment(rs.getString("department_id"));
+                    product.setCategory(rs.getString("category_id"));
+                    product.setSubcategory(rs.getString("subcategory_id"));
+                    product.setDepartment(rs.getString("department"));
+                    product.setCategory(rs.getString("category"));
+                    product.setSubcategory(rs.getString("subcategory"));
+                    product.setPostedDate(rs.getTimestamp("posted_date"));
+                    product.setPrice(rs.getDouble("price"));
+                    product.setCondition(rs.getString("item_condition"));
+                    product.setSize(rs.getString("size"));
+                    product.setColor(rs.getString("color"));
+                    product.setImgsrc(rs.getString("imgsrc"));
+                    product.setCreatedByID(rs.getInt("createdbyid"));
+                    return product;
+                });
     }
 
 
