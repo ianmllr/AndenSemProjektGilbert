@@ -157,23 +157,20 @@
         var dep = document.getElementById("department").value;
         var catSelect = document.getElementById("category");
         catSelect.innerHTML = '<option value="" disabled selected>Select a category</option>';
-        if (dep === "Home") {
-            allCategoryOptions.forEach(function(option) {
-                if (
-                    option.textContent.trim() === "Living room" ||
-                    option.textContent.trim() === "Kitchen" ||
-                    option.textContent.trim() === "Bedroom"
-                ) {
+        allCategoryOptions.forEach(function(option) {
+            var catName = option.textContent.trim();
+            if (dep === "Home") {
+                // viser kun de 3
+                if (catName === "Living room" || catName === "Kitchen" || catName === "Bedroom") {
                     catSelect.appendChild(option.cloneNode(true));
                 }
-            });
-        } else {
-            // Show all categories
-            allCategoryOptions.forEach(function(option) {
-                catSelect.appendChild(option.cloneNode(true));
-            });
-        }
-        // Optionally, update subcategories as well
+            } else {
+                // viser ikke de 3
+                if (catName !== "Living room" && catName !== "Kitchen" && catName !== "Bedroom") {
+                    catSelect.appendChild(option.cloneNode(true));
+                }
+            }
+        });
         updateSubcategories();
     }
 

@@ -42,13 +42,8 @@ public class ProductsController {
     public String getNewProduct(Model model, HttpSession session) {
         User user = (User) session.getAttribute("currentUser");
         model.addAttribute("departments", productsService.getDepartments());
-
-        List<Category> categories = productsService.getCategories();
-        model.addAttribute("categories", categories);
-
-        List<Subcategory> subcategories = productsService.getSubcategories();
-        model.addAttribute("subcategories", subcategories);
-
+        model.addAttribute("categories", productsService.getCategories());
+        model.addAttribute("subcategories", productsService.getSubcategories());
         model.addAttribute("brands", productsService.getBrands());
         model.addAttribute("locations", productsService.getLocations());
         model.addAttribute("conditions", productsService.getConditions());
@@ -56,7 +51,6 @@ public class ProductsController {
         model.addAttribute("sizes", productsService.getSizes());
         model.addAttribute("user", user);
         model.addAttribute("product", new Product());
-
         return "newproduct";
     }
 
