@@ -551,8 +551,52 @@ public class ProductRepo {
         });
     }
 
-    public void deleteProductById(int productId) {
+    public boolean deleteProductById(int productId) {
         String sql = "DELETE FROM Product WHERE id = ?";
-        jdbcTemplate.update(sql, productId);
+        int deleted = jdbcTemplate.update(sql, productId);
+        if (deleted > 0) {
+            return true;
+        }
+        return false;
+    }
+    public List<Product> getProductsPage(int page, int size) {
+        String sql = "SELECT \n" +
+                "    p.id, p.name, b.name AS brand, l.name AS location, p.description, \n" +
+                "    dcs.department_id, dcs.category_id, dcs.subcategory_id, \n" +
+                "    d.name AS department, c.name AS category, sc.name AS subcategory, \n" +
+                "    p.posted_date, p.price, cond.itemcondition AS item_condition, \n" +
+                "    s.size_value AS size, col.color AS color, p.imgsrc, p.createdbyid\n" +
+                "FROM product p\n" +
+                "LEFT JOIN department_category_subcategory dcs \n" +
+                "    ON p.category_id = dcs.category_id \n" +
+                "    AND p.subcategory_id = dcs.subcategory_id \n" +
+                "    AND p.department_id = dcs.department_id\n" +
+                "LEFT JOIN department d ON dcs.department_id = d.id\n" +
+                "LEFT JOIN category c ON dcs.category_id = c.id\n" +
+                "LEFT JOIN subcategory sc ON dcs.subcategory_id = sc.id\n" +
+                "LEFT JOIN brand b ON p.brand_id = b.id\n" +
+                "LEFT JOIN location l ON p.location_id = l.id\n" +
+                "LEFT JOIN color col ON p.color_id = col.idcolor\n" +
+                "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition\n" +
+                "LEFT JOIN size s ON p.size_id = s.id\n" +
+                "LIMIT ? OFFSET ?;";
+        int offset = (page - 1) * size;
+        return jdbcTemplate.query(sql, new Object[]{size, offset}, (rs, rowNum) -> new Product(
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getString("brand"),
+                rs.getString("location"),
+                rs.getString("description"),
+                rs.getString("department"),
+                rs.getString("category"),
+                rs.getString("subcategory"),
+                rs.getDate("posted_date"),
+                rs.getDouble("price"),
+                rs.getString("item_condition"),
+                rs.getString("size"),
+                rs.getString("color"),
+                rs.getString("imgsrc"),
+                rs.getInt("createdByID")
+        ));
     }
 }

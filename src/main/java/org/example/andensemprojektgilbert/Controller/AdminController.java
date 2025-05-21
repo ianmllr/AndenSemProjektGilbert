@@ -1,8 +1,10 @@
 package org.example.andensemprojektgilbert.Controller;
 
 import jakarta.servlet.http.HttpSession;
+import org.example.andensemprojektgilbert.Model.Product;
 import org.example.andensemprojektgilbert.Model.User;
 import org.example.andensemprojektgilbert.Service.AdminService;
+import org.example.andensemprojektgilbert.Service.ProductsService;
 import org.example.andensemprojektgilbert.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,8 @@ public class AdminController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    private ProductsService productsService;
 
     @GetMapping("/adminpage")
     public String adminPage(Model model, HttpSession session) {
@@ -51,7 +55,7 @@ public class AdminController {
     @GetMapping("/edituseradmin/{id}")
     public String editUserAdmin(@PathVariable int id, Model model, HttpSession session) {
         User currentUser = (User) session.getAttribute("currentUser");
-        User user = adminService.getUser(id);
+        User user = adminService.getUserById(id);
         if (user != null && currentUser.getRole().equals("admin")) {
             model.addAttribute("user", user);
             return "/edituseradmin";
@@ -117,5 +121,58 @@ public String adminRights(@PathVariable int id, Model model, HttpSession session
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+    @GetMapping("/adminlistings")
+    public String getAdminListings(@RequestParam(defaultValue = "1") int page, Model model, HttpSession session) {
+        User user = (User) session.getAttribute("currentUser");
+        if (!user.getRole().equals("admin")) {
+            model.addAttribute ("exception", "You must be admin to use this function");
+            return "error";
+        }
+        int pageSize = 10;
+        List<Product> products = adminService.getProductsPage(page, pageSize);
+        int totalPages = (products.size() + pageSize) / pageSize;
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("products", products);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("pageSize", pageSize);
+        return "adminlistings";
+    }
+    @DeleteMapping("/deletelisting/{id}")
+    public ResponseEntity<String> deleteListing(@PathVariable int id, HttpSession session) {
+        User user = (User) session.getAttribute("currentUser");
+        if(!user.getRole().equals("admin")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body("You must be an admin to use this function");
+        }
 
+        else{
+            boolean deleted = adminService.deleteProduct(id);
+
+        if (deleted) {
+            return ResponseEntity.status(HttpStatus.OK).body("Deleted");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+    }
+    @GetMapping("/searchlistings")
+    public String searchForListings(@RequestParam("query") String query, Model model){
+        List<Product> filteredProducts = adminService.getFilteredProducts(query);
+        model.addAttribute("products", filteredProducts);
+        model.addAttribute("currentPage", 1);
+        return "adminlistings";
+    }
+    @GetMapping("/viewlistingadmin/{id}")
+    public String viewListingAdmin(@PathVariable int id, Model model, HttpSession session) {
+        User user = (User) session.getAttribute("currentUser");
+        if (!user.getRole().equals("admin")) {
+            model.addAttribute ("exception", "You must be admin to use this function");
+            return "error";
+        }
+        Product product = productsService.getProduct(id);
+        User creator = adminService.getUserById(product.getCreatedByID());
+        model.addAttribute("creator", creator);
+        model.addAttribute("product", product);
+        return "viewlistingadmin";
+    }
 }

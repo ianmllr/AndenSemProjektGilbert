@@ -17,7 +17,7 @@ public class AdminTest {
 
     @BeforeEach
     void setUp() {
-        User testUser = adminService.getUser(1);
+        User testUser = adminService.getUserById(1);
         if (testUser != null && testUser.getRole().equals("admin")) {
             adminService.removeAdminRights(testUser.getId());
         }
@@ -25,14 +25,14 @@ public class AdminTest {
 
     @Test
     void testGiveAdminRole() {
-        User testUser = adminService.getUser(1);
+        User testUser = adminService.getUserById(1);
         adminService.giveAdminRights(testUser.getId());
-        testUser = adminService.getUser(1);
+        testUser = adminService.getUserById(1);
         assertEquals("admin", testUser.getRole());
     }
     @Test
     void testRemoveAdminRights() {
-        User testUser = adminService.getUser(1);
+        User testUser = adminService.getUserById(1);
         //da setup fjerner adminrettigheder, tjekker vi blot om de er user
         assertEquals("user", testUser.getRole());
     }

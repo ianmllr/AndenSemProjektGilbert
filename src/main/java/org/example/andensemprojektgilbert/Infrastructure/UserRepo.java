@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class UserRepo {
@@ -108,5 +109,19 @@ public class UserRepo {
         int offset = (page - 1) * size;
         return jdbcTemplate.query(sql, new Object[]{size, offset}, (rs, rowNum) ->
                 new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getInt("sales"), rs.getString("rating"), rs.getString("role"), rs.getString("imgsrc")));
+    }
+    public Optional<User> getUserById(int id) {
+        try {
+            String sql = "SELECT u.id, u.name, u.email, u.password, u.sales, u.rating, r.role, u.imgsrc\n" +
+                    "FROM gilbert.user u\n" +
+                    "JOIN user_role r ON u.role = r.idroles\n" +
+                    "WHERE u.id = ?";
+            User user = jdbcTemplate.queryForObject(sql, ((rs, rowNum) ->
+                    new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getInt("sales"), rs.getString("rating"), rs.getString("role"), rs.getString("imgsrc"))), id);
+            return Optional.of(user);
         }
+        catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
 }

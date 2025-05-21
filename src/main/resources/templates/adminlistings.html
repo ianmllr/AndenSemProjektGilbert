@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listings</title>
+</head>
+<body>
+<div class="container">
+    <a id="adminPageBtn" th:href="@{adminpage}">
+        <button type="button">Til adminside</button>
+    </a>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>CreatedById</th>
+            <th>Department</th>
+            <th>Category</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${products}">
+            <td th:text="${product.name}">Film</td>
+            <td th:text="${product.description}">Titel</td>
+            <td th:text="${product.price}">Indhold</td>
+            <td th:text="${product.createdByID}">Forfatter</td>
+            <td th:text="${product.department}">Rating</td>
+            <td th:text="${product.category}">Dato</td>
+            <td><button id="adminPageBtn" th:onclick="'deleteListing(' + ${product.id} + ');'" >Delete listing</button></td>
+            <td><a th:href="@{'/viewlistingadmin/' + ${product.id}}">
+                <button>View listing</button> </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <a th:if="${currentPage > 1}" th:href="@{/adminlistings(page=${currentPage - 1})}">Forrige</a>
+        <text>Side </text>
+        <a th:text="${currentPage}"></a>
+        <a th:if="${currentPage < totalPages}" th:href="@{/adminlistings(page=${currentPage + 1})}">Næste</a>
+    </div>
+    <script>
+        function deleteListing(id) {
+            if (confirm('Er du sikker på du vil slette anmeldelsen?')) {
+                fetch('/deletelisting/' + id, {
+                    method: 'DELETE'
+                }).then(response => {
+                    console.log(response)
+                    if (response.status === 200) {
+                        alert('Listing deleted!');
+                        window.location.replace("/adminlistings");
+                    } else {
+                        alert('Kan ikke slette anmeldelse.');
+                    }
+                });
+            }
+        }
+    </script>
+    <br>
+    <form th:action="@{/searchlistings}" method="get">
+        <input type="text" name="query" id="query" placeholder="Search for listing">
+        <button type="submit">Søg</button>
+    </form>
+</div>
+</body>
+</html>

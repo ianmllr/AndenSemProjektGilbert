@@ -1,30 +1,28 @@
 package org.example.andensemprojektgilbert.Service;
 
+import org.example.andensemprojektgilbert.Infrastructure.ProductRepo;
 import org.example.andensemprojektgilbert.Infrastructure.UserRepo;
+import org.example.andensemprojektgilbert.Model.Product;
 import org.example.andensemprojektgilbert.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdminService {
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
+    private ProductRepo productRepo;
+
     public List<User> getUsers() {
         return userRepo.getAllUsers();
     }
-    public User getUser(int id) {
-        List<User> users = getUsers();
-        for (User user : users) {
-            if (user.getId() == id) {
-                return user;
-            }
-        }
-        return null;
-    }
+
     public boolean giveAdminRights(int id) {
         return userRepo.giveAdminRights(id);
     }
@@ -46,5 +44,22 @@ public class AdminService {
     }
     public List<User> getUsersPage(int page, int size) {
         return userRepo.getUserPages(page, size);
+    }
+    public List<Product> getProductsPage(int page, int size) {
+        return productRepo.getProductsPage(page, size);
+    }
+    public boolean deleteProduct(int id) {
+        return productRepo.deleteProductById(id);
+    }
+    public List<Product> getFilteredProducts(String query) {
+        List<Product> filteredProducts = productRepo.searchProducts(query);
+        return filteredProducts;
+    }
+    public User getUserById(int id) {
+        Optional<User> user = userRepo.getUserById(id);
+        if (user.isPresent()) {
+            return user.get();
+        }
+        return null;
     }
 }

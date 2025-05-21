@@ -177,7 +177,7 @@ public class ProductsService {
         return null;
     }
 
-    public void deleteProductById(int productId) {
+    public boolean deleteProductById(int productId) {
         Product product = getProduct(productId);
         if (product != null) {
             productRepo.deleteProductById(productId);
@@ -185,5 +185,6 @@ public class ProductsService {
             // Debug logging eller håndtering af ikke-eksisterende produkt
             System.out.println("Produkt med ID " + productId + " blev ikke fundet.");
         }
+        return false;
     }
 }

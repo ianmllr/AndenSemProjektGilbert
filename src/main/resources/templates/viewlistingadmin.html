@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listing</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Product name</th>
+        <th>Product description</th>
+        <th>Price</th>
+        <th>Picture</th>
+        <th>Delete Listing</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${creator.name}">Username</td>
+        <td th:text="${creator.email}">Email</td>
+        <td th:text="${product.name}">Product name</td>
+        <td th:text="${product.description}">Product description</td>
+        <td th:text="${product.price}">Price</td>
+        <td><img th:src="@{'/productimage/' + ${product.imgsrc}}" style="max-width: 200px; max-height: 200px;" alt="no pic"></td>
+        <td><button id="adminPageBtn" th:onclick="'deleteListing(' + ${product.id} + ');'" >Delete listing</button></td>
+
+        </td>
+    </tr>
+    </tbody>
+</table>
+<script>
+    function deleteListing(id) {
+        if (confirm('Er du sikker på du vil slette anmeldelsen?')) {
+            fetch('/deletelisting/' + id, {
+                method: 'DELETE'
+            }).then(response => {
+                console.log(response)
+                if (response.status === 200) {
+                    alert('Listing deleted!');
+                    window.location.replace("/adminlistings");
+                } else {
+                    alert('Kan ikke slette anmeldelse.');
+                }
+            });
+        }
+    }
+</script>
+</body>
+</html>
