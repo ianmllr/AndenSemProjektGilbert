@@ -14,7 +14,7 @@
 
 body {
     background-color: #f8f0e5; /* Off-white background */
-    color: #423a26; /* Dark brown text */
+    color: #f8f0e5;
     font-family: 'theseasons', Garamond, serif;
     line-height: 1.6;
 }
@@ -129,7 +129,7 @@ h1 a {
 /* Profile Header (for Profile Page) */
 .profile-header {
     background-color: #004224; /* Dark green background */
-    border-bottom: 1px solid #f8f0e5;
+    border-bottom: 2px solid #f8f0e5;
     width: 100%;
 }
 
@@ -234,13 +234,13 @@ h1 a {
 
 .button-bar-index .dropdown a:hover {
     background-color: #f8f0e5; /* Green on hover */
-    color: #423a26;
+    color: #004224;
 }
 
 .button-bar-index .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #423a26;
+    background-color: #004224;
     min-width: 100%;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
     z-index: 1;
@@ -301,7 +301,8 @@ h1 a {
     margin: 20px auto;
     padding: 10px;
     font-size: 1.1em;
-    background-color: #423a26;
+    background-color: #004224;
+    border: 2px solid #f8f0e5;
     color: #f8f0e5;
     text-decoration: none;
     text-align: center;
@@ -311,7 +312,7 @@ h1 a {
 
 .edituserclass:hover, .createnewlistingclass:hover {
     background-color: #f8f0e5;
-    color: #423a26;
+    color: #004224;
 }
 
 /* Mobile Search Overlay */
@@ -358,7 +359,7 @@ h1 a {
     border: none;
     outline: none;
     background-color: #fff;
-    color: #423a26;
+    color: #f8f0e5;
     border-radius: 5px;
     font-family: 'theseasons', Garamond,serif;
 }
@@ -401,7 +402,7 @@ main {
     align-items: center;
 }
 main h2 {
-    color: #423a26;
+    color: #004224;
     text-align: center;
     font-size: 1.8em;
     margin-bottom: 30px;
@@ -411,14 +412,14 @@ main h2 {
     margin-bottom: 40px; /* Space between sections */
 }
 .category-section h3 {
-    color: #423a26;
+    color: #f8f0e5;
     font-size: 1.4em;
     margin-bottom: 20px;
     text-align: center;
 }
 
 main h3 {
-    color: #423a26;
+    color:#004224;
     font-size: 1.4em;
     margin: 20px 0 10px;
 }
@@ -528,7 +529,7 @@ main h3 {
 .no-listings {
     text-align: center;
     font-size: 1.2em;
-    color: #423a26;
+    color: #004224;
     margin: 20px 0;
 }
 
@@ -549,7 +550,7 @@ main h3 {
 .form-group label {
     display: block;
     font-size: 1.1em;
-    color: #423a26;
+    color: #004224;
     margin-bottom: 5px;
 }
 
@@ -559,10 +560,10 @@ main h3 {
     width: 100%;
     padding: 10px;
     font-size: 1em;
-    border: 2px solid #423a26;
+    border: 2px solid #004224;
     border-radius: 5px;
     background-color: #f8f0e5;
-    color: #423a26;
+    color: #004224;
     outline: none;
     font-family: 'theseasons', Garamond, serif;
 }
@@ -581,11 +582,13 @@ main h3 {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.5s ease;
 }
 
 .login-form button:hover {
-    background-color: #423a26;
+    background-color: #f8f0e5;
+    color: #004224;
+    border: 1px solid #004224;
 }
 
 .error-message {
@@ -630,7 +633,7 @@ main h3 {
 }
 
 .register-form button:hover {
-    background-color: #423a26;
+    background-color: #f8f0e5;
 }
 
 /* New Product Form */
@@ -657,7 +660,7 @@ main h3 {
 }
 
 .newproduct-form button:hover {
-    background-color: #423a26;
+    background-color: #f8f0e5;
 }
 
 /* Footer (Same as Front Page) */
@@ -672,8 +675,8 @@ main h3 {
     justify-content: center;
     gap: 10px;
     padding: 10px 0;
-    background-color: #423a26;
-    border-bottom: 1px solid #f8f0e5;
+    background-color: #004224;
+    border-bottom: 2px solid #f8f0e5;
     width: 100%;
 }
 
