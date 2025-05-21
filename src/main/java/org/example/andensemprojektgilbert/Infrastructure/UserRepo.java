@@ -17,16 +17,16 @@ public class UserRepo {
 
 
     public boolean createUser(User user) {
-        String sql = "INSERT INTO user (name, password, email, sales, rating, role, imgsrc) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        int result = jdbcTemplate.update(sql, user.getName(), user.getPassword(), user.getEmail(), 0, user.getRating(), 2, user.getImgsrc());
+        String sql = "INSERT INTO user (name, password, email, sales, rating, role, imgsrc, Fname, Lname, address) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        int result = jdbcTemplate.update(sql, user.getName(), user.getPassword(), user.getEmail(), 0, user.getRating(), 2, user.getImgsrc(), user.getFname(), user.getLname(), user.getAddress());
         return result == 1;
     }
 
     public List<User> getAllUsers() {
-        String sql = "SELECT id, name, email, password, sales, rating, user_role.role, imgsrc FROM user\n"  +
+        String sql = "SELECT id, name, email, password, sales, rating, user_role.role, imgsrc, Fname, Lname, address FROM user\n"  +
                 "JOIN user_role ON idroles = user.role";
         return jdbcTemplate.query(sql, (rs, rowNum) ->
-                new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getInt("sales"), rs.getString("rating"), rs.getString("role"), rs.getString("imgsrc"))
+                new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getInt("sales"), rs.getString("rating"), rs.getString("role"), rs.getString("imgsrc"), rs.getString("Fname"), rs.getString("Lname"), rs.getString("address"))
         );
     }
 
@@ -102,22 +102,22 @@ public class UserRepo {
         return false;
     }
     public List<User> getUserPages(int page, int size) {
-        String sql = "SELECT u.id, u.name, u.email, u.password, u.sales, u.rating, r.role, u.imgsrc\n" +
+        String sql = "SELECT u.id, u.name, u.email, u.password, u.sales, u.rating, r.role, u.imgsrc, u.Fname, u.Lname, u.address\n" +
                 "FROM gilbert.user u\n" +
                 "JOIN user_role r ON u.role = r.idroles\n" +
                 "LIMIT ? OFFSET ?;";
         int offset = (page - 1) * size;
         return jdbcTemplate.query(sql, new Object[]{size, offset}, (rs, rowNum) ->
-                new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getInt("sales"), rs.getString("rating"), rs.getString("role"), rs.getString("imgsrc")));
+                new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getInt("sales"), rs.getString("rating"), rs.getString("role"), rs.getString("imgsrc"), rs.getString("Fname"), rs.getString("Lname"), rs.getString("address")));
     }
     public Optional<User> getUserById(int id) {
         try {
-            String sql = "SELECT u.id, u.name, u.email, u.password, u.sales, u.rating, r.role, u.imgsrc\n" +
+            String sql = "SELECT u.id, u.name, u.email, u.password, u.sales, u.rating, r.role, u.imgsrc, u.Fname, u.Lname, u.address\n" +
                     "FROM gilbert.user u\n" +
                     "JOIN user_role r ON u.role = r.idroles\n" +
                     "WHERE u.id = ?";
             User user = jdbcTemplate.queryForObject(sql, ((rs, rowNum) ->
-                    new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getInt("sales"), rs.getString("rating"), rs.getString("role"), rs.getString("imgsrc"))), id);
+                    new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getInt("sales"), rs.getString("rating"), rs.getString("role"), rs.getString("imgsrc"), rs.getString("Fname"), rs.getString("Lname"), rs.getString("address"))), id);
             return Optional.of(user);
         }
         catch (EmptyResultDataAccessException e) {

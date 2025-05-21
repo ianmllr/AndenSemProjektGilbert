@@ -30,7 +30,11 @@ public class User {
 
     private String imgsrc;
 
-    public User(int id, String name, String email, String password, int sales, String rating, String role, String imgsrc) {
+    private String Fname;
+    private String Lname;
+    private String address;
+
+    public User(int id, String name, String email, String password, int sales, String rating, String role, String imgsrc, String Fname, String Lname, String address) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -39,6 +43,9 @@ public class User {
         this.rating = rating;
         this.role = role;
         this.imgsrc = imgsrc;
+        this.Fname = Fname;
+        this.Lname = Lname;
+        this.address = address;
     }
     public User() {}
 
@@ -96,6 +103,25 @@ public class User {
     }
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getFname() {
+        return Fname;
+    }
+    public void setFname(String Fname) {
+        this.Fname = Fname;
+    }
+    public String getLname() {
+        return Lname;
+    }
+    public void setLname(String Lname) {
+        this.Lname = Lname;
+    }
+    public String getAddress() {
+        return address;
+    }
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Override

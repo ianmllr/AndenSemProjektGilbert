@@ -61,6 +61,7 @@ public class UserController {
                 throw new RuntimeException(e);
             }
         }
+
         if (userService.register(user)) {
             session.setAttribute("currentUser", user);
             return "redirect:/";
