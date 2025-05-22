@@ -90,7 +90,7 @@
             <label for="image">Upload picture:</label>
             <input type="file" id="image" name="image" accept="image/*">
 
-            <button type="submit">Opret opslag</button>
+            <button type="submit">Post listing</button>
         </div>
     </form>
 </main>
@@ -140,59 +140,77 @@
 
 
 <script th:inline="javascript">
+    // variabler til at holde styr på værdierne
     let allCategoryOptions = [];
     let allSubcatOptions = [];
     let allSizeOptions = [];
 
+    // kaldes når siden loader
     window.addEventListener('DOMContentLoaded', function() {
+        // henter alle options
         allCategoryOptions = Array.from(document.querySelectorAll('#category option[value]'));
         allSubcatOptions = Array.from(document.querySelectorAll('#subcategory option[data-category-id]'));
         allSizeOptions = Array.from(document.querySelectorAll('#size option[data-size-type-id]'));
+
+        // sætter værdierne
         updateCategoriesByDepartment();
         updateSubcategories();
         updateSizesBySubcategory();
     });
 
+    // kaldes hvis department ændres
     function updateCategoriesByDepartment() {
+        // henter værdier
         var dep = document.getElementById("department").value;
         var catSelect = document.getElementById("category");
         catSelect.innerHTML = '<option value="" disabled selected>Select a category</option>';
+
+        // tilføjer de rigtige
         allCategoryOptions.forEach(function(option) {
             var catName = option.textContent.trim();
             if (dep === "Home") {
-                // viser kun de 3
+                // tilføjer kun de 3
                 if (catName === "Living room" || catName === "Kitchen" || catName === "Bedroom") {
                     catSelect.appendChild(option.cloneNode(true));
                 }
             } else {
-                // viser ikke de 3
+                // tilføjer alle undtagen de 3
                 if (catName !== "Living room" && catName !== "Kitchen" && catName !== "Bedroom") {
                     catSelect.appendChild(option.cloneNode(true));
                 }
             }
         });
+        // kalder updateSubcategories();
         updateSubcategories();
     }
 
+    // kaldes hvis category ændres
     function updateSubcategories() {
+        // henter værdier
         var catId = document.getElementById("category").value;
         var subcatSelect = document.getElementById("subcategory");
         subcatSelect.innerHTML = '<option value="" disabled selected>Select a subcategory</option>';
+
+        // tilføjer de rigtige
         allSubcatOptions.forEach(function(option) {
             if (option.getAttribute('data-category-id') === catId) {
                 subcatSelect.appendChild(option.cloneNode(true));
             }
         });
-        // Nulstil sizes når subcategory ændres
+        // opdater sizes når subcategory ændres
         updateSizesBySubcategory();
     }
 
+    // opdaterer størrelser
     function updateSizesBySubcategory() {
+        // henter værdier
         var subcatSelect = document.getElementById("subcategory");
         var selectedSubcat = subcatSelect.options[subcatSelect.selectedIndex];
         var sizeTypeId = selectedSubcat ? selectedSubcat.getAttribute('data-size-type-id') : null;
         var sizeSelect = document.getElementById("size");
         sizeSelect.innerHTML = '<option value="" disabled selected>Select size</option>';
+
+        // tilføjer de rigtige
         allSizeOptions.forEach(function(option) {
             if (sizeTypeId && option.getAttribute('data-size-type-id') === sizeTypeId) {
                 sizeSelect.appendChild(option.cloneNode(true));

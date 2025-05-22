@@ -6,10 +6,7 @@ import org.example.andensemprojektgilbert.Service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -69,6 +66,37 @@ public class ProductsController {
             productsService.createImage(image, product);
         }
         productsService.createProduct(product, user);
+        return "redirect:/gilbertprofile";
+    }
+
+    @GetMapping("/editproduct/{id}")
+    public String getEditProduct(Model model, @PathVariable int id) {
+        Product product = productsService.getProduct(id);
+        model.addAttribute("product", product);
+        model.addAttribute("departments", productsService.getDepartments());
+        model.addAttribute("categories", productsService.getCategories());
+        model.addAttribute("subcategories", productsService.getSubcategories());
+        model.addAttribute("brands", productsService.getBrands());
+        model.addAttribute("locations", productsService.getLocations());
+        model.addAttribute("conditions", productsService.getConditions());
+        model.addAttribute("colors", productsService.getColors());
+        model.addAttribute("sizes", productsService.getSizes());
+        return "editproduct";
+    }
+
+    @PostMapping("/editproduct/{id}")
+    public String postEditProduct(@ModelAttribute Product product, HttpSession session,
+                                  @RequestParam("image") MultipartFile image, RedirectAttributes redirectAttributes) {
+        User user = (User) session.getAttribute("currentUser");
+        product.setCreatedByID(user.getId());
+        if (!image.isEmpty()) {
+            if (image.getSize() > 3 * 1024 * 1024) {
+                redirectAttributes.addFlashAttribute("message", "Image is too large to upload");
+                return "redirect:/gilbertprofile/newproduct";
+            }
+            productsService.createImage(image, product);
+        }
+        productsService.updateProduct(product);
         return "redirect:/gilbertprofile";
     }
 

@@ -54,7 +54,7 @@
       <p class="productname" th:text="${product.name}"></p>
       <p th:text="${product.brand}"></p>
       <p th:text="${product.price} + ' €'"></p>
-      <button>Edit listing</button>
+      <button class="edit-button"><a th:href="@{/editproduct/{id}(id=${product.id})}">Edit product</a> </button>
     </div>
   </div>
 </main>
