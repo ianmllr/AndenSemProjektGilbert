@@ -44,7 +44,7 @@ public class FavoriteController {
         else {
             redirectAttributes.addFlashAttribute("error", "Something went wrong. Try again");
         }
-        String referrer = request.getHeader("Referer");
+        String referrer = request.getHeader("Referer"); //Sørger for at man bliver på siden hvor man tilføjede favorit
         return "redirect:" + (referrer != null ? referrer : "/");
     }
     @PostMapping("/products/removeAsFavorite/{id}")

@@ -904,6 +904,12 @@ main h3 {
         padding: 15px;
     }
 
+    .product-card img {
+        width: 100%;
+        height: auto;
+        object-fit: cover; /*Gør så den udfylder sin "container" Er måske ikke nødvendig*/
+    }
+
     .form-group label {
         font-size: 1em;
     }

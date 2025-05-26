@@ -9,16 +9,16 @@ import jdk.jfr.Name;
 public class User {
     private int id;
 
-    @Name("Navn skal være gyldigt")
-    @NotBlank(message = "Må ikke være tom")
+    @Name("Name has to be valid")
+    @NotBlank(message = "Cannot be blank")
     private String name;
 
-    @Email(message = "Email skal være gyldig")
-    @NotBlank(message = "Email må ikke være tom")
+    @Email(message = "Email has to be valid")
+    @NotBlank(message = "Email field cannot be blank")
     private String email;
 
-    @NotBlank(message = "Må ikke være tom")
-    @Size(min = 3, message = "Password skal være mindst 3 tegn")
+    @NotBlank(message = "Cannot be blank")
+    @Size(min = 3, message = "The password must be at least 3 characters")
     private String password;
 
 

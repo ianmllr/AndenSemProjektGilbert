@@ -13,27 +13,27 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public String handleGeneralException(Exception e, Model model) {
-        model.addAttribute("exception", "Uventet fejl: " + e.getClass().getSimpleName() + ": " + e.getMessage());
+        model.addAttribute("exception", "Unexpected error: " + e.getClass().getSimpleName() + ": " + e.getMessage());
         e.printStackTrace();
         return "error";
     }
 
     @ExceptionHandler
     public String handleEmptyResultDataAccessException(EmptyResultDataAccessException e, Model model) {
-        model.addAttribute("exception", "Brugernavn eller kodeord eksisterer ikke");
+        model.addAttribute("exception", "Username or password does not exist");
         e.printStackTrace();
         return "error";
     }
 
     @ExceptionHandler
     public String handleSessionAuthenticationException(SessionAuthenticationException e, Model model) {
-        model.addAttribute("exception", "Du er ikke logget ind");
+        model.addAttribute("exception", "You are not logged in");
         return "error";
     }
 
     @ExceptionHandler
     public String handleNullPointerException(NullPointerException e, Model model) {
-        model.addAttribute("exception", "Du skal være logget ind");
+        model.addAttribute("exception", "You have to be logged in");
         e.printStackTrace();
         return "error";
     }
@@ -42,21 +42,21 @@ public class GlobalExceptionHandler {
     public String handleDataIntegrityViolation(DataIntegrityViolationException e, Model model) {
         String message = e.getRootCause() != null ? e.getRootCause().getMessage() : e.getMessage();
         if (message.contains("null value") || message.contains("not-null constraint")) {
-            model.addAttribute("exception", "Et felt mangler – tjek at alle felter er udfyldt.");
+            model.addAttribute("exception", "Something is missing. Check that you wrote in everything");
         } else if (message.contains("duplicate key") || message.contains("Duplicate entry")) {
-            model.addAttribute("exception", "Denne post findes allerede – brug en anden ID eller email.");
+            model.addAttribute("exception", "Post already exists – use another ID or email.");
         } else if (message.contains("foreign key constraint")) {
-            model.addAttribute("exception", "Handlingen kunne ikke gennemføres pga. afhængigheder i databasen.");
+            model.addAttribute("exception", "The action could not be completed due to dependencies in the database.");
             e.printStackTrace();
         } else {
-            model.addAttribute("exception", "Der opstod en databasefejl – prøv igen.");
+            model.addAttribute("exception", "A database error occurred – please try again.");
         }
         return "error";
     }
 
     @ExceptionHandler
     public String handleNoResourceFoundException(NoResourceFoundException e, Model model) {
-        model.addAttribute("exception", "Siden findes ikke eller du er ikke logget ind. Fejl: " + e.getClass().getSimpleName() + ": " + e.getMessage());
+        model.addAttribute("exception", "Page does not exist or you are not logged in. Error: " + e.getClass().getSimpleName() + ": " + e.getMessage());
         return "error";
     }
 }

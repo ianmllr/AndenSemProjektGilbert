@@ -122,16 +122,16 @@ public class ProductsController {
                                 RedirectAttributes redirectAttributes) {
         User user = (User) session.getAttribute("currentUser");
         if (user == null) {
-            redirectAttributes.addFlashAttribute("message", "Du skal være logget ind for at slette et produkt.");
+            redirectAttributes.addFlashAttribute("message", "You must be logged in to delete a product.");
             return "redirect:/login";
         }
 
         Product product = productsService.getProduct(productId);
         if (product != null && product.getCreatedByID() == user.getId()) {
             productsService.deleteProductById(productId);
-            redirectAttributes.addFlashAttribute("message", "Produktet blev slettet.");
+            redirectAttributes.addFlashAttribute("message", "Product deleted.");
         } else {
-            redirectAttributes.addFlashAttribute("message", "Du har ikke tilladelse til at slette dette produkt, eller produktet blev ikke fundet.");
+            redirectAttributes.addFlashAttribute("message", "You do not have the permission to delete this product or it was not found.");
         }
 
         return "redirect:/gilbertprofile";

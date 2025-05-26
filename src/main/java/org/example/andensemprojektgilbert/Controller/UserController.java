@@ -66,7 +66,7 @@ public class UserController {
             session.setAttribute("currentUser", user);
             return "redirect:/";
         } else {
-            model.addAttribute("error", "Email findes allerede");
+            model.addAttribute("error", "Email already exists");
             return "register";
         }
     }
@@ -111,7 +111,7 @@ public class UserController {
             System.out.println(loggedInUser.getRole());
             return "redirect:/";
         } else {
-            model.addAttribute("error", "Forkert email eller password");
+            model.addAttribute("error", "Wrong email or password");
             return "login";
         }
     }
@@ -155,7 +155,7 @@ public class UserController {
             session.setAttribute("currentUser", user);
             return "redirect:/gilbertprofile";
         } else {
-            redirectAttributes.addFlashAttribute("message", "Der er sket en fejl, prøv igen");
+            redirectAttributes.addFlashAttribute("message", "Error - try again");
             return "redirect:/edituser";
         }
     }
