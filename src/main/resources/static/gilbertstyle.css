@@ -792,6 +792,11 @@ main h3 {
         font-size: 0.8em;
         padding: 8px;
     }
+    .product-card img {
+        width: 100%;
+        height: auto;
+        object-fit: cover; /*Gør så den udfylder sin "container" Er måske ikke nødvendig*/
+    }
 
     .profile-button-bar {
         flex-wrap: nowrap;

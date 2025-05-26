@@ -27,6 +27,7 @@ public class FavoriteController {
             return "redirect:/login";
         }
         List<Product> favorites = favoriteService.getFavorites(user.getId());
+        model.addAttribute("user", user);
         model.addAttribute("favorites", favorites);
         return "favorites";
     }

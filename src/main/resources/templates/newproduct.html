@@ -51,7 +51,7 @@
             <input type="hidden" name="categoryId" th:value="${selectedCategoryId}">
 
             <label for="subcategory">Subcategory:</label>
-            <select id="subcategory" th:field="*{subcategory}" required onchange="updateSizesBySubcategory()">
+            <select id="subcategory" th:field="*{subcategory}" onchange="updateSizesBySubcategory()">
                 <option value="" disabled selected>Select a subcategory</option>
                 <option th:each="subcat : ${subcategories}" th:value="${subcat.name}" th:text="${subcat.name}"
                         th:attr="data-size-type-id=${subcat.sizeTypeId}"
@@ -79,13 +79,13 @@
             </select>
 
             <label for="size">Size:</label>
-            <select id="size" th:field="*{size}" required>
+            <select id="size" th:field="*{size}" >
                 <option value="" disabled selected>Select size</option>
                 <option th:each="size : ${sizes}" th:value="${size.size_value}" th:text="${size.size_value}" th:attr="data-size-type-id=${size.sizeTypeId}"></option>
             </select>
 
             <label for="color">Color:</label>
-            <select id="color" th:field="*{color}" required>
+            <select id="color" th:field="*{color}" >
                 <option value="" disabled selected>Select color</option>
                 <option th:each="color : ${colors}" th:value="${color}" th:text="${color}"></option>
             </select>

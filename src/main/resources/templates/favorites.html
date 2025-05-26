@@ -11,54 +11,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-
 <header class="header-container">
-    <div>
+    <div class="header-content">
+        <div class="desktop-search">
+            <form action="/search" method="get">
+                <input type="text" name="q" placeholder="Search for products..." required>
+            </form>
+        </div>
         <h1><a href="/">Gilbert</a></h1>
-    </div>
-<nav class="button-bar-index">
-    <div class="dropdown">
-        <a href="/women">Women</a>
-        <div class="dropdown-content">
-            <a href="/women/clothing">Clothing</a>
-            <a href="/women/bags">Bags</a>
-            <a href="/women/shoes">Shoes</a>
-            <a href="/women/accessories">Accessories</a>
+        <div class="auth-links">
+            <a th:if="${user == null}" id="SignIn" href="/login">Sign in</a>
+            <a th:if="${user == null}" id="SignUp" href="/register">Sign up</a>
+            <a th:if="${user != null}" href="/favorites" class="favorites">
+                <img src="/icons/heart.png" class="icon" alt="Favorites">
+            </a>
+            <a th:if="${user != null}" href="/notifications" class="notifications">
+                <img src="/icons/notification.png" class="icon" alt="Notifications">
+            </a>
+            <a th:if="${user != null}" href="/gilbertprofile" class="profilelink">
+                <img th:src="${user.imgsrc != null} ? @{/userimage/} + ${user.imgsrc} : @{/icons/profil.png}" class="profilpicture" alt="Profile">
+            </a>
+            <a th:if="${user != null and user.role == 'admin'}" href="adminpage" class="adminpagelink">
+                <button type="button">Go to adminpage</button>
+            </a>
         </div>
     </div>
-    <div class="dropdown">
-        <a href="/men">Men</a>
-        <div class="dropdown-content">
-            <a href="/men/clothing">Clothing</a>
-            <a href="/men/bags">Bags</a>
-            <a href="/men/shoes">Shoes</a>
-            <a href="/men/accessories">Accessories</a>
+
+    <nav class="button-bar-index">
+        <div class="dropdown">
+            <a href="/women">Women</a>
+            <div class="dropdown-content">
+                <a href="/women/clothing">Clothing</a>
+                <a href="/women/bags">Bags</a>
+                <a href="/women/shoes">Shoes</a>
+                <a href="/women/accessories">Accessories</a>
+            </div>
         </div>
-    </div>
-    <div class="dropdown">
-        <a href="/home">Home</a>
-        <div class="dropdown-content">
-            <a href="/home/interior">Interior and furniture</a>
-            <a href="/home/decoration">Decoration</a>
-            <a href="/home/kitchen">Kitchen</a>
+        <div class="dropdown">
+            <a href="/men">Men</a>
+            <div class="dropdown-content">
+                <a href="/men/clothing">Clothing</a>
+                <a href="/men/bags">Bags</a>
+                <a href="/men/shoes">Shoes</a>
+                <a href="/men/accessories">Accessories</a>
+            </div>
         </div>
-    </div>
-    <div class="dropdown">
-        <a href="/beauty">Beauty</a>
-        <div class="dropdown-content">
-            <a href="/beauty/makeup">Makeup</a>
-            <a href="/home/fragrance">Fragrance</a>
+        <div class="dropdown">
+            <a href="/home">Home</a>
+            <div class="dropdown-content">
+                <a href="/home/interior">Interior and furniture</a>
+                <a href="/home/decoration">Decoration</a>
+                <a href="/home/kitchen">Kitchen</a>
+            </div>
         </div>
-    </div>
-    <div class="dropdown">
-        <a href="/designers">Designers</a>
-        <div class="dropdown-content">
-            <a href="/designer1">Designer1</a>
-            <a href="/designer2">Designer2</a>
-            <a href="/designer3">Designer3</a>
+        <div class="dropdown">
+            <a href="/beauty">Beauty</a>
+            <div class="dropdown-content">
+                <a href="/beauty/makeup">Makeup</a>
+                <a href="/home/fragrance">Fragrance</a>
+            </div>
         </div>
+        <div class="dropdown">
+            <a href="/designers">Designers</a>
+            <div class="dropdown-content">
+                <a href="/designer1">Designer1</a>
+                <a href="/designer2">Designer2</a>
+                <a href="/designer3">Designer3</a>
+            </div>
+        </div>
+    </nav>
+
+</header>
+
+<div class="search-overlay" id="searchOverlay">
+    <div class="search-box">
+        <form action="/search" method="get">
+            <input type="text" name="q" placeholder="Search for products..." required>
+        </form>
     </div>
-</nav>
+</div>
+
+
 </header>
 
     <h2>Your Favorite Products</h2>
@@ -75,5 +108,27 @@
         </li>
     </ul>
 
+
+<nav class="mobile-nav">
+    <div class="nav-container">
+        <a href="/">
+            <img src="/icons/home2.png" class="icon" alt="Home">
+        </a>
+        <a href="/search">
+            <img src="/icons/sg.png" class="icon" alt="Search">
+        </a>
+        <a href="/favorites">
+            <img src="/icons/heart.png" class="icon" alt="Favorites">
+        </a>
+        <a href="/gilbertprofile">
+            <img src="/icons/profil.png" class="icon" alt="Profile">
+        </a>
+        <a href="/notifications">
+            <img src="/icons/notification.png" class="icon" alt="Notifications">
+        </a>
+    </div>
+</nav>
+
+<script src="/search.js"></script>
 </body>
 </html>
