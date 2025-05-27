@@ -16,7 +16,7 @@ public class ProductRepo {
     private JdbcTemplate jdbcTemplate;
 
     private Integer getColorId(String color) {
-        String sql = "SELECT idcolor from Color WHERE color = ?";
+        String sql = "SELECT idcolor from Color WHERE color = ? LIMIT 1";
         try {
             return jdbcTemplate.queryForObject(sql, Integer.class, color);
         } catch (EmptyResultDataAccessException e) {
@@ -25,7 +25,7 @@ public class ProductRepo {
     }
 
     private Integer getSizeId(String sizeValue) {
-        String sql = "SELECT id FROM size WHERE size_value = ?";
+        String sql = "SELECT id FROM size WHERE size_value = ? LIMIT 1";
         try {
             return jdbcTemplate.queryForObject(sql, new Object[]{sizeValue}, Integer.class);
         } catch (EmptyResultDataAccessException e) {
@@ -34,7 +34,7 @@ public class ProductRepo {
     }
 
     private Integer getConditionId(String condition) {
-        String sql = "SELECT idcondition FROM gilbert.condition WHERE itemcondition = ?";
+        String sql = "SELECT idcondition FROM gilbert.condition WHERE itemcondition = ? LIMIT 1";
         try {
             return jdbcTemplate.queryForObject(sql, new Object[]{condition}, Integer.class);
         } catch (EmptyResultDataAccessException e) {
@@ -43,7 +43,7 @@ public class ProductRepo {
     }
 
     private Integer getBrandId(String brandName) {
-        String sql = "SELECT id FROM Brand WHERE name = ?";
+        String sql = "SELECT id FROM Brand WHERE name = ? LIMIT 1";
         try {
             return jdbcTemplate.queryForObject(sql, Integer.class, brandName);
         } catch (EmptyResultDataAccessException e) {
@@ -52,7 +52,7 @@ public class ProductRepo {
     }
     private Integer getCategoryId(String categoryName) {
         System.out.println("Looking for category: '" + categoryName + "'");
-        String sql = "SELECT id FROM Category WHERE name = ?";
+        String sql = "SELECT id FROM Category WHERE name = ? LIMIT 1";
         try {
             Integer categoryId = jdbcTemplate.queryForObject(sql, Integer.class, categoryName);
             System.out.println("Found category ID: " + categoryId + " for category: " + categoryName);
@@ -63,7 +63,7 @@ public class ProductRepo {
         }
     }
     private Integer getSubcategoryId(String subcategoryName) {
-        String sql = "SELECT id FROM Subcategory WHERE name = ?";
+        String sql = "SELECT id FROM Subcategory WHERE name = ? LIMIT 1";
         try {
             return jdbcTemplate.queryForObject(sql, Integer.class, subcategoryName);
         } catch (EmptyResultDataAccessException e) {
@@ -71,7 +71,7 @@ public class ProductRepo {
         }
     }
     private Integer getLocationId(String locationName) {
-        String sql = "SELECT id FROM Location WHERE name = ?";
+        String sql = "SELECT id FROM Location WHERE name = ? LIMIT 1";
         try {
             return jdbcTemplate.queryForObject(sql, Integer.class, locationName);
         } catch (EmptyResultDataAccessException e) {
@@ -79,7 +79,7 @@ public class ProductRepo {
         }
     }
     private Integer getDepartmentId(String departmentName) {
-        String sql = "SELECT id FROM Department WHERE name = ?";
+        String sql = "SELECT id FROM Department WHERE name = ? LIMIT 1";
         try {
             return jdbcTemplate.queryForObject(sql, Integer.class, departmentName);
         } catch (EmptyResultDataAccessException e) {
