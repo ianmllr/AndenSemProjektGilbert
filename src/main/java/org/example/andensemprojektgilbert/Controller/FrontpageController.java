@@ -60,4 +60,13 @@ public class FrontpageController {
         return "search";
     }
 
+    @GetMapping("/FAQ")
+    public String getFAQ() {
+        return "FAQ";
+    }
+
+    @GetMapping("/about")
+    public String getAbout() {
+        return "about";
+    }
 }

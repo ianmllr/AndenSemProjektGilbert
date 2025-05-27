@@ -8,10 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -49,16 +46,12 @@ public class ProductsController {
 
         User user = (User) session.getAttribute("currentUser");
         model.addAttribute("departments", productsService.getDepartments());
-
         List<Category> categories = (departmentId != null) ? productsService.findByDepartment(departmentId) : Collections.emptyList();
         model.addAttribute("categories", categories);
-
         List<Subcategory> subcategories = (categoryId != null) ? productsService.findByCategory(categoryId, departmentId) : Collections.emptyList();
         model.addAttribute("subcategories", subcategories);
-
         model.addAttribute("selectedDepartmentId", departmentId);
         model.addAttribute("selectedCategoryId", categoryId);
-
         model.addAttribute("brands", productsService.getBrands());
         model.addAttribute("locations", productsService.getLocations());
         model.addAttribute("conditions", productsService.getConditions());
@@ -115,6 +108,8 @@ public class ProductsController {
         productsService.createProduct(product, user);
         return "redirect:/gilbertprofile";
     }
+
+
 
     @PostMapping("/gilbertprofile/deleteproduct")
     public String deleteProduct(@RequestParam("productId") int productId,

@@ -1,268 +1,168 @@
 <!DOCTYPE html>
-<!--suppress ALL -->
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="/icons/profil.png">
   <link rel="stylesheet" href="/gilbertstyle.css">
-  <title>Edit listing</title>
+  <title>Edit Listing</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-
-<div id="newproduct">
-  <h1>Indtast oplysninger</h1>
-
-  <form th:action="@{/editproduct/{id}(id=${product.id})}" th:object="${product}" th:method="post" enctype="multipart/form-data">
-    <label>Name</label>
-    <br><input type="text" th:value="${product.name}" th:field="*{name}" required><br>
-
-    <br>
-    <label>Brand</label>
-    <br><input type="text" th:value="${product.brand}" th:field="*{brand}" required><br>
-
-    <br>
-    <label>Department</label>
-    <br><select id="department" th:value="${product.department}" th:field="*{department}" required>
-    <option value="" disabled selected>Select department</option>
-    <option value="Women">Women</option>
-    <option value="Men">Men</option>
-    <option value="Home">Home</option>
-    <option value="Beauty">Beauty</option>
-  </select><br>
-
-    <br>
-    <label>Category</label>
-    <br><select id="category" th:value="${product.category}" th:field="*{category}" required>
-    <option value="" disabled selected>Select category</option>
-
-    <option value="Clothing">Clothing</option>
-    <option value="Bags">Bags</option>
-    <option value="Shoes">Shoes</option>
-    <option value="Accessories">Accessories</option>
-  </select><br>
-
-    <br>
-    <label>Subcategory</label><br>
-    <select id="subcategory" th:value="${product.subcategory}" th:field="*{subcategory}" required>
-      <option value="" disabled selected>Select subcategory</option>
-    </select><br>
-
-    <br>
-    <label>Price</label>
-    <br><input type="number" th:value="${product.price}" th:field="*{price}" required><br>
-
-    <br>
-    <label>Condition</label><br>
-    <select th:value="${product.p_condition}" th:field="*{p_condition}" required>
-      <option value="" disabled selected>Select condition</option>
-      <option value="Brand new">Brand new</option>
-      <option value="Like new">Like new</option>
-      <option value="Good condition">Good condition</option>
-      <option value="Used">Used</option>
-      <option value="Very used">Very used</option>
-    </select><br>
-
-    <br>
-    <label>Size</label>
-    <br><select id="size" name="size" th:value="${product.size}" th:field="*{size}" required>
-    <option value="" disabled selected>-- Select size --</option>
-  </select><br>
-
-    <br>
-    <label>Color</label>
-    <br><select th:value="${product.color}" th:field="*{color}" required>
-    <option value="" disabled selected>Select color</option>
-    <option value="Blue">Blue</option>
-    <option value="Green">Green</option>
-    <option value="Orange">Orange</option>
-    <option value="Purple">Purple</option>
-    <option value="Red">Red</option>
-    <option value="White">White</option>
-    <option value="Yellow">Yellow</option>
-    <option value="Black">Black</option>
-    <option value="Gray">Gray</option>
-    <option value="Brown">Brown</option>
-    <option value="Silver">Silver</option>
-    <option value="Gold">Gold</option>
-    <option value="Other">Other</option>
-  </select><br>
-
-    <br>
-    <label>Location</label>
-    <br><input type="text" th:value="${product.location}" th:field="*{location}" required><br>
-
-    <br>
-    <label>Description</label>
-    <br><textarea rows="4" cols="50" th:value="${product.description}" th:field="*{description}" required></textarea><br>
-
-    <label for="image">Upload picture</label>
-    <input type="file" id="image" name="image" accept="image/*">
-
-    <br><button type="submit">Submit</button><br><br>
-  </form>
+<header class="simple-header">
+  <h1><a href="/">Gilbert</a></h1>
+</header>
+<div class="profile-button-bar">
+  <a href="gilbertlistings.html">Listings</a>
+  <a href="gilbertsales.html">Sales</a>
+  <a href="gilbertorders.html">Orders</a>
+  <a href="gilbertinfo.html">Info</a>
+  <a href="gilberthelp.html">Help</a>
 </div>
+<main>
+  <h2>Edit Listing</h2>
 
-<script>
-  // alle kategorier og underkategorier
-  const subcategories = {
-    Women: {
-      Shoes: [
-        "Heels", "Ankle Boots", "Boots", "Sandals", "Espadrilles",
-        "Mules & Clogs", "Sneakers", "Flat Shoes", "Ballet Flats", "Lace ups"
-      ],
-      Clothing: [
-        "Coats", "Trench Coats", "Jackets", "Leather Jackets", "Dresses", "Knitwear",
-        "Tops", "Skirts", "Shorts", "Pants", "Jeans", "Jumpsuits", "Lingerie", "Swimwear"
-      ],
-      Bags: [
-        "Handbags", "Shoulder Bags", "Totes", "Crossbody Bags", "Clutch Bags",
-        "Belt Bags", "Backpacks", "Travel Bags", "Satchels"
-      ],
-      Accessories: [
-        "Handkerchiefs", "Cases", "Belts", "Wallets", "Hats", "Gloves",
-        "Sunglasses", "Scarves", "Watches"
-      ]
-    },
-    Men: {
-      Shoes: [
-        "Sneakers", "Boots", "Smart Shoes", "Flat Shoes", "Sandals", "Espadrilles"
-      ],
-      Clothing: [
-        "Coats", "Jackets", "Knitwear & Sweatshirts", "Shirts", "Polo Shirts", "T-shirts",
-        "Jeans", "Pants", "Shorts", "Suits", "Swimwear"
-      ],
-      Bags: [
-        "Bags", "Small bags, wallets & cases", "Belt Bags"
-      ],
-      Accessories: [
-        "Belts", "Sunglasses", "Scarves", "Ties", "Hats & pull on hats", "Gloves", "Cufflinks", "Watches"
-      ]
-    },
-    Home: {
-      "Interior and Furniture": [
-        "Bedroom Furniture", "Living Room Furniture", "Dining Room Furniture", "Kitchen Furniture",
-      ],
-      Decoration: [
-        "Wall Decor", "Flooring", "Lighting", "Candles", "Wall Art", "Rugs", "Curtains",
-      ],
-      Kitchen: [
-        "Appliances", "Cookware", "Dinnerware", "Dining Sets",
-      ],
-    },
-    Beauty: {
-      Makeup: [
-        "Eyeshadow", "Lipstick", "Lip gloss", "Lip liner", "Lip balm", "Lipstick"
-      ],
-      Fragrance: [
-        "Perfume", "Deodorant", "Shaving cream", "Body lotion", "Hand cream", "Moisturizer"
-      ]
-    }
-  };
+  <div class="newproduct-form">
+    <form th:action="@{/gilbertprofile/editproduct/{id}(id=${product.id})}" th:object="${product}" method="post" enctype="multipart/form-data">
+      <input type="hidden" th:field="*{id}">
+      <input type="hidden" name="departmentId" th:value="${selectedDepartmentId}">
+      <input type="hidden" name="categoryId" th:value="${selectedCategoryId}">
 
-  // størrelser til forskellige kategorier
-  const sizeGroups = {
-    pantsSizes: ['28', '30', '32', '34', '36', '38', '40'],
-    shoesSizes: ['34', '36', '38', '40', '42', '44', '46', '48', '50', '52', '54'],
-    shirtSizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-    oneSize: ['One Size']
-  };
+      <label for="department">Department:</label>
+      <select id="department" name="departmentId" required>
+        <option value="" disabled>Select department</option>
+        <option th:each="dep : ${departments}"
+                th:value="${dep.id}"
+                th:text="${dep.name}"
+                th:selected="${selectedDepartmentId != null && dep.id == selectedDepartmentId}">
+        </option>
+      </select>
 
-  const subcategoryToSizeGroup = {
-    // Shoes
-    'Heels': 'shoesSizes', 'Ankle Boots': 'shoesSizes', 'Boots': 'shoesSizes',
-    'Sandals': 'shoesSizes', 'Espadrilles': 'shoesSizes', 'Mules & Clogs': 'shoesSizes',
-    'Sneakers': 'shoesSizes', 'Flat Shoes': 'shoesSizes', 'Ballet Flats': 'shoesSizes',
-    'Lace ups': 'shoesSizes',
-    // Clothing
-    'Coats': 'shirtSizes', 'Trench Coats': 'shirtSizes', 'Jackets': 'shirtSizes',
-    'Leather Jackets': 'shirtSizes', 'Dresses': 'shirtSizes', 'Knitwear': 'shirtSizes',
-    'Tops': 'shirtSizes', 'Skirts': 'pantsSizes', 'Shorts': 'pantsSizes',
-    'Pants': 'pantsSizes', 'Jeans': 'pantsSizes', 'Jumpsuits': 'shirtSizes',
-    'Lingerie': 'shirtSizes', 'Swimwear': 'shirtSizes',
-    // Bags & Accessories (One Size)
-    'Handbags': 'oneSize', 'Shoulder Bags': 'oneSize', 'Totes': 'oneSize',
-    'Crossbody Bags': 'oneSize', 'Clutch Bags': 'oneSize', 'Belt Bags': 'oneSize',
-    'Backpacks': 'oneSize', 'Travel Bags': 'oneSize', 'Satchels': 'oneSize',
-    'Handkerchiefs': 'oneSize', 'Cases': 'oneSize', 'Belts': 'oneSize',
-    'Wallets': 'oneSize', 'Hats': 'oneSize', 'Gloves': 'oneSize',
-    'Sunglasses': 'oneSize', 'Scarves': 'oneSize', 'Watches': 'oneSize'
-  };
+      <label for="category">Category:</label>
+      <select id="category" name="categoryId" required>
+        <option value="" disabled>Select a category</option>
+        <option th:each="cat : ${categories}"
+                th:value="${cat.id}"
+                th:text="${cat.name}"
+                th:selected="${selectedCategoryId != null && cat.id == selectedCategoryId}">
+        </option>
+      </select>
 
-  function updateCategories() {
-    const dept = document.getElementById('department').value;
-    const categorySelect = document.getElementById('category');
+      <label for="subcategory">Subcategory:</label>
+      <select id="subcategory" th:field="*{subcategory}" onchange="updateSizesBySubcategory()">
+        <option value="" disabled>Select a subcategory</option>
+        <option th:each="subcat : ${subcategories}" th:value="${subcat.name}" th:text="${subcat.name}"
+                th:attr="data-size-type-id=${subcat.sizeTypeId}"
+                th:selected="${product.subcategory != null && product.subcategory == subcat.name}">
+        </option>
+      </select>
 
-    categorySelect.innerHTML = '<option value="">Select Category</option>';
+      <label for="name">Name:</label>
+      <input type="text" id="name" th:field="*{name}" required>
 
-    // tilføjer de pågældende categories
-    if (subcategories[dept]) {
-      Object.keys(subcategories[dept]).forEach(cat => {
-        const opt = document.createElement('option');
-        opt.value = cat;
-        opt.textContent = cat;
-        categorySelect.appendChild(opt);
+      <label for="brand">Brand:</label>
+      <select id="brand" th:field="*{brand}" required>
+        <option value="" disabled>Select a brand</option>
+        <option th:each="brand : ${brands}" th:value="${brand}" th:text="${brand}"></option>
+      </select>
+
+      <label for="price">Price:</label>
+      <input type="number" id="price" th:field="*{price}" required>
+
+      <label for="p_condition">Condition:</label>
+      <select id="p_condition" th:field="*{condition}" required>
+        <option value="" disabled>Select condition</option>
+        <option th:each="cond : ${conditions}" th:value="${cond}" th:text="${cond}"></option>
+      </select>
+
+      <label for="size">Size:</label>
+      <select id="size" th:field="*{size}">
+        <option value="" disabled>Select size</option>
+        <option th:each="size : ${sizes}" th:value="${size.size_value}" th:text="${size.size_value}" th:attr="data-size-type-id=${size.sizeTypeId}"></option>
+      </select>
+
+      <label for="color">Color:</label>
+      <select id="color" th:field="*{color}">
+        <option value="" disabled>Select color</option>
+        <option th:each="color : ${colors}" th:value="${color}" th:text="${color}"></option>
+      </select>
+
+      <label for="location">Location:</label>
+      <select name="location" id="location" th:field="*{location}">
+        <option value="" disabled>Select location</option>
+        <option th:each="loc : ${locations}" th:value="${loc}" th:text="${loc}"></option>
+      </select>
+
+      <label for="description">Description:</label>
+      <textarea id="description" rows="4" cols="50" th:field="*{description}" required></textarea>
+
+      <label for="image">Current Image:</label>
+      <div th:if="${product.imageUrl != null}">
+        <img th:src="@{${product.imageUrl}}" alt="Current Image" style="max-width: 200px;"/>
+      </div>
+      <label for="image">Change picture:</label>
+      <input type="file" id="image" name="image" accept="image/*">
+
+      <button type="submit">Update Listing</button>
+    </form>
+  </div>
+</main>
+
+<nav class="mobile-nav">
+  <div class="nav-container">
+    <a href="/"><img src="/icons/home2.png" class="icon" alt="Home"></a>
+    <a href="/search"><img src="/icons/sg.png" class="icon" alt="Search"></a>
+    <a href="/favorites"><img src="/icons/heart.png" class="icon" alt="Favorites"></a>
+    <a href="/gilbertprofile"><img src="/icons/profil.png" class="icon" alt="Profile"></a>
+    <a href="/notifications"><img src="/icons/notification.png" class="icon" alt="Notifications"></a>
+  </div>
+</nav>
+
+<footer class="footer-container">
+  <div class="footer-links-bar">
+    <a href="/about">About Us</a>
+    <a href="/help">Support</a>
+    <a href="/terms">Terms & Conditions</a>
+    <a href="/privacy">Privacy Policy</a>
+  </div>
+  <div class="footer-content">
+    <div class="footer-contact">
+      <p>Contact: info@gilbert.com | +45 1234 5678</p>
+      <p>Address: 123 Fashion Street, Copenhagen, Denmark</p>
+    </div>
+    <div class="footer-social">
+      <a href="[https://facebook.com/gilbert">Facebook</a>](https://facebook.com/gilbert">Facebook</a>)
+      <a href="[https://instagram.com/gilbert">Instagram</a>](https://instagram.com/gilbert">Instagram</a>)
+      <a href="[https://twitter.com/gilbert">Twitter</a>](https://twitter.com/gilbert">Twitter</a>)
+    </div>
+    <div class="footer-copyright">
+      <p>© 2025 ccco</p>
+    </div>
+  </div>
+</footer>
+
+<script th:inline="javascript">
+  let allSizeOptions = [];
+
+  window.addEventListener('DOMContentLoaded', () => {
+    allSizeOptions = Array.from(document.querySelectorAll('#size option[data-size-type-id]'));
+    updateSizesBySubcategory();
+  });
+
+  function updateSizesBySubcategory() {
+    const subcatSelect = document.getElementById("subcategory");
+    const sizeTypeId = subcatSelect.selectedIndex > 0 ? subcatSelect.options[subcatSelect.selectedIndex].getAttribute('data-size-type-id') : null;
+
+    const sizeSelect = document.getElementById("size");
+    sizeSelect.innerHTML = '<option value="" disabled>Select size</option>';
+    if (sizeTypeId) {
+      allSizeOptions.forEach(option => {
+        const optionSizeTypeId = option.getAttribute('data-size-type-id');
+        if (optionSizeTypeId === sizeTypeId) {
+          sizeSelect.appendChild(option.cloneNode(true));
+        }
       });
     }
-    updateSubcategories();
   }
-
-  function updateSubcategories() {
-    const dept = document.getElementById('department').value;
-    const cat = document.getElementById('category').value;
-    const subcategorySelect = document.getElementById('subcategory');
-
-    subcategorySelect.innerHTML = '<option disabled selected value="">Select Subcategory</option>';
-
-    // tilføjer de pågældende subcategories
-    if (subcategories[dept] && subcategories[dept][cat]) {
-      subcategories[dept][cat].forEach(subcat => {
-        const opt = document.createElement('option');
-        opt.value = subcat;
-        opt.textContent = subcat;
-        subcategorySelect.appendChild(opt);
-      });
-    }
-  }
-
-  function updateSizeOptionsForSubcategory(subcategory) {
-    const sizeSelect = document.getElementById('size');
-    sizeSelect.innerHTML = '';
-
-    const group = subcategoryToSizeGroup[subcategory] || 'oneSize';
-    const options = sizeGroups[group];
-
-    options.forEach(size => {
-      const option = document.createElement('option');
-      option.value = size;
-      option.text = size;
-      sizeSelect.appendChild(option);
-    });
-  }
-
-  // gør så subcategories loader når siden indlæses
-  document.addEventListener("DOMContentLoaded", function() {
-    var categorySelect = document.getElementById("category");
-    if (categorySelect && categorySelect.value) {
-      updateSubcategories(categorySelect.value);
-    }
-  });
-  document.addEventListener("DOMContentLoaded", function() {
-    var subcat = document.getElementById('subcategory');
-    if (subcat && subcat.value) {
-      updateSizeOptionsForSubcategory(subcat.value);
-    }
-  });
-
-  // holder øje med om man skifter kategori eller department
-  document.getElementById('subcategory').addEventListener('change', function() {
-    updateSizeOptionsForSubcategory(this.value);
-  });
-  document.getElementById('department').addEventListener('change', updateCategories);
-  document.getElementById('category').addEventListener('change', updateSubcategories);
 </script>
-
-
-
 </body>
 </html>
-
-
