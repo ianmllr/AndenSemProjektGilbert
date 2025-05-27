@@ -6,6 +6,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 
 @Repository
@@ -247,6 +248,49 @@ public class ProductRepo {
                 "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition\n" +
                 "LEFT JOIN size s ON p.size_id = s.id\n" +
                 "WHERE d.name = 'Women'";
+        return getProducts(sql);
+    }
+
+
+    public List<Product> readHomeProducts() {
+        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, dcs.department_id,\n" +
+                "dcs.category_id, dcs.subcategory_id, d.name AS department, \n" +
+                "c.name AS category, sc.name AS subcategory, p.posted_date, p.price, \n" +
+                "cond.itemcondition AS item_condition, s.size_value AS size, col.color AS color,\n" +
+                "p.imgsrc, p.createdbyid\n" +
+                "FROM product p\n" +
+                "INNER JOIN department_category_subcategory dcs \n" +
+                "ON p.category_id = dcs.category_id AND p.subcategory_id = dcs.subcategory_id AND p.department_id = dcs.department_id\n" +
+                "INNER JOIN department d ON dcs.department_id = d.id\n" +
+                "INNER JOIN category c ON dcs.category_id = c.id\n" +
+                "LEFT JOIN subcategory sc ON dcs.subcategory_id = sc.id\n" +
+                "LEFT JOIN brand b ON p.brand_id = b.id\n" +
+                "LEFT JOIN location l ON p.location_id = l.id\n" +
+                "LEFT JOIN color col ON p.color_id = col.idcolor\n" +
+                "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition\n" +
+                "LEFT JOIN size s ON p.size_id = s.id\n" +
+                "WHERE d.name = 'Home'";
+        return getProducts(sql);
+    }
+
+    public List<Product> readBeautyProducts() {
+        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, dcs.department_id,\n" +
+                "dcs.category_id, dcs.subcategory_id, d.name AS department, \n" +
+                "c.name AS category, sc.name AS subcategory, p.posted_date, p.price, \n" +
+                "cond.itemcondition AS item_condition, s.size_value AS size, col.color AS color,\n" +
+                "p.imgsrc, p.createdbyid\n" +
+                "FROM product p\n" +
+                "INNER JOIN department_category_subcategory dcs \n" +
+                "ON p.category_id = dcs.category_id AND p.subcategory_id = dcs.subcategory_id AND p.department_id = dcs.department_id\n" +
+                "INNER JOIN department d ON dcs.department_id = d.id\n" +
+                "INNER JOIN category c ON dcs.category_id = c.id\n" +
+                "LEFT JOIN subcategory sc ON dcs.subcategory_id = sc.id\n" +
+                "LEFT JOIN brand b ON p.brand_id = b.id\n" +
+                "LEFT JOIN location l ON p.location_id = l.id\n" +
+                "LEFT JOIN color col ON p.color_id = col.idcolor\n" +
+                "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition\n" +
+                "LEFT JOIN size s ON p.size_id = s.id\n" +
+                "WHERE d.name = 'Beauty'";
         return getProducts(sql);
     }
 
@@ -599,4 +643,5 @@ public class ProductRepo {
                 rs.getInt("createdByID")
         ));
     }
+
 }

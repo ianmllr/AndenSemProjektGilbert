@@ -2,6 +2,7 @@ package org.example.andensemprojektgilbert.Controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.example.andensemprojektgilbert.Model.*;
+import org.example.andensemprojektgilbert.Service.FavoriteService;
 import org.example.andensemprojektgilbert.Service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,17 +27,62 @@ public class ProductsController {
 
     @Autowired
     private ProductsService productsService;
+    @Autowired
+    private FavoriteService favoriteService;
 
     @GetMapping("/men")
-    public String getMensProducts(Model model) {
+    public String getMensProducts(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("currentUser");
+        model.addAttribute("user", user);
         List<Product> products = productsService.getMensProducts();
-        model.addAttribute("men", products);
+        model.addAttribute("products", products);
+        if (user != null) {
+            List<Integer> favoriteIds = favoriteService.getFavoriteIds(user.getId());
+            model.addAttribute("favorites", favoriteIds);
+        }
         return "men";
     }
 
-    // women, home osv her
-    //
-    //
+
+    @GetMapping("/women")
+    public String getWomensProducts(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("currentUser");
+        model.addAttribute("user", user);
+        List<Product> products = productsService.getWomensProducts();
+        model.addAttribute("products", products);
+        if (user != null) {
+            List<Integer> favoriteIds = favoriteService.getFavoriteIds(user.getId());
+            model.addAttribute("favorites", favoriteIds);
+        }
+        return "women";
+    }
+
+    @GetMapping("/home")
+    public String getHomeProducts(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("currentUser");
+        model.addAttribute("user", user);
+        List<Product> products = productsService.getHomeProducts();
+        model.addAttribute("products", products);
+        if (user != null) {
+            List<Integer> favoriteIds = favoriteService.getFavoriteIds(user.getId());
+            model.addAttribute("favorites", favoriteIds);
+        }
+        return "home";
+    }
+
+    @GetMapping("/beauty")
+    public String getBeautyProducts(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("currentUser");
+        model.addAttribute("user", user);
+        List<Product> products = productsService.getBeautyProducts();
+        model.addAttribute("products", products);
+        if (user != null) {
+            List<Integer> favoriteIds = favoriteService.getFavoriteIds(user.getId());
+            model.addAttribute("favorites", favoriteIds);
+        }
+        return "beauty";
+    }
+
 
 
     @GetMapping("/gilbertprofile/newproduct")
@@ -131,5 +177,6 @@ public class ProductsController {
 
         return "redirect:/gilbertprofile";
     }
+
 
 }

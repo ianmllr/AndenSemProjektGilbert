@@ -18,7 +18,7 @@ public class ProductsService {
         if (!productRepo.readAllProducts().isEmpty()) {
             return productRepo.readAllProducts();
         } else {
-            // debug logging her
+            System.out.println("Ingen produkter fundet");
             return null;
         }
     }
@@ -27,7 +27,34 @@ public class ProductsService {
         if (!productRepo.readMensProducts().isEmpty()) {
             return productRepo.readMensProducts();
         } else {
-            // debug logging her
+            System.out.println("Mens products er tom");
+            return null;
+        }
+    }
+
+    public List<Product> getWomensProducts() {
+        if (!productRepo.readWomensProducts().isEmpty()) {
+            return productRepo.readWomensProducts();
+        } else {
+            System.out.println("Womens products er tom");
+            return null;
+        }
+    }
+
+    public List<Product> getHomeProducts() {
+        if (!productRepo.readHomeProducts().isEmpty()) {
+            return productRepo.readHomeProducts();
+        } else {
+            System.out.println("Home products er tom");
+            return null;
+        }
+    }
+
+    public List<Product> getBeautyProducts() {
+        if (!productRepo.readBeautyProducts().isEmpty()) {
+            return productRepo.readBeautyProducts();
+        } else {
+            System.out.println("Beauty products er tom");
             return null;
         }
     }
@@ -39,14 +66,7 @@ public class ProductsService {
             return null;
         }
     }
-    public List<Product> getWomensProducts() {
-        if (!productRepo.readWomensProducts().isEmpty()) {
-            return productRepo.readWomensProducts();
-        } else {
-            System.out.println("Womens products er tom");
-            return null;
-        }
-    }
+
 
     public List<Product> getMyProducts(User user) {
         if (!productRepo.readUserProducts(user).isEmpty()) {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/gilbertstyle.css">
-    <title>Womens products</title>
+    <title>Home products</title>
 </head>
 <body>
 
@@ -78,7 +78,8 @@
 </header>
 
 <section class="category-section">
-    <h2 class="question">Womens products</h2>
+    <h2 class="question">Home products</h2>
+    <h3 th:if="${products} == null">Ingen produkter fundet</h3>
     <div class="products-container">
         <div th:each="product : ${products}" class="product-card">
             <div class="product-picture">
