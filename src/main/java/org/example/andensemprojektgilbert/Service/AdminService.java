@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @Service
 public class AdminService {
+
     @Autowired
     private UserRepo userRepo;
 
@@ -60,6 +61,7 @@ public class AdminService {
         if (user.isPresent()) {
             return user.get();
         }
+
         return null;
     }
 }

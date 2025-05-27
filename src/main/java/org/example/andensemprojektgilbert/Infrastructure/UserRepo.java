@@ -15,7 +15,6 @@ public class UserRepo {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-
     public boolean createUser(User user) {
         String sql = "INSERT INTO user (name, password, email, sales, rating, role, imgsrc, Fname, Lname, address) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         int result = jdbcTemplate.update(sql, user.getName(), user.getPassword(), user.getEmail(), 0, user.getRating(), 2, user.getImgsrc(), user.getFname(), user.getLname(), user.getAddress());

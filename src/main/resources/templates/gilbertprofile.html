@@ -54,7 +54,9 @@
       <p class="productname" th:text="${product.name}"></p>
       <p th:text="${product.brand}"></p>
       <p th:text="${product.price} + ' €'"></p>
-      <button>Edit listing</button>
+      <form th:action="@{/gilbertprofile/editproduct/{id}(id=${product.id})}" method="get">
+        <button type="submit">Edit listing</button>
+      </form>
       <form th:action="@{/gilbertprofile/deleteproduct}" method="post">
         <input type="hidden" name="productId" th:value="${product.id}"/>
         <button type="submit" onclick="return confirm('Er du sikker på, at du vil slette dette produkt?')">Slet produkt</button>

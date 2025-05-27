@@ -12,6 +12,24 @@
     font-style: normal;
 }
 
+.question {
+    text-align: center;
+    font-family: 'theseasons';
+    color: black;
+    font-size: 1.5em;
+}
+.title {
+    text-align: center;
+    font-family: 'theseasons';
+    color: black;
+}
+
+.answer {
+    text-align: center;
+    font-family: 'theseasons';
+    color: black;
+}
+
 body {
     background-color: #f8f0e5;
     color: #f8f0e5;
