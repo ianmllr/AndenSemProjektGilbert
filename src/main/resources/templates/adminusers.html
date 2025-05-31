@@ -25,20 +25,20 @@
             <td th:text="${users.email}">Email</td>
             <td>
                 <a th:href="@{'edituseradmin/' + ${users.id}}">
-                    <button id="controlUsersPageBtn">Rediger bruger</button>
+                    <button id="controlUsersPageBtn">Edit user</button>
                 </a>
             </td>
             <td th:if="${users.role} == 'admin'">
                 <form th:action="@{adminpage/removeadminrights/{id}(id=${users.id})}" method="post">
-                    <button id="controlUsersPageBtn">Fjern adminrettigheder</button>
+                    <button id="controlUsersPageBtn">Revoke admin rights</button>
                 </form>
             </td>
             <td th:if="${users.role} == 'user'">
-                <button id="controlUsersPageBtn" th:onclick="'deleteUser(' + ${users.id} + ');'">Slet bruger</button>
+                <button id="controlUsersPageBtn" th:onclick="'deleteUser(' + ${users.id} + ');'">Delete user</button>
             </td>
             <td th:if="${users.role} == 'user'">
                 <form th:action="@{adminpage/giveadminrights/{id}(id=${users.id})}" method="post">
-                    <button id="controlUsersPageBtn">Giv adminrettigheder</button>
+                    <button id="controlUsersPageBtn">Give admin rights</button>
                 </form>
             </td>
             </td>
@@ -54,16 +54,16 @@
     </div>
     <script>
         function deleteUser(id) {
-            if (confirm('Er du sikker på du vil slette bruger?')) {
+            if (confirm('Are you sure you want to delete user?')) {
                 fetch('/deleteUser/' + id, {
                     method: 'DELETE'
                 }).then(response => {
                     console.log(response)
                     if (response.status === 200) {
-                        alert('Bruger slettet!');
+                        alert('User deleted!');
                         window.location.replace("/adminusers");
                     } else {
-                        alert('Kan ikke slette bruger.');
+                        alert('Can not delete user.');
                     }
                 });
             }
@@ -80,7 +80,7 @@
     <br>
 
     <form id="adminquery" th:action="@{/searchForUser}" method="get">
-        <input type="text" name="query" id="query" placeholder="Søg efter bruger"><br>
+        <input type="text" name="query" id="query" placeholder="Search for user"><br>
         <button type="submit">Søg</button>
 
     </form>

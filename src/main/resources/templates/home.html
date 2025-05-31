@@ -79,7 +79,7 @@
 
 <section class="category-section">
     <h2 class="question">Home products</h2>
-    <h3 th:if="${products} == null">Ingen produkter fundet</h3>
+    <h3 th:if="${products} == null">No products found</h3>
     <div class="products-container">
         <div th:each="product : ${products}" class="product-card">
             <div class="product-picture">

@@ -119,6 +119,7 @@ public class ProductsService {
         System.out.println(product.toString());
         if (product != null) {
             product.setPostedDate(new java.util.Date());
+            System.out.println(product.getPostedDate());
             productRepo.createProduct(product, user);
         } else {
             // debug logging her
@@ -206,5 +207,11 @@ public class ProductsService {
             System.out.println("Produkt med ID " + productId + " blev ikke fundet.");
         }
         return false;
+    }
+    public Integer getDepartmentId(String name) {
+        return productRepo.getDepartmentId(name);
+    }
+    public Integer getCategoryId(String name) {
+        return productRepo.getCategoryId(name);
     }
 }
