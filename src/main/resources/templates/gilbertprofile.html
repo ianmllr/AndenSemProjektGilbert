@@ -50,7 +50,11 @@
   <h3>Your listings</h3>
   <div class="profile-products-container">
     <div class="profile-productlisting" th:each="product : ${myproducts}">
-      <img th:src="@{'/productimage/' + ${product.imgsrc}}" class="product-image" alt="Product Image" style="max-width: 200px; max-height: 200px;">
+      <img
+              th:src="@{'/productimage/' + ${product.imgsrc}}"
+              th:attr="onerror=|this.onerror=null;this.src='${product.imgsrc}'|"
+              style="max-width: 200px; max-height: 200px;"
+              alt="no pic">
       <p class="productname" th:text="${product.name}"></p>
       <p th:text="${product.brand}"></p>
       <p th:text="${product.price} + ' €'"></p>

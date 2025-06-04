@@ -93,7 +93,11 @@
                         ❤️
                     </button>
                 </form>
-                <img th:src="@{'/productimage/' + ${product.imgsrc}}" style="max-width: 200px; max-height: 200px;" alt="no pic">
+                <img
+                        th:src="@{'/productimage/' + ${product.imgsrc}}"
+                        th:attr="onerror=|this.onerror=null;this.src='${product.imgsrc}'|"
+                        style="max-width: 200px; max-height: 200px;"
+                        alt="no pic">
             </div>
             <p class="productname" th:text="${product.name}"></p>
             <p th:text="${product.brand}"></p>

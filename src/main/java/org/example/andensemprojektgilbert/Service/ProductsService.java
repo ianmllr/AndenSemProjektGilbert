@@ -68,8 +68,9 @@ public class ProductsService {
     }
 
     public List<Product> getBeautyProducts() {
-        if (!productRepo.readBeautyProducts().isEmpty()) {
-            return productRepo.readBeautyProducts();
+        List<Product> products = productRepo.readBeautyProducts();
+        if (!products.isEmpty()) {
+            return products;
         } else {
             System.out.println("Beauty products er tom");
             return null;
