@@ -121,7 +121,8 @@
         <div th:each="product : ${randomWomensProducts}" class="product-card">
             <div class="product-picture">
                 <img
-                        th:src="${product.imgsrc.startsWith('http') || product.imgsrc.startsWith('https') ? product.imgsrc : '/productimage/' + product.imgsrc}"
+                        th:src="@{'/productimage/' + ${product.imgsrc}}"
+                        th:attr="onerror=|this.onerror=null;this.src='${product.imgsrc}'|"
                         style="max-width: 200px; max-height: 200px;"
                         alt="no pic">
                 <form th:action="@{/products/addToFavorites/{id}(id=${product.id})}" method="post">
