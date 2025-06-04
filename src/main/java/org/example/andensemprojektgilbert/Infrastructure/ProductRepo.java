@@ -123,6 +123,47 @@ public class ProductRepo {
 
 
     // READ
+    public List<Product> readProductsByDepartmentAndCategory(String department, String category) {
+        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, dcs.department_id, " +
+                "dcs.category_id, dcs.subcategory_id, d.name AS department, c.name AS category, sc.name AS subcategory, " +
+                "p.posted_date, p.price, cond.itemcondition AS item_condition, s.size_value AS size, col.color AS color, " +
+                "p.imgsrc, p.createdbyid " +
+                "FROM product p " +
+                "INNER JOIN department_category_subcategory dcs " +
+                "ON p.category_id = dcs.category_id AND p.subcategory_id = dcs.subcategory_id AND p.department_id = dcs.department_id " +
+                "INNER JOIN department d ON dcs.department_id = d.id " +
+                "INNER JOIN category c ON dcs.category_id = c.id " +
+                "LEFT JOIN subcategory sc ON dcs.subcategory_id = sc.id " +
+                "LEFT JOIN brand b ON p.brand_id = b.id " +
+                "LEFT JOIN location l ON p.location_id = l.id " +
+                "LEFT JOIN color col ON p.color_id = col.idcolor " +
+                "LEFT JOIN `condition` cond ON p.condition_id = cond.idcondition " +
+                "LEFT JOIN size s ON p.size_id = s.id " +
+                "WHERE LOWER(d.name) = ? AND LOWER(c.name) = ?";
+
+        return jdbcTemplate.query(sql, new Object[]{department.toLowerCase(), category.toLowerCase()}, (rs, rowNum) -> {
+            Product product = new Product();
+            product.setId(rs.getInt("id"));
+            product.setName(rs.getString("name"));
+            product.setBrand(rs.getString("brand"));
+            product.setLocation(rs.getString("location"));
+            product.setDescription(rs.getString("description"));
+            product.setDepartment(rs.getString("department"));
+            product.setCategory(rs.getString("category"));
+            product.setSubcategory(rs.getString("subcategory"));
+            product.setPostedDate(rs.getTimestamp("posted_date"));
+            product.setPrice(rs.getDouble("price"));
+            product.setCondition(rs.getString("item_condition"));
+            product.setSize(rs.getString("size"));
+            product.setColor(rs.getString("color"));
+            product.setImgsrc(rs.getString("imgsrc"));
+            product.setCreatedByID(rs.getInt("createdbyid"));
+            return product;
+        });
+    }
+
+
+
     public List<Product> getProducts(String sql) {
         return jdbcTemplate.query(sql, (rs, rowNum) -> new Product(
                 rs.getInt("id"),
@@ -644,5 +685,6 @@ public class ProductRepo {
                 rs.getInt("createdByID")
         ));
     }
+
 
 }
