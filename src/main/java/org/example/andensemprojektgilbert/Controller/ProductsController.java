@@ -84,7 +84,7 @@ public class ProductsController {
     }
 
 
-    @GetMapping("/{department}/{category}")
+    @GetMapping("/products/{department}/{category}")
     public String getDepartmentCategoryProducts(@PathVariable String department,
                                                 @PathVariable String category,
                                                 Model model,
