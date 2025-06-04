@@ -83,6 +83,7 @@ public class ProductsController {
         return "beauty";
     }
 
+
     @GetMapping("/{department}/{category}")
     public String getDepartmentCategoryProducts(@PathVariable String department,
                                                 @PathVariable String category,
