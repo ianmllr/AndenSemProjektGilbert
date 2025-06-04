@@ -10,10 +10,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class FavoriteRepo {
+public class FavoriteRepo implements IFavoriteRepo {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Override
     public List<Product> getFavorites(int userId) {
         String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, \n" +
                 "d.name AS department, c.name AS category, sc.name AS subcategory, \n" +
@@ -54,7 +55,7 @@ public class FavoriteRepo {
         ), userId);
     }
 
-
+    @Override
     public boolean addFavorite(int userId, int productId) {
         String sql = "INSERT INTO favorite (userid, productid) VALUES (?, ?)";
         try {
@@ -68,6 +69,7 @@ public class FavoriteRepo {
         return false;
     }
 
+    @Override
     public boolean removeAsFavorite(int userId, int productId) {
         String sql = "DELETE FROM gilbert.favorite WHERE userid = ? AND productid = ?;";
         try {

@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import org.example.andensemprojektgilbert.Model.Product;
 import org.example.andensemprojektgilbert.Model.User;
 import org.example.andensemprojektgilbert.Service.FavoriteService;
+import org.example.andensemprojektgilbert.Service.IFavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +20,7 @@ import java.util.List;
 @Controller
 public class FavoriteController {
     @Autowired
-    private FavoriteService favoriteService;
+    private IFavoriteService favoriteService;
     @GetMapping("/favorites")
     public String showFavorites(Model model, HttpSession session) {
         User user = (User) session.getAttribute("currentUser");

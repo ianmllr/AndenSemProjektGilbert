@@ -3,6 +3,7 @@ package org.example.andensemprojektgilbert;
 import org.example.andensemprojektgilbert.Infrastructure.FavoriteRepo;
 import org.example.andensemprojektgilbert.Model.Product;
 import org.example.andensemprojektgilbert.Service.FavoriteService;
+import org.example.andensemprojektgilbert.Service.IFavoriteService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 public class FavoriteTest {
     @Autowired
-    private FavoriteService favoriteService;
+    private IFavoriteService favoriteService;
 //Husk at have oprettet bruger 1 og produkterne 1 og 2 i databasen inden test
     @BeforeEach
     void setUp() {

@@ -1,6 +1,7 @@
 package org.example.andensemprojektgilbert.Service;
 
 import org.example.andensemprojektgilbert.Infrastructure.FavoriteRepo;
+import org.example.andensemprojektgilbert.Infrastructure.IFavoriteRepo;
 import org.example.andensemprojektgilbert.Model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,13 +11,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class FavoriteService {
+public class FavoriteService implements IFavoriteService {
     @Autowired
-    private FavoriteRepo favoriteRepo;
+    private IFavoriteRepo favoriteRepo;
 
+    @Override
     public List<Product> getFavorites(int userid) {
         return favoriteRepo.getFavorites(userid);
     }
+    @Override
     public List<Integer> getFavoriteIds(int userid) {
         List<Product> favorites = getFavorites(userid);
         List<Integer> favoriteIds = new ArrayList<>();
@@ -26,7 +29,7 @@ public class FavoriteService {
         return favoriteIds;
     }
 
-
+    @Override
     public boolean addFavorite(int userId, int productId) {
         boolean newFavorite = favoriteRepo.addFavorite(userId, productId);
         if (newFavorite) {
@@ -34,7 +37,7 @@ public class FavoriteService {
         }
         return false;
     }
-
+    @Override
     public boolean removeFavorite(int userId, int productId) {
         boolean removedAsFavorite = favoriteRepo.removeAsFavorite(userId, productId);
         if (removedAsFavorite) {
