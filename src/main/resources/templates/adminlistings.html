@@ -44,7 +44,7 @@
     </div>
     <script>
         function deleteListing(id) {
-            if (confirm('Er du sikker på du vil slette anmeldelsen?')) {
+            if (confirm('Are you sure you want to delete listing?')) {
                 fetch('/deletelisting/' + id, {
                     method: 'DELETE'
                 }).then(response => {
@@ -53,7 +53,7 @@
                         alert('Listing deleted!');
                         window.location.replace("/adminlistings");
                     } else {
-                        alert('Kan ikke slette anmeldelse.');
+                        alert('Can not delete listing.');
                     }
                 });
             }

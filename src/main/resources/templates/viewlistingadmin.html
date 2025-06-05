@@ -25,15 +25,14 @@
         <td th:text="${product.description}">Product description</td>
         <td th:text="${product.price}">Price</td>
         <td><img th:src="@{'/productimage/' + ${product.imgsrc}}" style="max-width: 200px; max-height: 200px;" alt="no pic"></td>
-        <td><button id="adminPageBtn" th:onclick="'deleteListing(' + ${product.id} + ');'" >Delete listing</button></td>
-
+        <td><button id="adminPageBtn" th:onclick="'deleteListing(' + ${product.id} + ');'" >Delete listing</button>
         </td>
     </tr>
     </tbody>
 </table>
 <script>
     function deleteListing(id) {
-        if (confirm('Er du sikker på du vil slette anmeldelsen?')) {
+        if (confirm('Are you sure you want to delete listing?')) {
             fetch('/deletelisting/' + id, {
                 method: 'DELETE'
             }).then(response => {
@@ -42,7 +41,7 @@
                     alert('Listing deleted!');
                     window.location.replace("/adminlistings");
                 } else {
-                    alert('Kan ikke slette anmeldelse.');
+                    alert('Can not delete listing.');
                 }
             });
         }

@@ -117,7 +117,6 @@ public class ProductsController {
                                  @RequestParam(value = "departmentId", required = false) Integer departmentId,
                                  @RequestParam(value = "categoryId", required = false) Integer categoryId,
                                  HttpSession session,
-                                 Model model,
                                  @RequestParam("image") MultipartFile image,
                                  RedirectAttributes redirectAttributes) {
         User user = (User) session.getAttribute("currentUser");
@@ -129,7 +128,9 @@ public class ProductsController {
         Category category = (categoryId != null) ? productsService.getCategoryById(categoryId) : null;
 
         product.setDepartment(department.getName());
-        product.setCategory(category.getName());
+        if (category != null) {
+            product.setCategory(category.getName());
+        }
         product.setCreatedByID(user.getId());
 
         if (!image.isEmpty()) {
@@ -179,4 +180,80 @@ public class ProductsController {
     }
 
 
+
+    @GetMapping("/editproduct/{id}")
+    public String getEditProduct(@PathVariable int id,
+                                 @RequestParam(value = "departmentId", required = false) Integer departmentId,
+                                 @RequestParam(value = "categoryId", required = false) Integer categoryId,
+                                 Model model, HttpSession session) {
+
+        User user = (User) session.getAttribute("currentUser");
+        Product product = productsService.getProduct(id);
+
+        if (product == null || product.getCreatedByID() != user.getId()) {
+            model.addAttribute("exception", "Unauthorized or product not found");
+            return "error";
+        }
+
+        departmentId = (departmentId != null) ? departmentId : productsService.getDepartmentId(product.getDepartment());
+        categoryId = (categoryId != null) ? categoryId : productsService.getCategoryId(product.getCategory());
+
+        List<Category> categories = (departmentId != null) ? productsService.findByDepartment(departmentId) : Collections.emptyList();
+        List<Subcategory> subcategories = (categoryId != null) ? productsService.findByCategory(categoryId, departmentId) : Collections.emptyList();
+        System.out.println(product.getPostedDate());
+        model.addAttribute("product", product);
+        model.addAttribute("departments", productsService.getDepartments());
+        model.addAttribute("categories", categories);
+        model.addAttribute("subcategories", subcategories);
+        model.addAttribute("brands", productsService.getBrands());
+        model.addAttribute("locations", productsService.getLocations());
+        model.addAttribute("conditions", productsService.getConditions());
+        model.addAttribute("colors", productsService.getColors());
+        model.addAttribute("sizes", productsService.getSizes());
+        model.addAttribute("user", user);
+        model.addAttribute("selectedDepartmentId", departmentId);
+        model.addAttribute("selectedCategoryId", categoryId);
+
+        return "editproduct";
+    }
+    @PostMapping("/editproduct/{id}")
+    public String updateProduct(@ModelAttribute Product product,
+                                 @RequestParam(value = "departmentId", required = false) Integer departmentId,
+                                 @RequestParam(value = "categoryId", required = false) Integer categoryId,
+                                 @RequestParam("image") MultipartFile image,
+                                 RedirectAttributes redirectAttributes) {
+
+        System.out.println("Received departmentId: " + departmentId);
+        System.out.println("Received categoryId: " + categoryId);
+
+        Department department = (departmentId != null) ? productsService.getDepartmentById(departmentId) : null;
+        Category category = (categoryId != null) ? productsService.getCategoryById(categoryId) : null;
+
+        product.setDepartment(department.getName());
+        if (category != null) {
+            product.setCategory(category.getName());
+        }
+
+        if (!image.isEmpty()) {
+            if (image.getSize() > 3 * 1024 * 1024) {
+                redirectAttributes.addFlashAttribute("message", "Image is too large to upload");
+                return "redirect:/index";
+            }
+
+            String originalFilename = image.getOriginalFilename();
+            String uniqueFilename = UUID.randomUUID().toString() + "_" + originalFilename;
+            String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/productimage";
+            Path filePath = Paths.get(uploadDir, uniqueFilename);
+
+            try {
+                Files.createDirectories(filePath.getParent());
+                Files.write(filePath, image.getBytes());
+                product.setImgsrc(uniqueFilename);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        productsService.updateProduct(product);
+        return "redirect:/gilbertprofile";
+    }
 }

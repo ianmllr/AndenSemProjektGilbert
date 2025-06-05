@@ -50,7 +50,7 @@ public class ProductRepo {
             return null;
         }
     }
-    private Integer getCategoryId(String categoryName) {
+    public Integer getCategoryId(String categoryName) {
         System.out.println("Looking for category: '" + categoryName + "'");
         String sql = "SELECT id FROM Category WHERE name = ? LIMIT 1";
         try {
@@ -63,6 +63,7 @@ public class ProductRepo {
         }
     }
     private Integer getSubcategoryId(String subcategoryName) {
+        System.out.println("Looking for subcategory: '" + subcategoryName + "'");
         String sql = "SELECT id FROM Subcategory WHERE name = ? LIMIT 1";
         try {
             return jdbcTemplate.queryForObject(sql, Integer.class, subcategoryName);
@@ -78,7 +79,7 @@ public class ProductRepo {
             return null;
         }
     }
-    private Integer getDepartmentId(String departmentName) {
+    public Integer getDepartmentId(String departmentName) {
         String sql = "SELECT id FROM Department WHERE name = ? LIMIT 1";
         try {
             return jdbcTemplate.queryForObject(sql, Integer.class, departmentName);
@@ -468,7 +469,7 @@ public class ProductRepo {
                 rs.getString("department"),
                 rs.getString("category"),
                 rs.getString("subcategory"),
-                rs.getDate("posted_date"),
+                rs.getTimestamp("posted_date"),
                 rs.getDouble("price"),
                 rs.getString("condition"),
                 rs.getString("size"),
@@ -480,19 +481,19 @@ public class ProductRepo {
 
     public void updateProduct(Product product) {
         String sql = "UPDATE product SET name = ?, brand_id = ?, location_id = ?, description = ?, " +
-                "department_id = ?, category_id = ?, subcategory_id = ?, posted_date = ?, price = ?, " +
+                "department_id = ?, category_id = ?, subcategory_id = ?, price = ?, " +
                 "condition_id = ?, size_id = ?, color_id = ?, imgsrc = ? WHERE id = ?";
         int brandId = getBrandId(product.getBrand());
-        int categoryId = getCategoryId(product.getCategory());
-        int subcategoryId = getSubcategoryId(product.getSubcategory());
+        Integer categoryId = getCategoryId(product.getCategory());
+        Integer subcategoryId = getSubcategoryId(product.getSubcategory());
         int colorId = getColorId(product.getColor());
         int conditionId = getConditionId(product.getCondition());
         int departmentId = getDepartmentId(product.getDepartment());
         int locationId = getLocationId(product.getLocation());
-        int sizeId = getSizeId(product.getSize()); // Henter size-id ud fra tekst
+        Integer sizeId = getSizeId(product.getSize()); // Henter size-id ud fra tekst
 
         jdbcTemplate.update(sql, product.getName(), brandId, locationId, product.getDescription(),
-                departmentId, categoryId, subcategoryId, product.getPostedDate(), product.getPrice(),
+                departmentId, categoryId, subcategoryId, product.getPrice(),
                 conditionId, sizeId, colorId, product.getImgsrc(), product.getId());
     }
 
