@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -13,6 +14,22 @@ public class ProductsService {
 
     @Autowired
     private ProductRepo productRepo;
+
+    public List<Product> getProductsByDepartment(String department) {
+        return switch (department.toLowerCase()) {
+            case "men" -> getMensProducts();
+            case "women" -> getWomensProducts();
+            case "beauty" -> getBeautyProducts();
+            case "home" -> getHomeProducts();
+            default -> Collections.emptyList();
+        };
+    }
+
+    public List<Product> getProductsByDepartmentAndCategory(String department, String category) {
+        return productRepo.readProductsByDepartmentAndCategory(department, category);
+    }
+
+
 
     public List<Product> getAllProducts() {
         if (!productRepo.readAllProducts().isEmpty()) {
@@ -51,8 +68,9 @@ public class ProductsService {
     }
 
     public List<Product> getBeautyProducts() {
-        if (!productRepo.readBeautyProducts().isEmpty()) {
-            return productRepo.readBeautyProducts();
+        List<Product> products = productRepo.readBeautyProducts();
+        if (!products.isEmpty()) {
+            return products;
         } else {
             System.out.println("Beauty products er tom");
             return null;

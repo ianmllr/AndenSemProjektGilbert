@@ -50,7 +50,14 @@
   <h3>Your listings</h3>
   <div class="profile-products-container">
     <div class="profile-productlisting" th:each="product : ${myproducts}">
-      <img th:src="@{'/productimage/' + ${product.imgsrc}}" class="product-image" alt="Product Image" style="max-width: 200px; max-height: 200px;">
+      <img
+              th:src="${product.imgsrc != null && !#strings.isEmpty(product.imgsrc) ?
+             (#strings.startsWith(product.imgsrc, 'http') || #strings.startsWith(product.imgsrc, 'https') ? product.imgsrc : '/productimage/' + product.imgsrc) :
+             'https://placehold.co/200x200/cccccc/000000?text=Intet+Billede'}"
+              th:alt="${product.name != null ? product.name : 'Produkt uden billede'}"
+              style="max-width: 200px; max-height: 200px;"
+              onerror="this.onerror=null;this.src='https://placehold.co/200x200/cccccc/000000?text=Fejl+ved+indl\u00e6sning';"
+      />
       <p class="productname" th:text="${product.name}"></p>
       <p th:text="${product.brand}"></p>
       <p th:text="${product.price} + ' €'"></p>

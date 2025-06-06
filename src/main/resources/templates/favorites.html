@@ -41,34 +41,34 @@
         <div class="dropdown">
             <a href="/women">Women</a>
             <div class="dropdown-content">
-                <a href="/women/clothing">Clothing</a>
-                <a href="/women/bags">Bags</a>
-                <a href="/women/shoes">Shoes</a>
-                <a href="/women/accessories">Accessories</a>
+                <a href="/products/women/clothing">Clothing</a>
+                <a href="/products/women/bags">Bags</a>
+                <a href="/products/women/shoes">Shoes</a>
+                <a href="/products/women/accessories">Accessories</a>
             </div>
         </div>
         <div class="dropdown">
             <a href="/men">Men</a>
             <div class="dropdown-content">
-                <a href="/men/clothing">Clothing</a>
-                <a href="/men/bags">Bags</a>
-                <a href="/men/shoes">Shoes</a>
-                <a href="/men/accessories">Accessories</a>
+                <a href="/products/men/clothing">Clothing</a>
+                <a href="/products/men/bags">Bags</a>
+                <a href="/products/men/shoes">Shoes</a>
+                <a href="/products/men/accessories">Accessories</a>
             </div>
         </div>
         <div class="dropdown">
             <a href="/home">Home</a>
             <div class="dropdown-content">
-                <a href="/home/interior">Interior and furniture</a>
-                <a href="/home/decoration">Decoration</a>
-                <a href="/home/kitchen">Kitchen</a>
+                <a href="/products/home/livingroom">Living room</a>
+                <a href="/products/home/bedroom">Bedroom</a>
+                <a href="/products/home/kitchen">Kitchen</a>
             </div>
         </div>
         <div class="dropdown">
             <a href="/beauty">Beauty</a>
             <div class="dropdown-content">
-                <a href="/beauty/makeup">Makeup</a>
-                <a href="/home/fragrance">Fragrance</a>
+                <a href="/products/beauty/makeup">Makeup</a>
+                <a href="/products/beauty/fragrance">Fragrance</a>
             </div>
         </div>
         <div class="dropdown">
@@ -80,8 +80,6 @@
             </div>
         </div>
     </nav>
-
-</header>
 
 <div class="search-overlay" id="searchOverlay">
     <div class="search-box">
@@ -97,7 +95,11 @@
     <h2>Your Favorite Products</h2>
     <ul class="ulBox">
         <li th:each="product : ${favorites}">
-        <img th:src="@{'/productimage/' + ${product.imgsrc}}" style="max-width: 200px; max-height: 200px;">
+            <img
+                    th:src="@{'/productimage/' + ${product.imgsrc}}"
+                    th:attr="onerror=|this.onerror=null;this.src='${product.imgsrc}'|"
+                    style="max-width: 200px; max-height: 200px;"
+                    alt="no pic">
         <p th:text="${product.name}"></p>
         <p th:text="${product.brand}"></p>
         <p th:text="${product.price}"></p>

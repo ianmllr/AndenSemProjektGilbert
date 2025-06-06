@@ -83,6 +83,33 @@ public class ProductsController {
         return "beauty";
     }
 
+    @GetMapping("/products/{department}/{category}")
+    public String getDepartmentCategoryProducts(@PathVariable String department,
+                                                @PathVariable String category,
+                                                Model model,
+                                                HttpSession session) {
+        User user = (User) session.getAttribute("currentUser");
+        model.addAttribute("user", user);
+
+        List<Product> products = productsService.getProductsByDepartmentAndCategory(
+                department.toLowerCase(), category.toLowerCase()
+        );
+        model.addAttribute("products", products);
+
+        if (user != null) {
+            List<Integer> favoriteIds = favoriteService.getFavoriteIds(user.getId());
+            model.addAttribute("favorites", favoriteIds);
+        }
+
+        model.addAttribute("department", department);
+        model.addAttribute("category", category);
+
+        return "category-view";
+    }
+
+
+
+
 
 
     @GetMapping("/gilbertprofile/newproduct")
