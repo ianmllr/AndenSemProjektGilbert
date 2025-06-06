@@ -68,7 +68,7 @@ public class AdminController {
     public String editUserAdmin(@ModelAttribute User user, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         boolean updated = userService.updateUser(user);
         if (updated) {
-            redirectAttributes.addFlashAttribute("succes", "The information has been updated");
+            redirectAttributes.addFlashAttribute("success", "The information has been updated");
             return "redirect:/adminusers";
         } else {
             redirectAttributes.addFlashAttribute("error", "Error updating user");

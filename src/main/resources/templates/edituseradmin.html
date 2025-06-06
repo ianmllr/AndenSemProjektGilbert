@@ -17,8 +17,8 @@
     <input id="password" type="password" th:field="*{password}"><br>
     <button type="submit">Gem ændringer</button>
   </form>
-  <div class="alert alert-success" th:if="${succes}">
-    <strong>Success!</strong> <span th:text="${succes}"></span>
+  <div class="alert alert-success" th:if="${success}">
+    <strong>Success!</strong> <span th:text="${success}"></span>
   </div>
 
   <div class="alert alert-danger" th:if="${fejl}">
