@@ -1,8 +1,6 @@
 package org.example.andensemprojektgilbert;
 
-import org.example.andensemprojektgilbert.Infrastructure.FavoriteRepo;
 import org.example.andensemprojektgilbert.Model.Product;
-import org.example.andensemprojektgilbert.Service.FavoriteService;
 import org.example.andensemprojektgilbert.Service.IFavoriteService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

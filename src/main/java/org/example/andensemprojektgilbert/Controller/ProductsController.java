@@ -2,11 +2,9 @@ package org.example.andensemprojektgilbert.Controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.example.andensemprojektgilbert.Model.*;
-import org.example.andensemprojektgilbert.Service.FavoriteService;
+import org.example.andensemprojektgilbert.Service.FavoriteServiceImp;
 import org.example.andensemprojektgilbert.Service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +15,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -28,7 +25,7 @@ public class ProductsController {
     @Autowired
     private ProductsService productsService;
     @Autowired
-    private FavoriteService favoriteService;
+    private FavoriteServiceImp favoriteService;
 
     @GetMapping("/men")
     public String getMensProducts(Model model, HttpSession session) {

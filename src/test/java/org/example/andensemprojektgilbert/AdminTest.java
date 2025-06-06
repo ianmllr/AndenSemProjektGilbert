@@ -2,7 +2,6 @@ package org.example.andensemprojektgilbert;
 
 import org.example.andensemprojektgilbert.Model.User;
 import org.example.andensemprojektgilbert.Service.AdminService;
-import org.example.andensemprojektgilbert.Service.FavoriteService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

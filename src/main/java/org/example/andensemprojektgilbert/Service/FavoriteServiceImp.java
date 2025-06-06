@@ -1,6 +1,5 @@
 package org.example.andensemprojektgilbert.Service;
 
-import org.example.andensemprojektgilbert.Infrastructure.FavoriteRepo;
 import org.example.andensemprojektgilbert.Infrastructure.IFavoriteRepo;
 import org.example.andensemprojektgilbert.Model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class FavoriteService implements IFavoriteService {
+public class FavoriteServiceImp implements IFavoriteService {
     @Autowired
     private IFavoriteRepo favoriteRepo;
 
