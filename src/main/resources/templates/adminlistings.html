@@ -37,10 +37,10 @@
         </tbody>
     </table>
     <div>
-        <a th:if="${currentPage > 1}" th:href="@{/adminlistings(page=${currentPage - 1})}">Forrige</a>
+        <a th:if="${currentPage > 1}" th:href="@{/adminlistings(page=${currentPage - 1})}">Previous</a>
         <text>Side </text>
         <a th:text="${currentPage}"></a>
-        <a th:if="${currentPage < totalPages}" th:href="@{/adminlistings(page=${currentPage + 1})}">Næste</a>
+        <a th:if="${currentPage < totalPages}" th:href="@{/adminlistings(page=${currentPage + 1})}">Next</a>
     </div>
     <script>
         function deleteListing(id) {
