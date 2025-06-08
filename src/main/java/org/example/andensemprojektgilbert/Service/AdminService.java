@@ -2,6 +2,8 @@ package org.example.andensemprojektgilbert.Service;
 
 import org.example.andensemprojektgilbert.Infrastructure.ProductRepo;
 import org.example.andensemprojektgilbert.Infrastructure.UserRepo;
+import org.example.andensemprojektgilbert.Model.Condition;
+import org.example.andensemprojektgilbert.Model.Location;
 import org.example.andensemprojektgilbert.Model.Product;
 import org.example.andensemprojektgilbert.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +65,12 @@ public class AdminService {
         }
 
         return null;
+    }
+
+    public boolean createCondition(Condition condition) {
+       return productRepo.createCondition(condition);
+    }
+    public boolean createLocation(Location location) {
+        return productRepo.createLocation(location);
     }
 }

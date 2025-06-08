@@ -1,6 +1,8 @@
 package org.example.andensemprojektgilbert.Controller;
 
 import jakarta.servlet.http.HttpSession;
+import org.example.andensemprojektgilbert.Model.Condition;
+import org.example.andensemprojektgilbert.Model.Location;
 import org.example.andensemprojektgilbert.Model.Product;
 import org.example.andensemprojektgilbert.Model.User;
 import org.example.andensemprojektgilbert.Service.AdminService;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 public class AdminController {
@@ -30,6 +33,8 @@ public class AdminController {
     @GetMapping("/adminpage")
     public String adminPage(Model model, HttpSession session) {
         User user = (User) session.getAttribute("currentUser");
+        model.addAttribute("condition", new Condition());
+        model.addAttribute("location", new Location());
         if (user.getRole().equals("admin")) {
             return "adminpage";
         }
@@ -63,7 +68,28 @@ public class AdminController {
         model.addAttribute("exception", "Cannot find user");
         return "error";
     }
+    @PostMapping("/adminpage")
+    public String adminPage(@ModelAttribute Condition condition, @ModelAttribute Location location, Model model, RedirectAttributes redirectAttributes) {
+        boolean createdCon = false;
+        boolean createdLocation = false;
+        if (condition !=null && !condition.getItemcondition().isEmpty()) {
+            createdCon = adminService.createCondition(condition);
+        }
+        if (location != null && !location.getName().isEmpty()) {
+            createdLocation = adminService.createLocation(location);
+        }
 
+        if (createdCon && createdLocation) {
+            redirectAttributes.addFlashAttribute("success", "You have successfully added condition and location");
+        } else if (createdCon) {
+            redirectAttributes.addFlashAttribute("success", "You have successfully added condition");
+        } else if (createdLocation) {
+            redirectAttributes.addFlashAttribute("success", "You have successfully added location");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Cannot create condition");
+        }
+        return "redirect:/adminpage";
+    }
     @PostMapping("/edituseradmin")
     public String editUserAdmin(@ModelAttribute User user, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         boolean updated = userService.updateUser(user);
@@ -89,7 +115,7 @@ public String adminRights(@PathVariable int id, Model model, HttpSession session
     }
     model.addAttribute("exception", "Cannot grant admin rights");
     return "error";
-}
+    }
     @PostMapping("/adminpage/removeadminrights/{id}")
     public String removeAdminRights(@PathVariable int id, Model model, HttpSession session, User user, RedirectAttributes redirectAttributes) {
         user = (User) session.getAttribute("currentUser");

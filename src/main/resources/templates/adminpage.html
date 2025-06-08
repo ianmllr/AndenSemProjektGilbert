@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Welcome, Admin!</h1>
-</div>
+
 <div class="container">
     <a id="admin" href="/">
         <button type="button">Go to index page</button>
@@ -26,6 +26,17 @@
     <div th:if="${error}" class="alert alert-danger">
         <strong>Error!</strong> <span th:text="${error}"></span>
     </div>
+    <br>
+    <form th:action="@{adminpage}" th:object="${condition}" th:method="post">
+    <label for="name">Add a new Condition:</label>
+    <input type="text" id="name" th:field="*{itemcondition}">
+        <form th:action="@{adminpage}" th:object="${location}" th:method="post">
+            <label for="name">Add a new Location:</label>
+            <input type="text" id="location" th:field="*{name}">
+    <button type="submit">Submit</button>
+    </form>
+    </form>
+
 </div>
 </body>
 </html>

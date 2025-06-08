@@ -685,6 +685,14 @@ public class ProductRepo {
                 rs.getInt("createdByID")
         ));
     }
-
-
+    public boolean createCondition(Condition condition) {
+        String sql = "INSERT INTO gilbert.condition(itemcondition) VALUES (?)";
+        int result = jdbcTemplate.update(sql, condition.getItemcondition());
+        return result == 1;
+    }
+    public boolean createLocation(Location location) {
+        String sql = "INSERT INTO location(name) VALUES (?)";
+        int result = jdbcTemplate.update(sql, location.getName());
+        return result == 1;
+    }
 }
