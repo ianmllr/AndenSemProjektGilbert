@@ -146,22 +146,21 @@
 <script th:inline="javascript">
   let allSizeOptions = [];
 
-  window.addEventListener('DOMContentLoaded', () => {
-    allSizeOptions = Array.from(document.querySelectorAll('#size option[data-size-type-id]'));
-    updateSizesBySubcategory();
+  window.addEventListener('DOMContentLoaded', () => { //Document Object Model - venter på hele DOM er indlæst
+    allSizeOptions = Array.from(document.querySelectorAll('#size option[data-size-type-id]')); // Finder alle <option>-elementer med data-size-type-id
+    updateSizesBySubcategory(); // Kalder metoden når siden bliver indlæst
   });
 
   function updateSizesBySubcategory() {
-    const subcatSelect = document.getElementById("subcategory");
-    const sizeTypeId = subcatSelect.selectedIndex > 0 ? subcatSelect.options[subcatSelect.selectedIndex].getAttribute('data-size-type-id') : null;
-
+    const subcatSelect = document.getElementById("subcategory"); //Henter subcategory fra dropdown(select)
+    const sizeTypeId = subcatSelect.selectedIndex > 0 ? subcatSelect.options[subcatSelect.selectedIndex].getAttribute('data-size-type-id') : null; //Henter størrelser ud fra id
     const sizeSelect = document.getElementById("size");
-    sizeSelect.innerHTML = '<option value="" disabled>Select size</option>';
+    sizeSelect.innerHTML = '<option value="" disabled>Select size</option>'; //Rydder sizes fra dropdown
     if (sizeTypeId) {
-      allSizeOptions.forEach(option => {
-        const optionSizeTypeId = option.getAttribute('data-size-type-id');
+      allSizeOptions.forEach(option => { // Kører igennem og filterer størrelserne, så de passer til tingene
+        const optionSizeTypeId = option.getAttribute('data-size-type-id'); //Henter størrelser
         if (optionSizeTypeId === sizeTypeId) {
-          sizeSelect.appendChild(option.cloneNode(true));
+          sizeSelect.appendChild(option.cloneNode(true)); // Kopier og sørger for at få vist de relevante størrelser
         }
       });
     }
