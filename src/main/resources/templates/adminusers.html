@@ -48,7 +48,7 @@
 
     <div>
         <a th:if="${currentPage > 1}" th:href="@{/adminusers(page=${currentPage - 1})}">Previous</a>
-        <text>Side </text>
+        <text>Page </text>
         <a th:text="${currentPage}"></a>
         <a th:if="${currentPage < totalPages}" th:href="@{/adminusers(page=${currentPage + 1})}">Next</a>
     </div>
