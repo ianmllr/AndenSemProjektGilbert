@@ -22,7 +22,8 @@ public class FavoriteController {
     private IFavoriteService favoriteService;
 
 //    private final IFavoriteService favoriteService;
-
+//
+//    @Autowired
 //    public FavoriteController(IFavoriteService favoriteService) {
 //        this.favoriteService = favoriteService;
 //    }
