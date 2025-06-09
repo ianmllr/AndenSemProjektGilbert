@@ -236,10 +236,10 @@ public class ProductRepo {
                 "cond.itemcondition AS item_condition, s.size_value AS size, col.color AS color,\n" +
                 "p.imgsrc, p.createdbyid\n" +
                 "FROM product p\n" +
-                "INNER JOIN department_category_subcategory dcs \n" +
+                "LEFT JOIN department_category_subcategory dcs \n" +
                 "ON p.category_id = dcs.category_id AND p.subcategory_id = dcs.subcategory_id AND p.department_id = dcs.department_id\n" +
-                "INNER JOIN department d ON dcs.department_id = d.id\n" +
-                "INNER JOIN category c ON dcs.category_id = c.id\n" +
+                "LEFT JOIN department d ON dcs.department_id = d.id\n" +
+                "LEFT JOIN category c ON dcs.category_id = c.id\n" +
                 "LEFT JOIN subcategory sc ON dcs.subcategory_id = sc.id\n" +
                 "LEFT JOIN brand b ON p.brand_id = b.id\n" +
                 "LEFT JOIN location l ON p.location_id = l.id\n" +

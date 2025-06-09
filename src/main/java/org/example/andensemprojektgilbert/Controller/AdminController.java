@@ -49,8 +49,9 @@ public class AdminController {
             return "error";
         }
         int pageSize = 10;
+        List<User> allUsers = adminService.getUsers();
         List<User> users = adminService.getUsersPage(page, pageSize);
-        int totalPages = (users.size() + pageSize) / pageSize;
+        int totalPages = (allUsers.size() + pageSize) / pageSize;
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("users", users);
         model.addAttribute("currentPage", page);
@@ -155,8 +156,11 @@ public String adminRights(@PathVariable int id, Model model, HttpSession session
             return "error";
         }
         int pageSize = 10;
+        List<Product> allProducts = productsService.getAllProducts();
         List<Product> products = adminService.getProductsPage(page, pageSize);
-        int totalPages = (products.size() + pageSize) / pageSize;
+        int totalPages = (allProducts.size() + pageSize) / pageSize;
+        System.out.println(allProducts.size());
+        System.out.println(totalPages);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("products", products);
         model.addAttribute("currentPage", page);
