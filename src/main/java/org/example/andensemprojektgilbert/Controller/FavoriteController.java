@@ -17,8 +17,16 @@ import java.util.List;
 
 @Controller
 public class FavoriteController {
+
     @Autowired
     private IFavoriteService favoriteService;
+
+//    private final IFavoriteService favoriteService;
+
+//    public FavoriteController(IFavoriteService favoriteService) {
+//        this.favoriteService = favoriteService;
+//    }
+
     @GetMapping("/favorites")
     public String showFavorites(Model model, HttpSession session) {
         User user = (User) session.getAttribute("currentUser");
