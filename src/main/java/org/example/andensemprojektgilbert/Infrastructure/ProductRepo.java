@@ -191,9 +191,9 @@ public class ProductRepo {
                 "p.posted_date, p.price, cond.itemcondition AS item_condition, s.size_value AS size, col.color AS color, " +
                 "p.imgsrc, p.createdbyid " +
                 "FROM product p " +
-                "INNER JOIN department_category_subcategory dcs ON p.category_id = dcs.category_id AND p.subcategory_id = dcs.subcategory_id AND p.department_id = dcs.department_id " +
-                "INNER JOIN department d ON dcs.department_id = d.id " +
-                "INNER JOIN category c ON dcs.category_id = c.id " +
+                "LEFT JOIN department_category_subcategory dcs ON p.category_id = dcs.category_id AND p.subcategory_id = dcs.subcategory_id AND p.department_id = dcs.department_id " +
+                "LEFT JOIN department d ON dcs.department_id = d.id " +
+                "LEFT JOIN category c ON dcs.category_id = c.id " +
                 "LEFT JOIN subcategory sc ON dcs.subcategory_id = sc.id " +
                 "LEFT JOIN brand b ON p.brand_id = b.id " +
                 "LEFT JOIN location l ON p.location_id = l.id " +
