@@ -445,7 +445,7 @@ public class ProductRepo {
 
 
     public List<Product> readUserProducts(User user) {
-        String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, \n" +
+        String sql = "SELECT DISTINCT p.id, p.name, b.name AS brand, l.name AS location, p.description, \n" +
                 "d.name AS department, c.name AS category, sc.name AS subcategory, \n" +
                 "p.posted_date, p.price, cond.itemcondition AS `condition`, \n" +
                 "s.size_value AS size, col.color AS color, p.imgsrc, p.createdbyid \n" +
