@@ -51,7 +51,7 @@ public class AdminController {
         int pageSize = 10;
         List<User> allUsers = adminService.getUsers();
         List<User> users = adminService.getUsersPage(page, pageSize);
-        int totalPages = (allUsers.size() + pageSize) / pageSize;
+        int totalPages = (allUsers.size() + pageSize - 1) / pageSize;
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("users", users);
         model.addAttribute("currentPage", page);
@@ -158,7 +158,7 @@ public String adminRights(@PathVariable int id, Model model, HttpSession session
         int pageSize = 10;
         List<Product> allProducts = productsService.getAllProducts();
         List<Product> products = adminService.getProductsPage(page, pageSize);
-        int totalPages = (allProducts.size() + pageSize) / pageSize;
+        int totalPages = (allProducts.size() + pageSize - 1) / pageSize;
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("products", products);
         model.addAttribute("currentPage", page);
