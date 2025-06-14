@@ -1,7 +1,8 @@
 package org.example.andensemprojektgilbert;
 
 import org.example.andensemprojektgilbert.Model.User;
-import org.example.andensemprojektgilbert.Service.AdminService;
+import org.example.andensemprojektgilbert.Service.AdminServiceImp;
+import org.example.andensemprojektgilbert.Service.IAdminService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class AdminTest {
 
     @Autowired
-    private AdminService adminService;
+    private IAdminService adminService;
 
     @BeforeEach
     void setUp() {

@@ -10,8 +10,13 @@ import java.util.List;
 
 @Service
 public class FavoriteServiceImp implements IFavoriteService {
+
+    private final IFavoriteRepo favoriteRepo;
+
     @Autowired
-    private IFavoriteRepo favoriteRepo;
+    public FavoriteServiceImp(IFavoriteRepo favoriteRepo) {
+        this.favoriteRepo = favoriteRepo;
+    }
 
     @Override
     public List<Product> getFavorites(int userid) {

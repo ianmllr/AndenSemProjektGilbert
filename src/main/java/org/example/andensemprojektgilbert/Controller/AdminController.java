@@ -5,9 +5,9 @@ import org.example.andensemprojektgilbert.Model.Condition;
 import org.example.andensemprojektgilbert.Model.Location;
 import org.example.andensemprojektgilbert.Model.Product;
 import org.example.andensemprojektgilbert.Model.User;
-import org.example.andensemprojektgilbert.Service.AdminService;
-import org.example.andensemprojektgilbert.Service.ProductsService;
-import org.example.andensemprojektgilbert.Service.UserService;
+import org.example.andensemprojektgilbert.Service.IAdminService;
+import org.example.andensemprojektgilbert.Service.ProductsServiceImp;
+import org.example.andensemprojektgilbert.Service.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,18 +17,20 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-import java.util.Locale;
 
 @Controller
 public class AdminController {
 
-    @Autowired
-    AdminService adminService;
+    private final IAdminService adminService;
+    private final UserServiceImp userService;
+    private final ProductsServiceImp productsService;
 
     @Autowired
-    UserService userService;
-    @Autowired
-    private ProductsService productsService;
+    public AdminController(IAdminService adminService, UserServiceImp userService, ProductsServiceImp productsService) {
+        this.adminService = adminService;
+        this.userService = userService;
+        this.productsService = productsService;
+    }
 
     @GetMapping("/adminpage")
     public String adminPage(Model model, HttpSession session) {

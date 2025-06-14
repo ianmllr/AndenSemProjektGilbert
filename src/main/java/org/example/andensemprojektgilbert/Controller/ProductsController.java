@@ -3,7 +3,9 @@ package org.example.andensemprojektgilbert.Controller;
 import jakarta.servlet.http.HttpSession;
 import org.example.andensemprojektgilbert.Model.*;
 import org.example.andensemprojektgilbert.Service.FavoriteServiceImp;
-import org.example.andensemprojektgilbert.Service.ProductsService;
+import org.example.andensemprojektgilbert.Service.IFavoriteService;
+import org.example.andensemprojektgilbert.Service.IProductsService;
+import org.example.andensemprojektgilbert.Service.ProductsServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,10 +24,14 @@ import java.util.UUID;
 @Controller
 public class ProductsController {
 
+    private final IProductsService productsService;
+    private final IFavoriteService favoriteService;
+
     @Autowired
-    private ProductsService productsService;
-    @Autowired
-    private FavoriteServiceImp favoriteService;
+    public ProductsController(IProductsService productsService, IFavoriteService favoriteService) {
+        this.productsService = productsService;
+        this.favoriteService = favoriteService;
+    }
 
     @GetMapping("/men")
     public String getMensProducts(Model model, HttpSession session) {

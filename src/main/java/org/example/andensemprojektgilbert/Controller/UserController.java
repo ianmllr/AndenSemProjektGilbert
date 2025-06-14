@@ -4,8 +4,10 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.example.andensemprojektgilbert.Model.Product;
 import org.example.andensemprojektgilbert.Model.User;
-import org.example.andensemprojektgilbert.Service.ProductsService;
-import org.example.andensemprojektgilbert.Service.UserService;
+import org.example.andensemprojektgilbert.Service.IProductsService;
+import org.example.andensemprojektgilbert.Service.IUserService;
+import org.example.andensemprojektgilbert.Service.ProductsServiceImp;
+import org.example.andensemprojektgilbert.Service.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +28,15 @@ import java.util.UUID;
 @Controller
 public class UserController {
 
+    private final IUserService userService;
+
+    private final IProductsService productsService;
+
     @Autowired
-    private UserService userService = new UserService();
-    @Autowired
-    private ProductsService productsService;
+    public UserController(IUserService userService, IProductsService productsService) {
+        this.userService = userService;
+        this.productsService = productsService;
+    }
 
     @GetMapping("/register")
     public String getRegister(Model model) {

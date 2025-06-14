@@ -3,20 +3,22 @@ package org.example.andensemprojektgilbert.Service;
 import org.example.andensemprojektgilbert.Infrastructure.UserRepo;
 import org.example.andensemprojektgilbert.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
-    @Autowired
-    private UserRepo userRepo;
+public class UserServiceImp implements IUserService {
+
+    private final UserRepo userRepo;
 
     private User user;
 
+    @Autowired
+    public UserServiceImp(UserRepo userRepo) {
+        this.userRepo = userRepo;
+    }
 
+    @Override
     public boolean register(User user) {
         if (userRepo.readUserByEmail(user.getEmail()) != null) {
             return false;
@@ -26,6 +28,7 @@ public class UserService {
         return userRepo.createUser(user);
     }
 
+    @Override
     public User login(String email, String password) {
         user = userRepo.readUserByEmail(email);
         if (user != null && BCrypt.checkpw(password, user.getPassword())) {
@@ -35,6 +38,8 @@ public class UserService {
             return null;
         }
     }
+
+    @Override
     public boolean updateUser(User user) {
         if (user != null && user.getPassword().isEmpty()) {
             return userRepo.updateUserNoPassword(user);
@@ -46,6 +51,8 @@ public class UserService {
         }
         else return false;
     }
+
+    @Override
     public boolean deleteUser(String email) {
         return userRepo.deleteUser(email);
     }

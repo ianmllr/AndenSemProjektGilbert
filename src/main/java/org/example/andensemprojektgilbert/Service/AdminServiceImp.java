@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AdminService {
+public class AdminServiceImp implements IAdminService {
 
     @Autowired
     private UserRepo userRepo;
@@ -22,16 +22,20 @@ public class AdminService {
     @Autowired
     private ProductRepo productRepo;
 
+    @Override
     public List<User> getUsers() {
         return userRepo.getAllUsers();
     }
 
+    @Override
     public boolean giveAdminRights(int id) {
         return userRepo.giveAdminRights(id);
     }
+    @Override
     public boolean removeAdminRights(int id) {
         return userRepo.removeAdminRights(id);
     }
+    @Override
     public List<User> searchForUser(String query) {
         List<User> users = getUsers();
         List<User> filteredUsers = new ArrayList<>();
@@ -42,22 +46,28 @@ public class AdminService {
         }
         return filteredUsers;
     }
+    @Override
     public boolean deleteUser(int id) {
         return userRepo.deleteUserById(id);
     }
+    @Override
     public List<User> getUsersPage(int page, int size) {
         return userRepo.getUserPages(page, size);
     }
+    @Override
     public List<Product> getProductsPage(int page, int size) {
         return productRepo.getProductsPage(page, size);
     }
+    @Override
     public boolean deleteProduct(int id) {
         return productRepo.deleteProductById(id);
     }
+    @Override
     public List<Product> getFilteredProducts(String query) {
         List<Product> filteredProducts = productRepo.searchProducts(query);
         return filteredProducts;
     }
+    @Override
     public User getUserById(int id) {
         Optional<User> user = userRepo.getUserById(id);
         if (user.isPresent()) {
@@ -66,10 +76,11 @@ public class AdminService {
 
         return null;
     }
-
+    @Override
     public boolean createCondition(Condition condition) {
        return productRepo.createCondition(condition);
     }
+    @Override
     public boolean createLocation(Location location) {
         return productRepo.createLocation(location);
     }
