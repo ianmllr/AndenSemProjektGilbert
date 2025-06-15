@@ -10,8 +10,13 @@ import java.util.List;
 
 @Repository
 public class FavoriteRepoImp implements IFavoriteRepo {
+
+    private final JdbcTemplate jdbcTemplate;
+
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    public FavoriteRepoImp(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Override
     public List<Product> getFavorites(int userId) {

@@ -1,9 +1,7 @@
 package org.example.andensemprojektgilbert;
 
-import org.example.andensemprojektgilbert.Infrastructure.UserRepo;
 import org.example.andensemprojektgilbert.Model.User;
 import org.example.andensemprojektgilbert.Service.IUserService;
-import org.example.andensemprojektgilbert.Service.UserServiceImp;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

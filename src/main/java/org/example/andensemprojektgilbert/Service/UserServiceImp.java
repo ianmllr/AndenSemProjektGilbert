@@ -1,6 +1,7 @@
 package org.example.andensemprojektgilbert.Service;
 
-import org.example.andensemprojektgilbert.Infrastructure.UserRepo;
+import org.example.andensemprojektgilbert.Infrastructure.IUserRepo;
+import org.example.andensemprojektgilbert.Infrastructure.UserRepoImp;
 import org.example.andensemprojektgilbert.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -9,12 +10,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImp implements IUserService {
 
-    private final UserRepo userRepo;
+    private final IUserRepo userRepo;
 
     private User user;
 
     @Autowired
-    public UserServiceImp(UserRepo userRepo) {
+    public UserServiceImp(IUserRepo userRepo) {
         this.userRepo = userRepo;
     }
 

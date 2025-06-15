@@ -1,6 +1,7 @@
 package org.example.andensemprojektgilbert;
 
-import org.example.andensemprojektgilbert.Infrastructure.UserRepo;
+import org.example.andensemprojektgilbert.Infrastructure.IUserRepo;
+import org.example.andensemprojektgilbert.Infrastructure.UserRepoImp;
 import org.example.andensemprojektgilbert.Model.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class DatabaseConnectionTest {
 
     @Autowired
-    private UserRepo userRepo;
+    private IUserRepo userRepo;
 
 
     @Test
     void testConnection() throws SQLException {
-        UserRepo userRepo = this.userRepo;
+        IUserRepo userRepo = this.userRepo;
         User user = userRepo.readUserByEmail("Thomas");
         assertNull(user, "User should be null if not found");
     }

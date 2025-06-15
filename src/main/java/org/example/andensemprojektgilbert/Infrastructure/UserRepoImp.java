@@ -10,17 +10,23 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class UserRepo {
+public class UserRepoImp implements IUserRepo {
+
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    public UserRepoImp(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
+    @Override
     public boolean createUser(User user) {
         String sql = "INSERT INTO user (name, password, email, sales, rating, role, imgsrc, Fname, Lname, address) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         int result = jdbcTemplate.update(sql, user.getName(), user.getPassword(), user.getEmail(), 0, user.getRating(), 2, user.getImgsrc(), user.getFname(), user.getLname(), user.getAddress());
         return result == 1;
     }
 
+    @Override
     public List<User> getAllUsers() {
         String sql = "SELECT id, name, email, password, sales, rating, user_role.role, imgsrc, Fname, Lname, address FROM user\n"  +
                 "JOIN user_role ON idroles = user.role";
@@ -29,6 +35,7 @@ public class UserRepo {
         );
     }
 
+    @Override
     public User readUserByEmail(String email) {
         String sql = "SELECT u.id, u.name, u.password, u.email, u.sales, u.rating, u.imgsrc, ur.role AS role\n" +
                 "FROM gilbert.user u\n" +
@@ -52,6 +59,8 @@ public class UserRepo {
             return null;
         }
     }
+
+    @Override
     public boolean updateUser(User user) {
         String sql = "UPDATE user SET name = ?, password = ?, email = ?, imgsrc = ? WHERE id = ?";
         int updated = jdbcTemplate.update(sql, user.getName(), user.getPassword(), user.getEmail(), user.getImgsrc(), user.getId());
@@ -60,6 +69,8 @@ public class UserRepo {
         }
         return false;
     }
+
+    @Override
     public boolean updateUserNoPassword(User user) {
         String sql = "UPDATE user set name = ?, email = ?, imgsrc = ? WHERE id = ?";
         int updated = jdbcTemplate.update(sql, user.getName(), user.getEmail(), user.getImgsrc(), user.getId());
@@ -68,6 +79,8 @@ public class UserRepo {
         }
         return false;
     }
+
+    @Override
     public boolean deleteUser(String email) {
         String sql = "DELETE FROM user WHERE email = ?";
         int result = jdbcTemplate.update(sql, email);
@@ -76,6 +89,8 @@ public class UserRepo {
         }
         return false;
     }
+
+    @Override
     public boolean giveAdminRights(int id) {
         String sql = "UPDATE gilbert.user set role = ? where id = ?";
         int updated = jdbcTemplate.update(sql, 1, id);
@@ -84,6 +99,8 @@ public class UserRepo {
         }
         return false;
     }
+
+    @Override
     public boolean removeAdminRights(int id) {
         String sql = "UPDATE gilbert.user SET role = ? WHERE id = ?";
         int updated = jdbcTemplate.update(sql, 2, id);
@@ -92,6 +109,8 @@ public class UserRepo {
         }
         return false;
     }
+
+    @Override
     public boolean deleteUserById(int id) {
         String sql = "delete from gilbert.user where id = ?";
         int deleted = jdbcTemplate.update(sql, id);
@@ -100,6 +119,8 @@ public class UserRepo {
         }
         return false;
     }
+
+    @Override
     public List<User> getUserPages(int page, int size) {
         String sql = "SELECT u.id, u.name, u.email, u.password, u.sales, u.rating, r.role, u.imgsrc, u.Fname, u.Lname, u.address\n" +
                 "FROM gilbert.user u\n" +
@@ -109,6 +130,8 @@ public class UserRepo {
         return jdbcTemplate.query(sql, new Object[]{size, offset}, (rs, rowNum) ->
                 new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getInt("sales"), rs.getString("rating"), rs.getString("role"), rs.getString("imgsrc"), rs.getString("Fname"), rs.getString("Lname"), rs.getString("address")));
     }
+
+    @Override
     public Optional<User> getUserById(int id) {
         try {
             String sql = "SELECT u.id, u.name, u.email, u.password, u.sales, u.rating, r.role, u.imgsrc, u.Fname, u.Lname, u.address\n" +

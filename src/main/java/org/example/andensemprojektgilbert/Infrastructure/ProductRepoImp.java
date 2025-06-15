@@ -6,14 +6,17 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
 import java.util.List;
 
 @Repository
-public class ProductRepo {
+public class ProductRepoImp implements IProductRepo {
+
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    public ProductRepoImp(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     private Integer getColorId(String color) {
         String sql = "SELECT idcolor from Color WHERE color = ? LIMIT 1";
@@ -50,6 +53,8 @@ public class ProductRepo {
             return null;
         }
     }
+
+    @Override
     public Integer getCategoryId(String categoryName) {
         System.out.println("Looking for category: '" + categoryName + "'");
         String sql = "SELECT id FROM Category WHERE name = ? LIMIT 1";
@@ -79,6 +84,8 @@ public class ProductRepo {
             return null;
         }
     }
+
+    @Override
     public Integer getDepartmentId(String departmentName) {
         String sql = "SELECT id FROM Department WHERE name = ? LIMIT 1";
         try {
@@ -89,6 +96,7 @@ public class ProductRepo {
     }
 
     // CREATE
+    @Override
     public void createProduct(Product product, User user) {
         Integer brandId = getBrandId(product.getBrand());
         Integer categoryId = getCategoryId(product.getCategory());
@@ -123,6 +131,7 @@ public class ProductRepo {
 
 
     // READ
+    @Override
     public List<Product> readProductsByDepartmentAndCategory(String department, String category) {
         String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, dcs.department_id, " +
                 "dcs.category_id, dcs.subcategory_id, d.name AS department, c.name AS category, sc.name AS subcategory, " +
@@ -162,8 +171,7 @@ public class ProductRepo {
         });
     }
 
-
-
+    @Override
     public List<Product> getProducts(String sql) {
         return jdbcTemplate.query(sql, (rs, rowNum) -> new Product(
                 rs.getInt("id"),
@@ -184,7 +192,7 @@ public class ProductRepo {
         ));
     }
 
-
+    @Override
     public List<Product> searchProducts(String searchTerm) {
         String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, dcs.department_id, " +
                 "dcs.category_id, dcs.subcategory_id, d.name AS department, c.name AS category, sc.name AS subcategory, " +
@@ -229,6 +237,7 @@ public class ProductRepo {
     }
 
 
+    @Override
     public List<Product> readAllProducts() {
         String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, dcs.department_id,\n" +
                 "dcs.category_id, dcs.subcategory_id, d.name AS department, \n" +
@@ -250,6 +259,7 @@ public class ProductRepo {
     }
 
     // læser herre-produkter
+    @Override
     public List<Product> readMensProducts() {
         String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, dcs.department_id,\n" +
                 "dcs.category_id, dcs.subcategory_id, d.name AS department, \n" +
@@ -272,6 +282,7 @@ public class ProductRepo {
     }
 
     // læser kvinde-produkter
+    @Override
     public List<Product> readWomensProducts() {
         String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, dcs.department_id,\n" +
                 "dcs.category_id, dcs.subcategory_id, d.name AS department, \n" +
@@ -293,7 +304,7 @@ public class ProductRepo {
         return getProducts(sql);
     }
 
-
+    @Override
     public List<Product> readHomeProducts() {
         String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, dcs.department_id,\n" +
                 "dcs.category_id, dcs.subcategory_id, d.name AS department, \n" +
@@ -315,6 +326,7 @@ public class ProductRepo {
         return getProducts(sql);
     }
 
+    @Override
     public List<Product> readBeautyProducts() {
         String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, dcs.department_id,\n" +
                 "dcs.category_id, dcs.subcategory_id, d.name AS department, \n" +
@@ -336,6 +348,7 @@ public class ProductRepo {
         return getProducts(sql);
     }
 
+    @Override
     public List<Product> readRandomMensProducts() {
         String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, dcs.department_id,\n" +
                 "dcs.category_id, dcs.subcategory_id, d.name AS department, \n" +
@@ -357,6 +370,7 @@ public class ProductRepo {
         return getProducts(sql);
     }
 
+    @Override
     public List<Product> readRandomWomensProducts() {
         String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, dcs.department_id,\n" +
                 "dcs.category_id, dcs.subcategory_id, d.name AS department, \n" +
@@ -378,6 +392,7 @@ public class ProductRepo {
         return getProducts(sql);
     }
 
+    @Override
     public List<Product> readRandomBags() {
         String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, dcs.department_id,\n" +
                 "dcs.category_id, dcs.subcategory_id, d.name AS department, \n" +
@@ -399,6 +414,7 @@ public class ProductRepo {
         return getProducts(sql);
     }
 
+    @Override
     public List<Product> readMensProductsBySubCat(String subcategory) {
         String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, d.name AS department,\n" +
                 "c.name AS category, sc.name AS subcategory, p.posted_date, p.price, \n" +
@@ -443,7 +459,7 @@ public class ProductRepo {
 
     // andre produkttyper her
 
-
+    @Override
     public List<Product> readUserProducts(User user) {
         String sql = "SELECT DISTINCT p.id, p.name, b.name AS brand, l.name AS location, p.description, \n" +
                 "d.name AS department, c.name AS category, sc.name AS subcategory, \n" +
@@ -482,6 +498,7 @@ public class ProductRepo {
         ));
     }
 
+    @Override
     public Product readProduct(int id) {
         String sql = "SELECT p.id, p.name, b.name AS brand, l.name AS location, p.description, \n" +
                 "d.name AS department, c.name AS category, sc.name AS subcategory, \n" +
@@ -520,6 +537,7 @@ public class ProductRepo {
         ));
     }
 
+    @Override
     public void updateProduct(Product product) {
         String sql = "UPDATE product SET name = ?, brand_id = ?, location_id = ?, description = ?, " +
                 "department_id = ?, category_id = ?, subcategory_id = ?, price = ?, " +
@@ -538,6 +556,7 @@ public class ProductRepo {
                 conditionId, sizeId, colorId, product.getImgsrc(), product.getId());
     }
 
+    @Override
     public List<Department> getDepartments() {
         String sql = "SELECT id, name FROM Department";
         return jdbcTemplate.query(sql, (resultSet, i) -> {
@@ -548,6 +567,7 @@ public class ProductRepo {
         });
     }
 
+    @Override
     public List<Subcategory> getSubcategories() {
         String sql = "SELECT * FROM subcategory";
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
@@ -559,6 +579,7 @@ public class ProductRepo {
         });
     }
 
+    @Override
     public List<Category> getCategories() {
         String sql = "SELECT * FROM Category";
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
@@ -570,33 +591,39 @@ public class ProductRepo {
     }
 
 
+    @Override
     public List<String> getBrands() {
         String sql ="SELECT name FROM Brand";
         return jdbcTemplate.queryForList(sql, String.class);
     }
 
+    @Override
     public List<String> getLocations() {
         String sql = "SELECT name FROM Location";
         return jdbcTemplate.queryForList(sql, String.class);
     }
 
+    @Override
     public List<String> getConditions() {
         String sql = "SELECT itemcondition FROM `condition`";
         return jdbcTemplate.queryForList(sql, String.class);
     }
 
+    @Override
     public List<String> getColors() {
         String sql = "SELECT color FROM color";
         return jdbcTemplate.queryForList(sql, String.class);
     }
 
 
+    @Override
     public List<String> getSizesByType(String type) {
         String sql = "SELECT s.size_value FROM size s JOIN size_types t ON s.size_type_id = t.id WHERE t.name = ?";
         return jdbcTemplate.queryForList(sql, new Object[]{type}, String.class);
     }
 
 
+    @Override
     public List<Size> getSizes() {
         String sql = "SELECT * FROM size";
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
@@ -607,6 +634,8 @@ public class ProductRepo {
             return size;
         });
     }
+
+    @Override
     public List<Category> findByDepartment(int departmentId) {
         String sql = "SELECT DISTINCT c.id, c.name " +
                 "FROM category c " +
@@ -621,6 +650,7 @@ public class ProductRepo {
         });
     }
 
+    @Override
     public List<Subcategory> findByCategory(int categoryId, int departmentId) {
         String sql = "SELECT DISTINCT sc.id, sc.name, dcs.category_id, sc.size_type_id " +
                 "FROM subcategory sc " +
@@ -637,6 +667,7 @@ public class ProductRepo {
         });
     }
 
+    @Override
     public boolean deleteProductById(int productId) {
         String sql = "DELETE FROM Product WHERE id = ?";
         int deleted = jdbcTemplate.update(sql, productId);
@@ -645,6 +676,8 @@ public class ProductRepo {
         }
         return false;
     }
+
+    @Override
     public List<Product> getProductsPage(int page, int size) {
         String sql = "SELECT \n" +
                 "    p.id, p.name, b.name AS brand, l.name AS location, p.description, \n" +
@@ -685,11 +718,15 @@ public class ProductRepo {
                 rs.getInt("createdByID")
         ));
     }
+
+    @Override
     public boolean createCondition(Condition condition) {
         String sql = "INSERT INTO gilbert.condition(itemcondition) VALUES (?)";
         int result = jdbcTemplate.update(sql, condition.getItemcondition());
         return result == 1;
     }
+
+    @Override
     public boolean createLocation(Location location) {
         String sql = "INSERT INTO location(name) VALUES (?)";
         int result = jdbcTemplate.update(sql, location.getName());

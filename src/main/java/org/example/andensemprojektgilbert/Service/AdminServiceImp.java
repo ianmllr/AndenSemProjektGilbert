@@ -1,7 +1,8 @@
 package org.example.andensemprojektgilbert.Service;
 
-import org.example.andensemprojektgilbert.Infrastructure.ProductRepo;
-import org.example.andensemprojektgilbert.Infrastructure.UserRepo;
+import org.example.andensemprojektgilbert.Infrastructure.IProductRepo;
+import org.example.andensemprojektgilbert.Infrastructure.IUserRepo;
+import org.example.andensemprojektgilbert.Infrastructure.ProductRepoImp;
 import org.example.andensemprojektgilbert.Model.Condition;
 import org.example.andensemprojektgilbert.Model.Location;
 import org.example.andensemprojektgilbert.Model.Product;
@@ -16,11 +17,14 @@ import java.util.Optional;
 @Service
 public class AdminServiceImp implements IAdminService {
 
-    @Autowired
-    private UserRepo userRepo;
+    private final IUserRepo userRepo;
+    private final IProductRepo productRepo;
 
     @Autowired
-    private ProductRepo productRepo;
+    public AdminServiceImp(IUserRepo userRepo, IProductRepo productRepo) {
+        this.userRepo = userRepo;
+        this.productRepo = productRepo;
+    }
 
     @Override
     public List<User> getUsers() {

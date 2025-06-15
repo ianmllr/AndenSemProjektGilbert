@@ -1,6 +1,7 @@
 package org.example.andensemprojektgilbert.Service;
 
-import org.example.andensemprojektgilbert.Infrastructure.ProductRepo;
+import org.example.andensemprojektgilbert.Infrastructure.IProductRepo;
+import org.example.andensemprojektgilbert.Infrastructure.ProductRepoImp;
 import org.example.andensemprojektgilbert.Model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,9 +12,10 @@ import java.util.List;
 @Service
 public class ProductsServiceImp implements IProductsService {
 
-    private final ProductRepo productRepo;
+    private final IProductRepo productRepo;
 
-    public ProductsServiceImp(ProductRepo productRepo) {
+    @Autowired
+    public ProductsServiceImp(IProductRepo productRepo) {
         this.productRepo = productRepo;
     }
 
