@@ -66,19 +66,12 @@
                 <a href="/products/beauty/fragrance">Fragrance</a>
             </div>
         </div>
-        <div class="dropdown">
-            <a href="/designers">Designers</a>
-            <div class="dropdown-content">
-                <a href="/designer1">Designer1</a>
-                <a href="/designer2">Designer2</a>
-                <a href="/designer3">Designer3</a>
-            </div>
         </div>
     </nav>
 </header>
 
 <section class="category-section">
-    <h2 class="question">Mens products</h2>
+    <h2 class="question">Men's products</h2>
     <h3 th:if="${products} == null">Ingen produkter fundet</h3>
     <div class="products-container">
         <div th:each="product : ${products}" class="product-card">
